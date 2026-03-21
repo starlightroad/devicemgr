@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { APP_DESC, APP_NAME } from "@/lib/contants";
 
 const interSans = Inter({
   variable: "--font-inter-sans",
@@ -9,10 +10,10 @@ const interSans = Inter({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | DeviceMGR Dashboard",
-    default: "DeviceMGR Dashboard",
+    template: `%s | ${APP_NAME}`,
+    default: APP_NAME,
   },
-  description: "A device management dashboard built with Next.js.",
+  description: APP_DESC,
 };
 
 export default function RootLayout({
