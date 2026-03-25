@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
+
 import { APP_NAME } from "@/lib/contants";
 
 import { LoginForm } from "@/features/auth";
+
+export const metadata: Metadata = {
+  title: "Login",
+  description: `Login to ${APP_NAME} to view your devices.`,
+};
 
 export default function LoginPage() {
   return (
