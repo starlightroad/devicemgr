@@ -18,7 +18,7 @@ const initSeed = async () => {
       await resetTable(db, table);
     }
 
-    await usersSeed(db);
+    await usersSeed();
   } catch (error) {
     console.error(error);
   } finally {
