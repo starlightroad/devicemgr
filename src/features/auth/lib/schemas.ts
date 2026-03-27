@@ -1,6 +1,8 @@
 import { z } from "zod";
 
+import { MAX_PASSWORD, MIN_PASSWORD } from "@/features/auth";
+
 export const LoginFormSchema = z.object({
   email: z.email("Email is required."),
-  password: z.string().min(1, "Password is required.").max(32, "Password must be 32 characters or less."),
+  password: z.string().min(MIN_PASSWORD.length, MIN_PASSWORD.message).max(MAX_PASSWORD.length, MAX_PASSWORD.message),
 });
