@@ -8,6 +8,8 @@ import { db } from "@/db/client";
 
 import * as schemas from "@/db/schemas";
 
+import { MAX_PASSWORD, MIN_PASSWORD } from "@/features/auth";
+
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
@@ -28,6 +30,8 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     autoSignIn: false,
+    minPasswordLength: MIN_PASSWORD.length,
+    maxPasswordLength: MAX_PASSWORD.length,
   },
   plugins: [nextCookies()],
 });
