@@ -11,4 +11,7 @@ export const auth = betterAuth({
   user: {
     modelName: "users",
   },
+  session: {
+    modelName: "sessions",
+  },
 });
