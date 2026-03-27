@@ -1,5 +1,7 @@
 [
   {
-    "name": "John Smith"
+    "id": "040ff209-19b7-432f-a544-cd162159b4d3",
+    "name": "John Smith",
+    "email": "john@smith.com"
   }
 ]
