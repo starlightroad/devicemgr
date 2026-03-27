@@ -4,6 +4,8 @@ import { z } from "zod";
 
 import type { Form } from "@base-ui/react";
 
+import { auth } from "@/lib/auth";
+
 import { LoginFormSchema } from "@/features/auth";
 
 export const authenticateUser = async (_previousState: { serverErrors?: Form.Props["errors"] }, formData: FormData) => {
@@ -19,7 +21,15 @@ export const authenticateUser = async (_previousState: { serverErrors?: Form.Pro
       };
     }
 
-    // TODO: perform authentication
+    const response = await auth.api.signInEmail({
+      body: {
+        email: parsedFields.data.email,
+        password: parsedFields.data.password,
+      },
+      asResponse: true,
+    });
+
+    await response.json();
   } catch {
     return {
       serverErrors: {
