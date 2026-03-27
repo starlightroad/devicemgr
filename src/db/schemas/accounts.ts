@@ -5,7 +5,7 @@ import { pgTable, text, timestamp, index } from "drizzle-orm/pg-core";
 import { usersTable } from "@/db/schemas";
 
 export const accountsTable = pgTable(
-  "account",
+  "accounts",
   {
     id: text("id").primaryKey(),
     accountId: text("account_id").notNull(),
