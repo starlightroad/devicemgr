@@ -12,16 +12,16 @@ export const auth = betterAuth({
     schema: schemas,
   }),
   user: {
-    modelName: "users",
+    modelName: "usersTable",
   },
   session: {
-    modelName: "sessions",
+    modelName: "sessionsTable",
   },
   account: {
-    modelName: "accounts",
+    modelName: "accountsTable",
   },
   verification: {
-    modelName: "verifications",
+    modelName: "verificationsTable",
   },
   emailAndPassword: {
     enabled: true,
