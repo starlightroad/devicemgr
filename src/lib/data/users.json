@@ -1,10 +1,5 @@
 [
   {
-    "id": "040ff209-19b7-432f-a544-cd162159b4d3",
-    "name": "John Smith",
-    "email": "john@smith.com"
-  },
-  {
     "id": "aa5166f76d4f4aacaea5e0053f8c714e",
     "name": "Guest User",
     "email": "guest@devicemgr.com",
