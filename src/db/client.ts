@@ -1,8 +1,6 @@
-import { loadEnvConfig } from "@next/env";
+import "@/lib/config/env";
 
 import { drizzle } from "drizzle-orm/node-postgres";
-
-loadEnvConfig(process.cwd());
 
 export const db = drizzle(process.env.DATABASE_URL!);
 

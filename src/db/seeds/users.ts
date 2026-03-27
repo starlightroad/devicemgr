@@ -1,12 +1,10 @@
-import { loadEnvConfig } from "@next/env";
+import "@/lib/config/env";
 
 import { usersTable } from "@/db/schemas";
 
 import type { Database } from "@/db/client";
 
 import usersJSON from "@/lib/data/users.json";
-
-loadEnvConfig(process.cwd());
 
 const usersSeed = async (db: Database) => {
   try {
