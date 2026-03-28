@@ -4,6 +4,8 @@ import { useActionState, useState } from "react";
 
 import { Button, Field, Form } from "@base-ui/react";
 
+import usersJSON from "@/lib/data/users.json";
+
 import { authenticateUser } from "@/features/auth";
 
 export default function LoginForm() {
@@ -52,8 +54,10 @@ export default function LoginForm() {
         focusableWhenDisabled
         type="submit"
         onClick={() => {
-          setUserEmail("guest@devicemgr.com");
-          setUserPassword("guest1234!@#$");
+          const demoUserId = usersJSON.findIndex((user) => user.email.startsWith("guest"));
+
+          setUserEmail(usersJSON[demoUserId].email);
+          setUserPassword(usersJSON[demoUserId].password!);
         }}
         className="cursor-pointer self-center rounded-md p-px text-neutral-600 outline-0 hover:underline hover:underline-offset-4 focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-neutral-400 data-disabled:text-neutral-400 hover:data-disabled:cursor-not-allowed hover:data-disabled:no-underline focus-visible:data-disabled:outline-2"
       >

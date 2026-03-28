@@ -1,16 +1,25 @@
 import "@/lib/config/env";
 
-import { usersTable } from "@/db/schemas";
-
-import type { Database } from "@/db/client";
-
 import usersJSON from "@/lib/data/users.json";
 
-const usersSeed = async (db: Database) => {
+import { auth } from "@/lib/auth";
+
+const usersSeed = async () => {
   try {
     const insertedUsers = await Promise.all(
       usersJSON.map(async (user) => {
-        return await db.insert(usersTable).values(user).returning();
+        const data = await auth.api.signUpEmail({
+          body: {
+            name: user.name,
+            email: user.email,
+            password: user.password,
+          },
+        });
+
+        return {
+          name: data.user.name,
+          email: data.user.email,
+        };
       }),
     );
 
