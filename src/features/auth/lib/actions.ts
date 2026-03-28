@@ -4,13 +4,18 @@ import { z } from "zod";
 
 import type { Form } from "@base-ui/react";
 
+import { redirect } from "next/navigation";
+
 import { APIError, isAPIError } from "better-auth/api";
 
 import { auth } from "@/lib/auth";
 
 import { LoginFormSchema } from "@/features/auth";
 
-export const authenticateUser = async (_previousState: { serverErrors?: Form.Props["errors"] }, formData: FormData) => {
+export const authenticateUser = async (
+  _previousState: { serverErrors: Form.Props["errors"] } | undefined,
+  formData: FormData,
+) => {
   const parsedFields = LoginFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -55,5 +60,5 @@ export const authenticateUser = async (_previousState: { serverErrors?: Form.Pro
     };
   }
 
-  return {};
+  redirect("/dashboard");
 };

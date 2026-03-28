@@ -9,13 +9,13 @@ import usersJSON from "@/lib/data/users.json";
 import { authenticateUser } from "@/features/auth";
 
 export default function LoginForm() {
-  const [state, formAction, loading] = useActionState(authenticateUser, {});
+  const [state, formAction, loading] = useActionState(authenticateUser, undefined);
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
   return (
-    <Form action={formAction} errors={state.serverErrors} className="flex flex-col gap-4">
+    <Form action={formAction} errors={state?.serverErrors} className="flex flex-col gap-4">
       <Field.Root name="email" className="flex flex-col gap-1">
         <Field.Label className="sr-only">Email</Field.Label>
         <Field.Control
