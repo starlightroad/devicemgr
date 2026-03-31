@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { APP_DESC, APP_NAME } from "@/lib/contants";
 
+import { ThemeProvider } from "@wrksz/themes/next";
+
 const interSans = Inter({
   variable: "--font-inter-sans",
   subsets: ["latin"],
@@ -24,7 +26,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${interSans.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
-        <div className="root">{children}</div>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <div className="root">{children}</div>
+        </ThemeProvider>
       </body>
     </html>
   );
