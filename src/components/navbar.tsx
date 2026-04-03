@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 import { MonitorSmartphoneIcon } from "lucide-react";
 
-import { APP_NAME } from "@/lib/contants";
+import { APP_NAME } from "@/lib/constants";
 
 import { CTA, CTASkeleton } from "@/components/cta";
 
