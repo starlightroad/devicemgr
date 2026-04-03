@@ -16,6 +16,10 @@ body {
   position: relative;
 }
 
+html.dark body {
+  --background: theme(--color-neutral-950);
+}
+
 .root {
   isolation: isolate;
 }

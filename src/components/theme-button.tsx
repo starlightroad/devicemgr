@@ -18,7 +18,7 @@ export default function ThemeButton() {
       className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-neutral-800 outline-0 select-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-neutral-400"
     >
       <SunIcon className="h-4 w-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-      <MoonIcon className="absolute h-4 w-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+      <MoonIcon className="absolute h-4 w-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0 dark:text-neutral-100" />
     </Button>
   );
 }
