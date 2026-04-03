@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import { Suspense } from "react";
 
+import { buttonVariants } from "@heroui/react";
+
 import { MonitorSmartphoneIcon } from "lucide-react";
 
 import { APP_NAME } from "@/lib/constants";
@@ -16,7 +18,11 @@ export default function Navbar() {
       <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-between">
         <Link
           href="/"
-          className="flex h-8 items-center gap-2 rounded-lg px-2 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-neutral-400"
+          className={buttonVariants({
+            variant: "ghost",
+            size: "sm",
+            className: "focus-visible:ring-accent focus-visible:ring-2 focus-visible:ring-offset-2",
+          })}
         >
           <MonitorSmartphoneIcon size={16} className="text-neutral-800 dark:text-neutral-100" />
           <span className="text-sm font-medium text-neutral-800 dark:text-neutral-100">{APP_NAME}</span>
