@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #fafafa;
 }
@@ -12,6 +14,10 @@
 body {
   background: var(--background);
   position: relative;
+}
+
+html.dark body {
+  --background: theme(--color-neutral-950);
 }
 
 .root {

@@ -9,7 +9,7 @@ export async function CTA() {
   return (
     <Link
       href={isUserLoggedIn ? "/dashboard" : "/login"}
-      className="flex h-8 items-center justify-center rounded-lg bg-neutral-800 px-3 text-sm leading-6 font-medium text-white outline-0 select-none hover:bg-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-neutral-400"
+      className="flex h-8 items-center justify-center rounded-lg bg-neutral-800 px-3 text-sm leading-6 font-medium text-white outline-0 select-none hover:bg-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-neutral-400 dark:bg-neutral-100 dark:text-neutral-800 dark:hover:bg-neutral-200"
     >
       {isUserLoggedIn ? "Go to dashboard" : "Log in"}
     </Link>
