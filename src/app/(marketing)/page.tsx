@@ -11,10 +11,10 @@ export default function HomePage() {
       <Navbar />
       <main className="py-16">
         <section className="flex w-full flex-col items-center justify-center px-4">
-          <h1 className="mb-6 w-full max-w-md text-center text-4xl font-semibold text-neutral-800 lg:max-w-3xl lg:text-6xl dark:text-neutral-100">
+          <h1 className="mb-6 w-full max-w-md text-center text-4xl font-semibold lg:max-w-3xl lg:text-6xl">
             {headline}
           </h1>
-          <p className="mb-6 max-w-sm text-center text-neutral-600 lg:max-w-lg dark:text-neutral-400">{subheadline}</p>
+          <p className="text-muted mb-6 max-w-sm text-center lg:max-w-lg">{subheadline}</p>
           <ul className="flex gap-4">
             <li className="rounded-3xl bg-red-300 p-6 dark:bg-red-400">
               <ComputerIcon size={24} className="text-red-900" />

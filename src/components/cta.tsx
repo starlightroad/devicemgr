@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { buttonVariants } from "@heroui/react";
+
 import { getSession } from "@/dal/session";
 
 export async function CTA() {
@@ -9,7 +11,11 @@ export async function CTA() {
   return (
     <Link
       href={isUserLoggedIn ? "/dashboard" : "/login"}
-      className="flex h-8 items-center justify-center rounded-lg bg-neutral-800 px-3 text-sm leading-6 font-medium text-white outline-0 select-none hover:bg-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-neutral-400 dark:bg-neutral-100 dark:text-neutral-800 dark:hover:bg-neutral-200"
+      className={buttonVariants({
+        size: "sm",
+        className:
+          "focus-visible:ring-accent focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-2",
+      })}
     >
       {isUserLoggedIn ? "Go to dashboard" : "Log in"}
     </Link>
