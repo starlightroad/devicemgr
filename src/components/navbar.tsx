@@ -21,7 +21,8 @@ export default function Navbar() {
           className={buttonVariants({
             variant: "ghost",
             size: "sm",
-            className: "focus-visible:ring-accent focus-visible:ring-2 focus-visible:ring-offset-2",
+            className:
+              "focus-visible:ring-accent focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-2",
           })}
         >
           <MonitorSmartphoneIcon size={16} className="text-neutral-800 dark:text-neutral-100" />

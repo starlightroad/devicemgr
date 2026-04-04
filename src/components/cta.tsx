@@ -13,7 +13,8 @@ export async function CTA() {
       href={isUserLoggedIn ? "/dashboard" : "/login"}
       className={buttonVariants({
         size: "sm",
-        className: "focus-visible:ring-accent focus-visible:ring-2 focus-visible:ring-offset-2",
+        className:
+          "focus-visible:ring-accent focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-2",
       })}
     >
       {isUserLoggedIn ? "Go to dashboard" : "Log in"}
