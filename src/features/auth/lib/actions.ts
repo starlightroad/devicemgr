@@ -2,8 +2,6 @@
 
 import { z } from "zod";
 
-import type { Form } from "@base-ui/react";
-
 import { redirect } from "next/navigation";
 
 import { APIError, isAPIError } from "better-auth/api";
@@ -12,10 +10,14 @@ import { auth } from "@/lib/auth";
 
 import { LoginFormSchema } from "@/features/auth";
 
-export const authenticateUser = async (
-  _previousState: { serverErrors: Form.Props["errors"] } | undefined,
-  formData: FormData,
-) => {
+type PreviousState = {
+  serverErrors?: {
+    email?: string;
+    password?: string;
+  };
+};
+
+export const authenticateUser = async (_previousState: PreviousState | undefined, formData: FormData) => {
   const parsedFields = LoginFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -23,8 +25,13 @@ export const authenticateUser = async (
 
   try {
     if (!parsedFields.success) {
+      const { fieldErrors } = z.flattenError(parsedFields.error);
+
       return {
-        serverErrors: z.flattenError(parsedFields.error).fieldErrors,
+        serverErrors: {
+          email: fieldErrors.email?.toString(),
+          password: fieldErrors.password?.toString(),
+        },
       };
     }
 
