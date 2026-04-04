@@ -1,24 +1,13 @@
 @import "tailwindcss";
 @import "@heroui/styles";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
-:root {
-  --background: #fafafa;
-}
-
 @theme inline {
-  --color-background: var(--background);
   --font-sans: var(--font-inter-sans);
 }
 
 body {
   background: var(--background);
   position: relative;
-}
-
-html.dark body {
-  --background: theme(--color-neutral-950);
 }
 
 .root {
