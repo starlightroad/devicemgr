@@ -16,7 +16,11 @@ function Sidebar() {
 }
 
 function Shell({ children }: Pick<LayoutProps, "children">) {
-  return <div className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-[224px_1fr] border-x">{children}</div>;
+  return (
+    <div className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-1 border-x md:grid-cols-[224px_1fr]">
+      {children}
+    </div>
+  );
 }
 
 function Content({ children }: Pick<LayoutProps, "children">) {
