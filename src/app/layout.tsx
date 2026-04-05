@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en" className={`${interSans.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="flex min-h-full flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <div className="root">{children}</div>
+          {children}
         </ThemeProvider>
       </body>
     </html>
