@@ -1,0 +1,16 @@
+import { HouseIcon, MonitorSmartphoneIcon, UserRoundIcon } from "lucide-react";
+
+import type { NavItem } from "@/features/dashboard";
+
+export const getNavIcon = (label: NavItem["label"]) => {
+  switch (label) {
+    case "dashboard":
+      return HouseIcon;
+    case "devices":
+      return MonitorSmartphoneIcon;
+    case "profile":
+      return UserRoundIcon;
+    default:
+      throw new Error("Unknown label");
+  }
+};

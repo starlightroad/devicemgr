@@ -1,3 +1,5 @@
+import { Sidebar } from "@/features/dashboard";
+
 type LayoutProps = {
   children: React.ReactNode;
 };
@@ -9,10 +11,6 @@ export default function DashboardLayout({ children }: LayoutProps) {
       <Content>{children}</Content>
     </Shell>
   );
-}
-
-function Sidebar() {
-  return <aside className="hidden h-full flex-col border-r px-5 md:flex"></aside>;
 }
 
 function Shell({ children }: Pick<LayoutProps, "children">) {
