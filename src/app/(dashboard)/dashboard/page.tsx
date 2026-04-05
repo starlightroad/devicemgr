@@ -1,7 +1,7 @@
 export default function DashboardPage() {
   return (
     <>
-      <header className="py-4">
+      <header className="py-5">
         <h1 className="font-semibold">Dashboard</h1>
       </header>
       <main>
