@@ -1,7 +1,14 @@
-import { Sidebar } from "@/features/dashboard";
+import type { Metadata } from "next";
+
+import { DASHBOARD_DESC, DASHBOARD_TITLE, Sidebar } from "@/features/dashboard";
 
 type LayoutProps = {
   children: React.ReactNode;
+};
+
+export const metadata: Metadata = {
+  title: DASHBOARD_TITLE,
+  description: DASHBOARD_DESC,
 };
 
 export default function DashboardLayout({ children }: LayoutProps) {
