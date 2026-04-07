@@ -2,14 +2,20 @@
 
 import { headers } from "next/headers";
 
+import { redirect } from "next/navigation";
+
 import { auth } from "@/lib/auth";
 
 export const getSession = async () => {
-  const session = await auth.api.getSession({
+  const data = await auth.api.getSession({
     headers: await headers(),
   });
 
+  if (!data?.session.userId) {
+    redirect("/login");
+  }
+
   return {
-    userId: session?.session.userId,
+    userId: data.session.userId,
   };
 };
