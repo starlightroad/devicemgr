@@ -1,12 +1,12 @@
 import Link from "next/link";
 
-import { FolderGit2Icon, LogOutIcon } from "lucide-react";
+import { FolderGit2Icon } from "lucide-react";
 
-import { Button, buttonVariants, Separator } from "@heroui/react";
+import { buttonVariants, Separator } from "@heroui/react";
 
 import { GITHUB_REPO } from "@/lib/constants";
 
-import { navItems, NavList, UserProfile } from "@/features/dashboard";
+import { navItems, NavList, SignOutButton, UserProfile } from "@/features/dashboard";
 
 export default function Sidebar() {
   return (
@@ -24,10 +24,7 @@ export default function Sidebar() {
           <FolderGit2Icon className="text-muted size-4" />
           GitHub
         </Link>
-        <Button type="button" variant="ghost" size="sm" fullWidth className="justify-start">
-          <LogOutIcon className="text-muted size-4" />
-          Sign Out
-        </Button>
+        <SignOutButton />
       </div>
     </aside>
   );
