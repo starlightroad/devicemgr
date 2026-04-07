@@ -14,3 +14,11 @@ export const getNavIcon = (label: NavItem["label"]) => {
       throw new Error("Unknown label");
   }
 };
+
+export const getUserInitials = (name: string) => {
+  return name
+    .split(" ")
+    .slice(0, 2)
+    .map((str) => str[0])
+    .join("");
+};

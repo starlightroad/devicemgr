@@ -1,4 +1,4 @@
-import { navItems, NavList } from "@/features/dashboard";
+import { navItems, NavList, UserProfile } from "@/features/dashboard";
 
 export default function Sidebar() {
   return (
@@ -6,13 +6,5 @@ export default function Sidebar() {
       <UserProfile />
       <NavList items={navItems} />
     </aside>
-  );
-}
-
-function UserProfile() {
-  return (
-    <div className="py-5">
-      <p>Demo User</p>
-    </div>
   );
 }

@@ -9,3 +9,5 @@ export * from "./lib/utils";
 export { default as Sidebar } from "./components/sidebar";
 
 export { default as NavList } from "./components/nav-list";
+
+export { default as UserProfile } from "./components/user-profile";
