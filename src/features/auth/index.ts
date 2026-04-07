@@ -1,3 +1,5 @@
+export { client } from "./lib/client";
+
 export { LoginFormSchema } from "./lib/schemas";
 
 export { authenticateUser } from "./lib/actions";
