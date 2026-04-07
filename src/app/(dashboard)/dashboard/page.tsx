@@ -1,15 +1,13 @@
-import { Button, Card } from "@heroui/react";
+import { Card } from "@heroui/react";
 
-import { PanelRightIcon } from "lucide-react";
+import { MobileNav } from "@/features/dashboard";
 
 export default function DashboardPage() {
   return (
     <>
       <header className="flex items-center justify-between py-5">
         <h1 className="font-semibold">Dashboard</h1>
-        <Button type="button" variant="ghost" size="sm" isIconOnly className="md:hidden">
-          <PanelRightIcon />
-        </Button>
+        <MobileNav />
       </header>
       <main className="flex flex-col gap-5">
         <div className="grid gap-5 sm:grid-cols-2">

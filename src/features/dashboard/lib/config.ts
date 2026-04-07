@@ -17,3 +17,8 @@ export const navItems: NavItem[] = [
     href: PROFILE_PATH,
   },
 ];
+
+export const mobileNavItems: NavItem[] = navItems.map((navItem) => ({
+  ...navItem,
+  id: navItem.id.replace("sidebar", "mobile"),
+}));
