@@ -2,20 +2,18 @@
 
 import Link from "next/link";
 
-import { useRouter } from "next/navigation";
-
 import { Dropdown, Label } from "@heroui/react";
 
 import { FolderGit2Icon, LogOutIcon } from "lucide-react";
 
 import { GITHUB_REPO } from "@/lib/constants";
 
-import { client } from "@/features/auth";
+import { useSignOut } from "@/features/auth";
 
 import { getNavIcon, mobileNavItems } from "@/features/dashboard";
 
 export default function MobileNavMenu() {
-  const router = useRouter();
+  const { signOut } = useSignOut();
 
   return (
     <Dropdown.Menu>
@@ -39,26 +37,7 @@ export default function MobileNavMenu() {
         <FolderGit2Icon className="text-muted size-4" />
         <Label>GitHub</Label>
       </Dropdown.Item>
-      <Dropdown.Item
-        id="signout"
-        textValue="Sign Out"
-        variant="danger"
-        onAction={async () => {
-          try {
-            const { data, error } = await client.signOut();
-
-            if (!data?.success) {
-              throw error;
-            }
-
-            router.refresh();
-          } catch (error) {
-            console.error(error);
-
-            // Inform the user of the error
-          }
-        }}
-      >
+      <Dropdown.Item id="signout" textValue="Sign Out" variant="danger" onAction={async () => await signOut()}>
         <LogOutIcon className="text-muted size-4" />
         <Label>Sign Out</Label>
       </Dropdown.Item>
