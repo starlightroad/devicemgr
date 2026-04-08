@@ -6,10 +6,10 @@ import { MobileNavMenu, UserProfile } from "@/features/dashboard";
 
 export default function MobileNav() {
   return (
-    <nav role="Navigation">
+    <nav role="Navigation" className="md:hidden">
       <Dropdown>
         <Tooltip delay={0} closeDelay={0}>
-          <Button type="button" variant="ghost" size="sm" isIconOnly className="md:hidden">
+          <Button type="button" variant="ghost" size="sm" isIconOnly>
             <PanelRightIcon />
           </Button>
           <Tooltip.Content showArrow>
