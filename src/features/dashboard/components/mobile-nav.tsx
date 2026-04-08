@@ -17,7 +17,7 @@ export default function MobileNav() {
             <p>Navigation</p>
           </Tooltip.Content>
         </Tooltip>
-        <Dropdown.Popover>
+        <Dropdown.Popover className="md:hidden">
           <div className="px-3">
             <UserProfile />
           </div>
