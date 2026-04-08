@@ -2,6 +2,8 @@ import { PanelRightIcon } from "lucide-react";
 
 import { Button, Dropdown, Tooltip } from "@heroui/react";
 
+import { TOOLTIP_OFFSET } from "@/lib/constants";
+
 import { MobileNavMenu, UserProfile } from "@/features/dashboard";
 
 export default function MobileNav() {
@@ -12,7 +14,7 @@ export default function MobileNav() {
           <Button type="button" variant="ghost" size="sm" isIconOnly>
             <PanelRightIcon />
           </Button>
-          <Tooltip.Content showArrow>
+          <Tooltip.Content offset={TOOLTIP_OFFSET} showArrow>
             <Tooltip.Arrow />
             <p>Navigation</p>
           </Tooltip.Content>
