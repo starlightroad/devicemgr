@@ -13,3 +13,7 @@ export { default as NavList } from "./components/nav-list";
 export { default as UserProfile } from "./components/user-profile";
 
 export { default as SignOutButton } from "./components/sign-out-button";
+
+export { default as MobileNav } from "./components/mobile-nav";
+
+export { default as MobileNavMenu } from "./components/mobile-nav-menu";
