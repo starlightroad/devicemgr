@@ -4,12 +4,10 @@ import { Button } from "@heroui/react";
 
 import { LogOutIcon } from "lucide-react";
 
-import { useRouter } from "next/navigation";
-
-import { client } from "@/features/auth";
+import { useSignOut } from "@/features/auth";
 
 export default function SignOutButton() {
-  const router = useRouter();
+  const { signOut } = useSignOut();
 
   return (
     <Button
@@ -18,21 +16,7 @@ export default function SignOutButton() {
       size="sm"
       fullWidth
       className="justify-start"
-      onClick={async () => {
-        try {
-          const { data, error } = await client.signOut();
-
-          if (!data?.success) {
-            throw error;
-          }
-
-          router.refresh();
-        } catch (error) {
-          console.error(error);
-
-          // Inform the user of the error
-        }
-      }}
+      onPress={async () => await signOut()}
     >
       <LogOutIcon className="text-muted size-4" />
       Sign Out
