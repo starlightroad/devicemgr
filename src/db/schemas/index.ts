@@ -5,3 +5,5 @@ export * from "./sessions";
 export * from "./accounts";
 
 export * from "./verifications";
+
+export * from "./device-types";
