@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Core Gateway #1",
+    "device_type": "Router",
+    "device_status": "In Use",
+    "device_group": "Network Core",
+    "ip_address": "192.168.1.1",
+    "serial_number": "SN-RTR-9921"
+  },
+  {
+    "name": "Main Floor Switch",
+    "device_type": "Switch",
+    "device_status": "In Use",
+    "device_group": "Network Core",
+    "ip_address": "192.168.1.2",
+    "serial_number": "SN-SW-4410"
+  },
+  {
+    "name": "Dev Data Vault",
+    "device_type": "NAS",
+    "device_status": "In Use",
+    "device_group": "Storage",
+    "ip_address": "192.168.1.15",
+    "serial_number": "SN-NAS-8821"
+  },
+  {
+    "name": "Pro Workstation #1",
+    "device_type": "Desktop",
+    "device_status": "In Use",
+    "device_group": "Workstations",
+    "ip_address": "192.168.1.50",
+    "serial_number": "SN-DKT-1102"
+  },
+  {
+    "name": "Legacy Laptop",
+    "device_type": "Laptop",
+    "device_status": "Decommissioned",
+    "device_group": "Mobile Devices",
+    "ip_address": "192.168.1.201",
+    "serial_number": "SN-LPT-5567"
+  },
+  {
+    "name": "Entertainment Room Console",
+    "device_type": "Gaming Console",
+    "device_status": "In Use",
+    "device_group": "Entertainment",
+    "ip_address": "192.168.1.110",
+    "serial_number": "SN-GME-3341"
+  },
+  {
+    "name": "Erica's iPhone",
+    "device_type": "Smartphone",
+    "device_status": "In Use",
+    "device_group": "Guest",
+    "ip_address": "192.168.1.85",
+    "serial_number": "SN-SMP-0040"
+  },
+  {
+    "name": "Front Door Cam",
+    "device_type": "Smart Camera",
+    "device_status": "In Use",
+    "device_group": "IoT",
+    "ip_address": "192.168.1.120",
+    "serial_number": "SN-CAM-7712"
+  },
+  {
+    "name": "Admin Tablet",
+    "device_type": "Tablet",
+    "device_status": "In Use",
+    "device_group": "Mobile Devices",
+    "ip_address": "192.168.1.155",
+    "serial_number": "SN-TAB-2290"
+  },
+  {
+    "name": "Network Printer",
+    "device_type": "Printer",
+    "device_status": "In Use",
+    "device_group": "Servers",
+    "ip_address": "192.168.1.40",
+    "serial_number": "SN-PRN-6618"
+  }
+]

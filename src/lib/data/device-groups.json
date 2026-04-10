@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Network Core"
+  },
+  {
+    "name": "Workstations"
+  },
+  {
+    "name": "Servers"
+  },
+  {
+    "name": "Storage"
+  },
+  {
+    "name": "IoT"
+  },
+  {
+    "name": "Mobile Devices"
+  },
+  {
+    "name": "Entertainment"
+  },
+  {
+    "name": "Guest"
+  }
+]
