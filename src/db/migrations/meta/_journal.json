@@ -29,6 +29,13 @@
       "when": 1775783918153,
       "tag": "0003_chief_spyke",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1775785109197,
+      "tag": "0004_faithful_hulk",
+      "breakpoints": true
     }
   ]
 }
