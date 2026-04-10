@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Modem"
+  },
+  {
+    "name": "Router"
+  },
+  {
+    "name": "Switch"
+  },
+  {
+    "name": "Access Point"
+  },
+  {
+    "name": "Server"
+  },
+  {
+    "name": "NAS"
+  },
+  {
+    "name": "Desktop"
+  },
+  {
+    "name": "Laptop"
+  },
+  {
+    "name": "Tablet"
+  },
+  {
+    "name": "Smartphone"
+  },
+  {
+    "name": "VoIP Phone"
+  },
+  {
+    "name": "Printer"
+  },
+  {
+    "name": "Gaming Console"
+  },
+  {
+    "name": "Smart TV"
+  },
+  {
+    "name": "Media Streamer"
+  },
+  {
+    "name": "Smart Camera"
+  },
+  {
+    "name": "Thermostat"
+  },
+  {
+    "name": "Wearable"
+  }
+]
