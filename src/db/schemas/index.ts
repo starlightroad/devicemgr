@@ -7,3 +7,5 @@ export * from "./accounts";
 export * from "./verifications";
 
 export * from "./device-types";
+
+export * from "./device-statuses";
