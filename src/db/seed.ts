@@ -6,6 +6,8 @@ import usersSeed from "@/db/seeds/users";
 
 import deviceTypesSeed from "@/db/seeds/device-types";
 
+import deviceStatusesSeed from "@/db/seeds/device-statuses";
+
 import { db, type Database } from "@/db/client";
 
 const resetTable = async (db: Database, table: Table) => {
@@ -13,7 +15,7 @@ const resetTable = async (db: Database, table: Table) => {
 };
 
 const initSeed = async () => {
-  const tables = [schemas.usersTable, schemas.deviceTypesTable];
+  const tables = [schemas.usersTable, schemas.deviceTypesTable, schemas.deviceStatusesTable];
 
   try {
     for (const table of tables) {
@@ -22,6 +24,7 @@ const initSeed = async () => {
 
     await usersSeed();
     await deviceTypesSeed(db);
+    await deviceStatusesSeed(db);
   } catch (error) {
     console.error(error);
   } finally {
