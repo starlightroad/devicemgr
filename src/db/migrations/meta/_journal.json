@@ -22,6 +22,13 @@
       "when": 1775783707928,
       "tag": "0002_chilly_dazzler",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1775783918153,
+      "tag": "0003_chief_spyke",
+      "breakpoints": true
     }
   ]
 }
