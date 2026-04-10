@@ -1,6 +1,6 @@
 import { pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
-import { deviceGroupsTable, deviceStatuses, deviceTypesTable, usersTable } from "@/db/schemas";
+import { deviceGroupsTable, deviceStatusesTable, deviceTypesTable, usersTable } from "@/db/schemas";
 
 export const devicesTable = pgTable("devices", {
   id: text("id").primaryKey(),
@@ -12,7 +12,7 @@ export const devicesTable = pgTable("devices", {
     .references(() => deviceTypesTable.id),
   statusId: text("status_id")
     .notNull()
-    .references(() => deviceStatuses.id),
+    .references(() => deviceStatusesTable.id),
   groupId: text("group_id")
     .notNull()
     .references(() => deviceGroupsTable.id),

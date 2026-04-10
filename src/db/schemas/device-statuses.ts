@@ -2,7 +2,7 @@ import { pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 import { usersTable } from "@/db/schemas";
 
-export const deviceStatuses = pgTable("device_statuses", {
+export const deviceStatusesTable = pgTable("device_statuses", {
   id: text("id").primaryKey(),
   userId: text("user_id")
     .notNull()
