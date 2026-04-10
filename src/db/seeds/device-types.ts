@@ -14,25 +14,18 @@ import { deviceTypesTable, usersTable } from "@/db/schemas";
 
 const deviceTypesSeed = async (db: Database) => {
   try {
-    const insertedDeviceTypes = await Promise.all(
-      deviceTypesJSON.map(async (deviceType) => {
-        const guestUserEmail = usersJSON[0].email;
+    const guestUserEmail = usersJSON[0].email;
+    const data = await db.select({ id: usersTable.id }).from(usersTable).where(eq(usersTable.email, guestUserEmail));
 
-        const data = await db
-          .select({ id: usersTable.id })
-          .from(usersTable)
-          .where(eq(usersTable.email, guestUserEmail));
+    const deviceTypesValues = deviceTypesJSON.map((deviceType) => ({
+      id: generateId(),
+      userId: data[0].id,
+      name: deviceType.name,
+    }));
 
-        return db
-          .insert(deviceTypesTable)
-          .values({ id: generateId(), userId: data[0].id, name: deviceType.name })
-          .returning({ id: deviceTypesTable.id });
-      }),
-    );
+    const { rowCount } = await db.insert(deviceTypesTable).values(deviceTypesValues);
 
-    const deviceTypesCount = insertedDeviceTypes.length;
-
-    console.info(`✅ Seeded ${deviceTypesCount} device type${deviceTypesCount === 1 ? "" : "s"}.`);
+    console.info(`✅ Seeded ${rowCount} device type${rowCount === 1 ? "" : "s"}.`);
   } catch (error) {
     console.error("🔥 Failed to seed device types:", error);
   }
