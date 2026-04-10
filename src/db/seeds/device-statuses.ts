@@ -14,25 +14,18 @@ import { deviceStatusesTable, usersTable } from "@/db/schemas";
 
 const deviceStatusesSeed = async (db: Database) => {
   try {
-    const insertedDeviceStatuses = await Promise.all(
-      deviceStatusesJSON.map(async (deviceStatus) => {
-        const guestUserEmail = usersJSON[0].email;
+    const guestUserEmail = usersJSON[0].email;
+    const data = await db.select({ id: usersTable.id }).from(usersTable).where(eq(usersTable.email, guestUserEmail));
 
-        const data = await db
-          .select({ id: usersTable.id })
-          .from(usersTable)
-          .where(eq(usersTable.email, guestUserEmail));
+    const deviceStatusesValues = deviceStatusesJSON.map((deviceStatus) => ({
+      id: generateId(),
+      userId: data[0].id,
+      name: deviceStatus.name,
+    }));
 
-        return db
-          .insert(deviceStatusesTable)
-          .values({ id: generateId(), userId: data[0].id, name: deviceStatus.name })
-          .returning({ id: deviceStatusesTable.id });
-      }),
-    );
+    const { rowCount } = await db.insert(deviceStatusesTable).values(deviceStatusesValues);
 
-    const deviceStatusesCount = insertedDeviceStatuses.length;
-
-    console.info(`✅ Seeded ${deviceStatusesCount} device status${deviceStatusesCount === 1 ? "" : "es"}.`);
+    console.info(`✅ Seeded ${rowCount} device status${rowCount === 1 ? "" : "es"}.`);
   } catch (error) {
     console.error("🔥 Failed to seed device statuses:", error);
   }
