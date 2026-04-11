@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import { Card } from "@heroui/react";
 
 import { MobileNav } from "@/features/dashboard";
@@ -14,7 +16,9 @@ export default function DashboardPage() {
       <main className="flex flex-col gap-5">
         <div className="grid gap-5 sm:grid-cols-2">
           <article>
-            <TotalDevices />
+            <Suspense fallback={<p className="text-muted text-sm">Loading ...</p>}>
+              <TotalDevices />
+            </Suspense>
           </article>
           <article>
             <Card>
