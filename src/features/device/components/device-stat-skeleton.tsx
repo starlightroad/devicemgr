@@ -1,6 +1,6 @@
 import { Card, Skeleton } from "@heroui/react";
 
-export default function TotalDevicesSkeleton() {
+export default function DeviceStatSkeleton() {
   return (
     <Card>
       <Card.Header>
