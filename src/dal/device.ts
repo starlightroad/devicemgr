@@ -28,7 +28,7 @@ export const getDevicesCount = async (): Promise<ActionResult<number>> => {
   }
 };
 
-export const getDevicesInUseCount = async (): Promise<ActionResult<number>> => {
+export const getDevicesCountByStatus = async (status: string): Promise<ActionResult<number>> => {
   try {
     const session = await getSession();
 
@@ -37,7 +37,7 @@ export const getDevicesInUseCount = async (): Promise<ActionResult<number>> => {
       .from(devicesTable)
       .leftJoin(usersTable, eq(devicesTable.userId, session.userId))
       .leftJoin(deviceStatusesTable, eq(devicesTable.statusId, deviceStatusesTable.id))
-      .where(ilike(deviceStatusesTable.name, "in use"));
+      .where(ilike(deviceStatusesTable.name, status));
 
     return {
       data: data[0].count,

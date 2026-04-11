@@ -2,10 +2,10 @@ import { Card } from "@heroui/react";
 
 import { ZapIcon } from "lucide-react";
 
-import { getDevicesInUseCount } from "@/dal/device";
+import { getDevicesCountByStatus } from "@/dal/device";
 
 export default async function InUseDevices() {
-  const { data, error } = await getDevicesInUseCount();
+  const { data, error } = await getDevicesCountByStatus("in use");
 
   return (
     <Card>
