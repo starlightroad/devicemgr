@@ -1,6 +1,10 @@
+import { Suspense } from "react";
+
 import { Card } from "@heroui/react";
 
 import { MobileNav } from "@/features/dashboard";
+
+import { TotalDevices, TotalDevicesSkeleton } from "@/features/device";
 
 export default function DashboardPage() {
   return (
@@ -12,12 +16,9 @@ export default function DashboardPage() {
       <main className="flex flex-col gap-5">
         <div className="grid gap-5 sm:grid-cols-2">
           <article>
-            <Card>
-              <Card.Header>
-                <Card.Title>Total Devices</Card.Title>
-                <Card.Description>You have no devices saved.</Card.Description>
-              </Card.Header>
-            </Card>
+            <Suspense fallback={<TotalDevicesSkeleton />}>
+              <TotalDevices />
+            </Suspense>
           </article>
           <article>
             <Card>
