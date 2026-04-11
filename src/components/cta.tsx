@@ -2,10 +2,10 @@ import Link from "next/link";
 
 import { buttonVariants } from "@heroui/react";
 
-import { getSession } from "@/dal/session";
+import { getSessionFromHomePage } from "@/dal/session";
 
 export async function CTA() {
-  const session = await getSession();
+  const session = await getSessionFromHomePage();
   const isUserLoggedIn = Boolean(session.userId);
 
   return (
