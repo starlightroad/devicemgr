@@ -4,7 +4,13 @@ import { Card } from "@heroui/react";
 
 import { MobileNav } from "@/features/dashboard";
 
-import { TotalDevices, TotalDevicesSkeleton } from "@/features/device";
+import {
+  DecommissionedDevices,
+  DeviceStatSkeleton,
+  InUseDevices,
+  StorageDevices,
+  TotalDevices,
+} from "@/features/device";
 
 export default function DashboardPage() {
   return (
@@ -14,19 +20,26 @@ export default function DashboardPage() {
         <MobileNav />
       </header>
       <main className="flex flex-col gap-5">
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           <article>
-            <Suspense fallback={<TotalDevicesSkeleton />}>
+            <Suspense fallback={<DeviceStatSkeleton />}>
               <TotalDevices />
             </Suspense>
           </article>
           <article>
-            <Card>
-              <Card.Header>
-                <Card.Title>Health Status</Card.Title>
-                <Card.Description>Everything looks good.</Card.Description>
-              </Card.Header>
-            </Card>
+            <Suspense fallback={<DeviceStatSkeleton />}>
+              <InUseDevices />
+            </Suspense>
+          </article>
+          <article>
+            <Suspense fallback={<DeviceStatSkeleton />}>
+              <StorageDevices />
+            </Suspense>
+          </article>
+          <article>
+            <Suspense fallback={<DeviceStatSkeleton />}>
+              <DecommissionedDevices />
+            </Suspense>
           </article>
         </div>
         <article>
