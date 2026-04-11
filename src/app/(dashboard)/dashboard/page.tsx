@@ -4,7 +4,13 @@ import { Card } from "@heroui/react";
 
 import { MobileNav } from "@/features/dashboard";
 
-import { DeviceStatSkeleton, InUseDevices, StorageDevices, TotalDevices } from "@/features/device";
+import {
+  DecommissionedDevices,
+  DeviceStatSkeleton,
+  InUseDevices,
+  StorageDevices,
+  TotalDevices,
+} from "@/features/device";
 
 export default function DashboardPage() {
   return (
@@ -31,12 +37,9 @@ export default function DashboardPage() {
             </Suspense>
           </article>
           <article>
-            <Card>
-              <Card.Header>
-                <Card.Title>Health Status</Card.Title>
-                <Card.Description>Everything looks good.</Card.Description>
-              </Card.Header>
-            </Card>
+            <Suspense fallback={<DeviceStatSkeleton />}>
+              <DecommissionedDevices />
+            </Suspense>
           </article>
         </div>
         <article>
