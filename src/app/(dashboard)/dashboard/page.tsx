@@ -4,7 +4,7 @@ import { Card } from "@heroui/react";
 
 import { MobileNav } from "@/features/dashboard";
 
-import { DeviceStatSkeleton, InUseDevices, TotalDevices } from "@/features/device";
+import { DeviceStatSkeleton, InUseDevices, StorageDevices, TotalDevices } from "@/features/device";
 
 export default function DashboardPage() {
   return (
@@ -23,6 +23,11 @@ export default function DashboardPage() {
           <article>
             <Suspense fallback={<DeviceStatSkeleton />}>
               <InUseDevices />
+            </Suspense>
+          </article>
+          <article>
+            <Suspense fallback={<DeviceStatSkeleton />}>
+              <StorageDevices />
             </Suspense>
           </article>
           <article>
