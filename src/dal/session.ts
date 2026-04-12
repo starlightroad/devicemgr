@@ -19,3 +19,13 @@ export const getSession = async () => {
     userId: data.session.userId,
   };
 };
+
+export const getSessionFromHomePage = async () => {
+  const data = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  return {
+    userId: data?.session.userId,
+  };
+};
