@@ -15,3 +15,5 @@ export { default as StorageDevices } from "./components/storage-devices";
 export { default as DecommissionedDevices } from "./components/decommissioned-devices";
 
 export { default as RecentDevices } from "./components/recent-devices";
+
+export { default as DeviceActions } from "./components/device-actions";

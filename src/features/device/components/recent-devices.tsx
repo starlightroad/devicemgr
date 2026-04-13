@@ -1,12 +1,12 @@
 import Link from "next/link";
 
-import { Button, Chip, Table } from "@heroui/react";
+import { Chip, Table } from "@heroui/react";
 
-import { DatabaseIcon, DatabaseZapIcon, MoreVerticalIcon } from "lucide-react";
+import { DatabaseIcon, DatabaseZapIcon } from "lucide-react";
 
 import { getDevices } from "@/dal/device";
 
-import { getChipColorByStatus, TABLE_COLUMNS } from "@/features/device";
+import { DeviceActions, getChipColorByStatus, TABLE_COLUMNS } from "@/features/device";
 
 export default async function RecentDevices() {
   const { data, error } = await getDevices();
@@ -73,9 +73,7 @@ export default async function RecentDevices() {
                       <Table.Cell>{device.group}</Table.Cell>
                       <Table.Cell>{device.serialNumber}</Table.Cell>
                       <Table.Cell>
-                        <Button type="button" variant="outline" size="sm" isIconOnly aria-label="Actions">
-                          <MoreVerticalIcon />
-                        </Button>
+                        <DeviceActions />
                       </Table.Cell>
                     </Table.Row>
                   );
