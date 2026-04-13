@@ -5,3 +5,5 @@ export const APP_DESC = "A device management dashboard built with Next.js.";
 export const GITHUB_REPO = "https://github.com/starlightroad/devicemgr";
 
 export const TOOLTIP_OFFSET = 12;
+
+export const MAX_ROWS = 10;

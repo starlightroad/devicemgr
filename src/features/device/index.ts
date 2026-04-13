@@ -1,3 +1,5 @@
+export * from "./lib/definitions";
+
 export { default as TotalDevices } from "./components/total-devices";
 
 export { default as DeviceStatSkeleton } from "./components/device-stat-skeleton";
