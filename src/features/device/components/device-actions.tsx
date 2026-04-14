@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Dropdown, Label, Separator } from "@heroui/react";
+import { Button, Dropdown, type Key, Label, Separator } from "@heroui/react";
 
 import {
   CircleEllipsisIcon,
@@ -13,13 +13,21 @@ import {
 } from "lucide-react";
 
 export default function DeviceActions() {
+  const handleAction = (key: Key) => {
+    if (key === "view") {
+      // Will need to change the URL in the future.
+      window.open("#", "_blank");
+      return;
+    }
+  };
+
   return (
     <Dropdown>
       <Button type="button" variant="outline" size="sm" isIconOnly aria-label="Actions">
         <MoreVerticalIcon />
       </Button>
       <Dropdown.Popover placement="bottom right">
-        <Dropdown.Menu>
+        <Dropdown.Menu onAction={(key) => handleAction(key)}>
           <Dropdown.Item id="view" textValue="View">
             <SquareArrowUpRightIcon className="text-muted size-4" />
             <Label>View</Label>
