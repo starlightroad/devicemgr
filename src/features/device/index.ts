@@ -17,3 +17,5 @@ export { default as DecommissionedDevices } from "./components/decommissioned-de
 export { default as RecentDevices } from "./components/recent-devices";
 
 export { default as DeviceActions } from "./components/device-actions";
+
+export { default as EditDeviceModal } from "./components/edit-device-modal";
