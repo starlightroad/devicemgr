@@ -12,3 +12,5 @@ export const getChipColorByStatus = (status: string): ChipVariants["color"] => {
       throw new Error("Invalid status.");
   }
 };
+
+export const generateId = (value: string, separator: string = "-") => value.toLowerCase().split(" ").join(separator);

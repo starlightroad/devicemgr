@@ -14,7 +14,7 @@ import {
   Trash2Icon,
 } from "lucide-react";
 
-import { EditDeviceModal } from "@/features/device";
+import { EditDeviceModal, MoveDeviceModal } from "@/features/device";
 
 const initialState = {
   isEditAction: false,
@@ -23,7 +23,7 @@ const initialState = {
   isDeleteAction: false,
 };
 
-export default function DeviceActions() {
+export default function DeviceActions({ data }: { data: { deviceId: string; group: string } }) {
   const [modalState, setModalState] = useState<typeof initialState>(initialState);
 
   const openModal = (key: keyof typeof initialState) => {
@@ -39,6 +39,11 @@ export default function DeviceActions() {
 
     if (key === "edit") {
       openModal("isEditAction");
+      return;
+    }
+
+    if (key === "move") {
+      openModal("isMoveAction");
       return;
     }
   };
@@ -81,12 +86,23 @@ export default function DeviceActions() {
           </Dropdown.Menu>
         </Dropdown.Popover>
       </Dropdown>
-      <EditDeviceModal
-        isOpen={modalState.isEditAction}
-        onOpenChange={() => {
-          setModalState(initialState);
-        }}
-      />
+      {modalState.isEditAction && (
+        <EditDeviceModal
+          isOpen={modalState.isEditAction}
+          onOpenChange={() => {
+            setModalState(initialState);
+          }}
+        />
+      )}
+      {modalState.isMoveAction && (
+        <MoveDeviceModal
+          isOpen={modalState.isMoveAction}
+          onOpenChange={() => {
+            setModalState(initialState);
+          }}
+          data={data}
+        />
+      )}
     </>
   );
 }
