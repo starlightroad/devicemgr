@@ -64,8 +64,8 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
                   >
                     <Label>Type</Label>
                     <Select.Trigger className="h-10">
-                      <Select.Value />
-                      <Select.Indicator className="leading-6" />
+                      <Select.Value className="leading-6" />
+                      <Select.Indicator />
                     </Select.Trigger>
                     <Select.Popover>
                       <ListBox>
@@ -92,8 +92,8 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
                   >
                     <Label>Status</Label>
                     <Select.Trigger className="h-10">
-                      <Select.Value />
-                      <Select.Indicator className="leading-6" />
+                      <Select.Value className="leading-6" />
+                      <Select.Indicator />
                     </Select.Trigger>
                     <Select.Popover>
                       <ListBox>
