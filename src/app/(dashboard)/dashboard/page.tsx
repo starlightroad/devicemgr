@@ -8,6 +8,7 @@ import {
   DecommissionedDevices,
   DeviceStatSkeleton,
   InUseDevices,
+  RecentDevices,
   StorageDevices,
   TotalDevices,
 } from "@/features/device";
@@ -42,14 +43,11 @@ export default function DashboardPage() {
             </Suspense>
           </article>
         </div>
-        <article>
-          <Card>
-            <Card.Header>
-              <Card.Title>Recent Devices</Card.Title>
-              <Card.Description>You have no devices saved.</Card.Description>
-            </Card.Header>
-          </Card>
-        </article>
+        <section>
+          <article>
+            <RecentDevices />
+          </article>
+        </section>
         <article>
           <Card>
             <Card.Header>
