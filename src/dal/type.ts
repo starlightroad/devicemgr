@@ -1,6 +1,6 @@
 "use server";
 
-import { eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 
 import { db } from "@/db/client";
 
@@ -20,7 +20,8 @@ export const getDeviceTypes = async (): Promise<ActionResult<Array<{ id: string;
         name: deviceTypesTable.name,
       })
       .from(deviceTypesTable)
-      .innerJoin(usersTable, eq(deviceTypesTable.userId, session.userId));
+      .innerJoin(usersTable, eq(deviceTypesTable.userId, session.userId))
+      .orderBy(asc(deviceTypesTable.name));
 
     return {
       data,
