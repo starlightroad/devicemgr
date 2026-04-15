@@ -1,10 +1,10 @@
 "use client";
 
+import { useState } from "react";
+
 import { FolderClosedIcon } from "lucide-react";
 
-import { type ChangeEvent, useState } from "react";
-
-import { Button, Form, Input, Key, Label, ListBox, Modal, Select, Surface, TextField } from "@heroui/react";
+import { Button, Form, Input, Label, ListBox, Modal, Select, Surface, TextField } from "@heroui/react";
 
 import { generateId, useDeviceStatuses, type MoveDeviceModalProps } from "@/features/device";
 
@@ -21,14 +21,8 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
 
   const { statuses } = useDeviceStatuses();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
+  const handleChange = (name: string, value: string) => {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleSelectChange = (name: string, value: Key | null) => {
-    setFormData((prevState) => ({ ...prevState, [name]: String(value) }));
   };
 
   return (
@@ -55,7 +49,7 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
                       autoComplete="off"
                       className="h-10"
                       value={formData.name}
-                      onChange={handleChange}
+                      onChange={(e) => handleChange(e.target.name, e.target.value)}
                     />
                   </TextField>
                   <TextField type="text" name="type" isRequired>
@@ -66,7 +60,7 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
                       autoComplete="off"
                       className="h-10"
                       value={formData.type}
-                      onChange={handleChange}
+                      onChange={(e) => handleChange(e.target.name, e.target.value)}
                     />
                   </TextField>
                   <Select
@@ -75,7 +69,7 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
                     placeholder="Select status"
                     isRequired
                     value={formData.status}
-                    onChange={(e) => handleSelectChange("status", e)}
+                    onChange={(e) => handleChange("status", String(e))}
                   >
                     <Label>Status</Label>
                     <Select.Trigger className="h-10">
@@ -105,7 +99,7 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
                       autoComplete="off"
                       className="h-10"
                       value={formData.group}
-                      onChange={handleChange}
+                      onChange={(e) => handleChange(e.target.name, e.target.value)}
                     />
                   </TextField>
                   <TextField type="text" name="serial-number" isRequired>
@@ -116,7 +110,7 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
                       autoComplete="off"
                       className="h-10"
                       value={formData["serial-number"]}
-                      onChange={handleChange}
+                      onChange={(e) => handleChange(e.target.name, e.target.value)}
                     />
                   </TextField>
                   <TextField type="text" name="ip-address">
@@ -127,7 +121,7 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
                       autoComplete="off"
                       className="h-10"
                       value={formData["ip-address"]}
-                      onChange={handleChange}
+                      onChange={(e) => handleChange(e.target.name, e.target.value)}
                     />
                   </TextField>
                 </Form>
