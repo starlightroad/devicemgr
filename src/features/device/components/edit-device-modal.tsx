@@ -1,10 +1,40 @@
 "use client";
 
+import { useState } from "react";
+
 import { FolderClosedIcon } from "lucide-react";
 
-import { Button, Form, Input, Label, Modal, type ModalRootProps, Surface, TextField } from "@heroui/react";
+import { Button, Form, Input, Label, ListBox, Modal, Select, Surface, TextField } from "@heroui/react";
 
-export default function EditDeviceModal({ isOpen, onOpenChange }: Pick<ModalRootProps, "isOpen" | "onOpenChange">) {
+import {
+  generateId,
+  useDeviceGroups,
+  useDeviceStatuses,
+  useDeviceTypes,
+  type MoveDeviceModalProps,
+} from "@/features/device";
+
+export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDeviceModalProps) {
+  const [formData, setFormData] = useState({
+    id: data.id,
+    name: data.name,
+    "serial-number": data.serialNumber,
+    "ip-address": data.ipAddress ?? "",
+    type: generateId(data.type),
+    status: generateId(data.status),
+    group: generateId(data.group),
+  });
+
+  const { types } = useDeviceTypes();
+
+  const { statuses } = useDeviceStatuses();
+
+  const { groups } = useDeviceGroups();
+
+  const handleChange = (name: string, value: string) => {
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
+
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <Button className="hidden">Edit Device</Button>
@@ -23,27 +53,120 @@ export default function EditDeviceModal({ isOpen, onOpenChange }: Pick<ModalRoot
                 <Form id="edit-device-form" onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
                   <TextField type="text" name="name" isRequired>
                     <Label>Name</Label>
-                    <Input variant="secondary" placeholder="John's MacBook Pro" autoComplete="off" className="h-10" />
+                    <Input
+                      variant="secondary"
+                      placeholder="John's MacBook Pro"
+                      autoComplete="off"
+                      className="h-10"
+                      value={formData.name}
+                      onChange={(e) => handleChange(e.target.name, e.target.value)}
+                    />
                   </TextField>
-                  <TextField type="text" name="type" isRequired>
+                  <Select
+                    name="type"
+                    variant="secondary"
+                    placeholder="Select type"
+                    isRequired
+                    value={formData.type}
+                    onChange={(e) => handleChange("type", String(e))}
+                  >
                     <Label>Type</Label>
-                    <Input variant="secondary" placeholder="Select type" autoComplete="off" className="h-10" />
-                  </TextField>
-                  <TextField type="text" name="status" isRequired>
+                    <Select.Trigger className="h-10">
+                      <Select.Value className="leading-6" />
+                      <Select.Indicator />
+                    </Select.Trigger>
+                    <Select.Popover>
+                      <ListBox>
+                        {types?.map((type) => {
+                          const id = generateId(type.name);
+
+                          return (
+                            <ListBox.Item key={id} id={id} textValue={type.name}>
+                              {type.name}
+                              <ListBox.ItemIndicator />
+                            </ListBox.Item>
+                          );
+                        })}
+                      </ListBox>
+                    </Select.Popover>
+                  </Select>
+                  <Select
+                    name="status"
+                    variant="secondary"
+                    placeholder="Select status"
+                    isRequired
+                    value={formData.status}
+                    onChange={(e) => handleChange("status", String(e))}
+                  >
                     <Label>Status</Label>
-                    <Input variant="secondary" placeholder="Select status" autoComplete="off" className="h-10" />
-                  </TextField>
-                  <TextField type="text" name="group" isRequired>
+                    <Select.Trigger className="h-10">
+                      <Select.Value className="leading-6" />
+                      <Select.Indicator />
+                    </Select.Trigger>
+                    <Select.Popover>
+                      <ListBox>
+                        {statuses?.map((status) => {
+                          const id = generateId(status.name);
+
+                          return (
+                            <ListBox.Item key={id} id={id} textValue={status.name}>
+                              {status.name}
+                              <ListBox.ItemIndicator />
+                            </ListBox.Item>
+                          );
+                        })}
+                      </ListBox>
+                    </Select.Popover>
+                  </Select>
+                  <Select
+                    name="group"
+                    variant="secondary"
+                    placeholder="Select group"
+                    isRequired
+                    value={formData.group}
+                    onChange={(e) => handleChange("group", String(e))}
+                  >
                     <Label>Group</Label>
-                    <Input variant="secondary" placeholder="Select group" autoComplete="off" className="h-10" />
-                  </TextField>
+                    <Select.Trigger className="h-10">
+                      <Select.Value className="leading-6" />
+                      <Select.Indicator />
+                    </Select.Trigger>
+                    <Select.Popover>
+                      <ListBox>
+                        {groups?.map((group) => {
+                          const id = generateId(group.name);
+
+                          return (
+                            <ListBox.Item key={id} id={id} textValue={group.name}>
+                              {group.name}
+                              <ListBox.ItemIndicator />
+                            </ListBox.Item>
+                          );
+                        })}
+                      </ListBox>
+                    </Select.Popover>
+                  </Select>
                   <TextField type="text" name="serial-number" isRequired>
                     <Label>Serial Number</Label>
-                    <Input variant="secondary" placeholder="SN-LTP-1002" autoComplete="off" className="h-10" />
+                    <Input
+                      variant="secondary"
+                      placeholder="SN-LTP-1002"
+                      autoComplete="off"
+                      className="h-10"
+                      value={formData["serial-number"]}
+                      onChange={(e) => handleChange(e.target.name, e.target.value)}
+                    />
                   </TextField>
                   <TextField type="text" name="ip-address">
                     <Label>IP Address</Label>
-                    <Input variant="secondary" placeholder="192.168.1.1" autoComplete="off" className="h-10" />
+                    <Input
+                      variant="secondary"
+                      placeholder="192.168.1.1"
+                      autoComplete="off"
+                      className="h-10"
+                      value={formData["ip-address"]}
+                      onChange={(e) => handleChange(e.target.name, e.target.value)}
+                    />
                   </TextField>
                 </Form>
               </Surface>

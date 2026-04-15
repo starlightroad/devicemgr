@@ -14,7 +14,7 @@ import {
   Trash2Icon,
 } from "lucide-react";
 
-import { EditDeviceModal, MoveDeviceModal } from "@/features/device";
+import { type Device, EditDeviceModal, MoveDeviceModal } from "@/features/device";
 
 const initialState = {
   isEditAction: false,
@@ -23,7 +23,7 @@ const initialState = {
   isDeleteAction: false,
 };
 
-export default function DeviceActions({ data }: { data: { deviceId: string; group: string } }) {
+export default function DeviceActions({ data }: { data: Device }) {
   const [modalState, setModalState] = useState<typeof initialState>(initialState);
 
   const openModal = (key: keyof typeof initialState) => {
@@ -92,6 +92,7 @@ export default function DeviceActions({ data }: { data: { deviceId: string; grou
           onOpenChange={() => {
             setModalState(initialState);
           }}
+          data={data}
         />
       )}
       {modalState.isMoveAction && (

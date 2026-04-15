@@ -6,6 +6,10 @@ export * from "./lib/utils";
 
 export { default as useDeviceGroups } from "./hooks/use-groups";
 
+export { default as useDeviceStatuses } from "./hooks/use-statuses";
+
+export { default as useDeviceTypes } from "./hooks/use-types";
+
 export { default as TotalDevices } from "./components/total-devices";
 
 export { default as DeviceStatSkeleton } from "./components/device-stat-skeleton";
