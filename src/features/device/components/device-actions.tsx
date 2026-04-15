@@ -92,6 +92,7 @@ export default function DeviceActions({ data }: { data: Device }) {
           onOpenChange={() => {
             setModalState(initialState);
           }}
+          data={data}
         />
       )}
       {modalState.isMoveAction && (
