@@ -4,9 +4,9 @@ import { FolderClosedIcon } from "lucide-react";
 
 import { type ChangeEvent, useState } from "react";
 
-import { Button, Form, Input, Label, Modal, Surface, TextField } from "@heroui/react";
+import { Button, Form, Input, Key, Label, ListBox, Modal, Select, Surface, TextField } from "@heroui/react";
 
-import type { MoveDeviceModalProps } from "@/features/device";
+import { generateId, useDeviceStatuses, type MoveDeviceModalProps } from "@/features/device";
 
 export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDeviceModalProps) {
   const [formData, setFormData] = useState({
@@ -15,14 +15,20 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
     "serial-number": data.serialNumber,
     "ip-address": data.ipAddress ?? "",
     type: data.type,
-    status: data.status,
+    status: generateId(data.status),
     group: data.group,
   });
+
+  const { statuses } = useDeviceStatuses();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleSelectChange = (name: string, value: Key | null) => {
+    setFormData((prevState) => ({ ...prevState, [name]: String(value) }));
   };
 
   return (
@@ -63,17 +69,34 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
                       onChange={handleChange}
                     />
                   </TextField>
-                  <TextField type="text" name="status" isRequired>
+                  <Select
+                    name="status"
+                    variant="secondary"
+                    placeholder="Select status"
+                    isRequired
+                    value={formData.status}
+                    onChange={(e) => handleSelectChange("status", e)}
+                  >
                     <Label>Status</Label>
-                    <Input
-                      variant="secondary"
-                      placeholder="Select status"
-                      autoComplete="off"
-                      className="h-10"
-                      value={formData.status}
-                      onChange={handleChange}
-                    />
-                  </TextField>
+                    <Select.Trigger className="h-10">
+                      <Select.Value />
+                      <Select.Indicator className="leading-6" />
+                    </Select.Trigger>
+                    <Select.Popover>
+                      <ListBox>
+                        {statuses?.map((status) => {
+                          const id = generateId(status.name);
+
+                          return (
+                            <ListBox.Item key={id} id={id} textValue={status.name}>
+                              {status.name}
+                              <ListBox.ItemIndicator />
+                            </ListBox.Item>
+                          );
+                        })}
+                      </ListBox>
+                    </Select.Popover>
+                  </Select>
                   <TextField type="text" name="group" isRequired>
                     <Label>Group</Label>
                     <Input
