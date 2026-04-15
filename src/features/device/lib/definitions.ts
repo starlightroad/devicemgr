@@ -9,5 +9,5 @@ export type Device = Pick<typeof devicesTable.$inferSelect, "id" | "name" | "ser
 };
 
 export type MoveDeviceModalProps = Pick<ModalRootProps, "isOpen" | "onOpenChange"> & {
-  data: { deviceId: string; group: string };
+  data: Device;
 };
