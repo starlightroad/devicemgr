@@ -6,7 +6,7 @@ import { FolderClosedIcon } from "lucide-react";
 
 import { Button, Form, Input, Label, ListBox, Modal, Select, Surface, TextField } from "@heroui/react";
 
-import { generateId, useDeviceStatuses, type MoveDeviceModalProps } from "@/features/device";
+import { generateId, useDeviceStatuses, useDeviceTypes, type MoveDeviceModalProps } from "@/features/device";
 
 export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDeviceModalProps) {
   const [formData, setFormData] = useState({
@@ -14,10 +14,12 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
     name: data.name,
     "serial-number": data.serialNumber,
     "ip-address": data.ipAddress ?? "",
-    type: data.type,
+    type: generateId(data.type),
     status: generateId(data.status),
     group: data.group,
   });
+
+  const { types } = useDeviceTypes();
 
   const { statuses } = useDeviceStatuses();
 
@@ -52,17 +54,34 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
                       onChange={(e) => handleChange(e.target.name, e.target.value)}
                     />
                   </TextField>
-                  <TextField type="text" name="type" isRequired>
+                  <Select
+                    name="type"
+                    variant="secondary"
+                    placeholder="Select type"
+                    isRequired
+                    value={formData.type}
+                    onChange={(e) => handleChange("type", String(e))}
+                  >
                     <Label>Type</Label>
-                    <Input
-                      variant="secondary"
-                      placeholder="Select type"
-                      autoComplete="off"
-                      className="h-10"
-                      value={formData.type}
-                      onChange={(e) => handleChange(e.target.name, e.target.value)}
-                    />
-                  </TextField>
+                    <Select.Trigger className="h-10">
+                      <Select.Value />
+                      <Select.Indicator className="leading-6" />
+                    </Select.Trigger>
+                    <Select.Popover>
+                      <ListBox>
+                        {types?.map((type) => {
+                          const id = generateId(type.name);
+
+                          return (
+                            <ListBox.Item key={id} id={id} textValue={type.name}>
+                              {type.name}
+                              <ListBox.ItemIndicator />
+                            </ListBox.Item>
+                          );
+                        })}
+                      </ListBox>
+                    </Select.Popover>
+                  </Select>
                   <Select
                     name="status"
                     variant="secondary"
