@@ -6,7 +6,13 @@ import { FolderClosedIcon } from "lucide-react";
 
 import { Button, Form, Input, Label, ListBox, Modal, Select, Surface, TextField } from "@heroui/react";
 
-import { generateId, useDeviceStatuses, useDeviceTypes, type MoveDeviceModalProps } from "@/features/device";
+import {
+  generateId,
+  useDeviceGroups,
+  useDeviceStatuses,
+  useDeviceTypes,
+  type MoveDeviceModalProps,
+} from "@/features/device";
 
 export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDeviceModalProps) {
   const [formData, setFormData] = useState({
@@ -16,12 +22,14 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
     "ip-address": data.ipAddress ?? "",
     type: generateId(data.type),
     status: generateId(data.status),
-    group: data.group,
+    group: generateId(data.group),
   });
 
   const { types } = useDeviceTypes();
 
   const { statuses } = useDeviceStatuses();
+
+  const { groups } = useDeviceGroups();
 
   const handleChange = (name: string, value: string) => {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
@@ -110,17 +118,34 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
                       </ListBox>
                     </Select.Popover>
                   </Select>
-                  <TextField type="text" name="group" isRequired>
+                  <Select
+                    name="group"
+                    variant="secondary"
+                    placeholder="Select group"
+                    isRequired
+                    value={formData.group}
+                    onChange={(e) => handleChange("group", String(e))}
+                  >
                     <Label>Group</Label>
-                    <Input
-                      variant="secondary"
-                      placeholder="Select group"
-                      autoComplete="off"
-                      className="h-10"
-                      value={formData.group}
-                      onChange={(e) => handleChange(e.target.name, e.target.value)}
-                    />
-                  </TextField>
+                    <Select.Trigger className="h-10">
+                      <Select.Value className="leading-6" />
+                      <Select.Indicator />
+                    </Select.Trigger>
+                    <Select.Popover>
+                      <ListBox>
+                        {groups?.map((group) => {
+                          const id = generateId(group.name);
+
+                          return (
+                            <ListBox.Item key={id} id={id} textValue={group.name}>
+                              {group.name}
+                              <ListBox.ItemIndicator />
+                            </ListBox.Item>
+                          );
+                        })}
+                      </ListBox>
+                    </Select.Popover>
+                  </Select>
                   <TextField type="text" name="serial-number" isRequired>
                     <Label>Serial Number</Label>
                     <Input
