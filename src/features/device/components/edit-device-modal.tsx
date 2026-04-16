@@ -25,6 +25,8 @@ const generateFieldIds = (device: Device) => ({
   group: { name: "group", value: generateId(device.group) },
 });
 
+const FORM_ID = "edit-device-form";
+
 export default function EditDeviceModal({ device, onClose }: EditDeviceModalProps) {
   const { types } = useDeviceTypes();
 
@@ -53,7 +55,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
             </Modal.Header>
             <Modal.Body className="px-1 py-4">
               <Surface variant="default">
-                <Form id="edit-device-form" onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
+                <Form id={FORM_ID} onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
                   <TextField type="text" name={field.name.name} isRequired>
                     <Label>Name</Label>
                     <Input
@@ -178,7 +180,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
               <Button type="button" slot="close" variant="secondary">
                 Cancel
               </Button>
-              <Button type="submit" isDisabled>
+              <Button type="submit" form={FORM_ID} isDisabled>
                 Save
               </Button>
             </Modal.Footer>
