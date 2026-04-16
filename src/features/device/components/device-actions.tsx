@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button, Dropdown, type Key, Label, Separator } from "@heroui/react";
 
@@ -16,37 +16,15 @@ import {
 
 import { type Device, EditDeviceModal, MoveDeviceModal } from "@/features/device";
 
-const initialState = {
-  isEditAction: false,
-  isMoveAction: false,
-  isShareAction: false,
-  isDeleteAction: false,
-};
+export default function DeviceActions({ device }: { device: Device }) {
+  const [modal, setModal] = useState<Key | null>(null);
 
-export default function DeviceActions({ data }: { data: Device }) {
-  const [modalState, setModalState] = useState<typeof initialState>(initialState);
-
-  const openModal = (key: keyof typeof initialState) => {
-    setModalState((prevState) => ({ ...prevState, [key]: true }));
-  };
-
-  const handleAction = (key: Key) => {
-    if (key === "view") {
+  useEffect(() => {
+    if (modal === "view") {
       // Will need to change the URL in the future.
       window.open("#", "_blank");
-      return;
     }
-
-    if (key === "edit") {
-      openModal("isEditAction");
-      return;
-    }
-
-    if (key === "move") {
-      openModal("isMoveAction");
-      return;
-    }
-  };
+  }, [modal]);
 
   return (
     <>
@@ -55,7 +33,7 @@ export default function DeviceActions({ data }: { data: Device }) {
           <MoreVerticalIcon />
         </Button>
         <Dropdown.Popover placement="bottom right">
-          <Dropdown.Menu onAction={(key) => handleAction(key)}>
+          <Dropdown.Menu onAction={(key) => setModal(key)}>
             <Dropdown.Item id="view" textValue="View">
               <SquareArrowUpRightIcon className="text-muted size-4" />
               <Label>View</Label>
@@ -86,24 +64,10 @@ export default function DeviceActions({ data }: { data: Device }) {
           </Dropdown.Menu>
         </Dropdown.Popover>
       </Dropdown>
-      {modalState.isEditAction && (
-        <EditDeviceModal
-          isOpen={modalState.isEditAction}
-          onOpenChange={() => {
-            setModalState(initialState);
-          }}
-          data={data}
-        />
-      )}
-      {modalState.isMoveAction && (
-        <MoveDeviceModal
-          isOpen={modalState.isMoveAction}
-          onOpenChange={() => {
-            setModalState(initialState);
-          }}
-          data={data}
-        />
-      )}
+
+      {modal === "edit" && <EditDeviceModal device={device} onClose={() => setModal(null)} />}
+
+      {modal === "move" && <MoveDeviceModal deviceGroup={device.group} onClose={() => setModal(null)} />}
     </>
   );
 }

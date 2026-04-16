@@ -4,17 +4,17 @@ import { useState } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
-import { Button, Form, Key, Label, ListBox, Modal, Select, Surface } from "@heroui/react";
+import { Button, Form, type Key, Label, ListBox, Modal, Select, Surface } from "@heroui/react";
 
 import { generateId, type MoveDeviceModalProps, useDeviceGroups } from "@/features/device";
 
-export default function MoveDeviceModal({ isOpen, onOpenChange, data }: MoveDeviceModalProps) {
+export default function MoveDeviceModal({ deviceGroup, onClose }: MoveDeviceModalProps) {
   const { groups } = useDeviceGroups();
 
-  const [selectedGroup, setSelectedGroup] = useState<Key | null>(generateId(data.group));
+  const [selectedGroup, setSelectedGroup] = useState<Key | null>(generateId(deviceGroup));
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal isOpen onOpenChange={onClose}>
       <Button className="hidden">Move Device</Button>
       <Modal.Backdrop>
         <Modal.Container placement="auto">

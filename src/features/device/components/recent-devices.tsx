@@ -73,7 +73,7 @@ export default async function RecentDevices() {
                       <Table.Cell>{device.group}</Table.Cell>
                       <Table.Cell>{device.serialNumber}</Table.Cell>
                       <Table.Cell>
-                        <DeviceActions data={device} />
+                        <DeviceActions device={device} />
                       </Table.Cell>
                     </Table.Row>
                   );
