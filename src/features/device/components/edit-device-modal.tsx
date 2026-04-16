@@ -7,36 +7,39 @@ import { FolderClosedIcon } from "lucide-react";
 import { Button, Form, Input, Label, ListBox, Modal, Select, Surface, TextField } from "@heroui/react";
 
 import {
+  type Device,
+  type EditDeviceModalProps,
   generateId,
   useDeviceGroups,
   useDeviceStatuses,
   useDeviceTypes,
-  type MoveDeviceModalProps,
 } from "@/features/device";
 
-export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDeviceModalProps) {
-  const [formData, setFormData] = useState({
-    id: data.id,
-    name: data.name,
-    "serial-number": data.serialNumber,
-    "ip-address": data.ipAddress ?? "",
-    type: generateId(data.type),
-    status: generateId(data.status),
-    group: generateId(data.group),
-  });
+const generateFieldIds = (device: Device) => ({
+  id: { name: "id", value: device.id },
+  name: { name: "name", value: device.name },
+  serialNumber: { name: "serial-number", value: device.serialNumber },
+  ipAddress: { name: "ip-address", value: device.ipAddress ?? "" },
+  type: { name: "type", value: generateId(device.type) },
+  status: { name: "status", value: generateId(device.status) },
+  group: { name: "group", value: generateId(device.group) },
+});
 
+export default function EditDeviceModal({ device, onClose }: EditDeviceModalProps) {
   const { types } = useDeviceTypes();
 
   const { statuses } = useDeviceStatuses();
 
   const { groups } = useDeviceGroups();
 
-  const handleChange = (name: string, value: string) => {
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  const [field, setField] = useState(generateFieldIds(device));
+
+  const handleFieldChange = (name: keyof typeof field, value: string) => {
+    setField((prevState) => ({ ...prevState, [name]: { name: prevState[name].name, value } }));
   };
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal isOpen onOpenChange={onClose}>
       <Button className="hidden">Edit Device</Button>
       <Modal.Backdrop>
         <Modal.Container placement="auto">
@@ -51,24 +54,24 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
             <Modal.Body className="px-1 py-4">
               <Surface variant="default">
                 <Form id="edit-device-form" onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
-                  <TextField type="text" name="name" isRequired>
+                  <TextField type="text" name={field.name.name} isRequired>
                     <Label>Name</Label>
                     <Input
                       variant="secondary"
                       placeholder="John's MacBook Pro"
                       autoComplete="off"
                       className="h-10"
-                      value={formData.name}
-                      onChange={(e) => handleChange(e.target.name, e.target.value)}
+                      value={field.name.value}
+                      onChange={(e) => handleFieldChange("name", e.target.value)}
                     />
                   </TextField>
                   <Select
-                    name="type"
+                    name={field.type.name}
                     variant="secondary"
                     placeholder="Select type"
                     isRequired
-                    value={formData.type}
-                    onChange={(e) => handleChange("type", String(e))}
+                    value={field.type.value}
+                    onChange={(e) => handleFieldChange("type", String(e))}
                   >
                     <Label>Type</Label>
                     <Select.Trigger className="h-10">
@@ -91,12 +94,12 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
                     </Select.Popover>
                   </Select>
                   <Select
-                    name="status"
+                    name={field.status.name}
                     variant="secondary"
                     placeholder="Select status"
                     isRequired
-                    value={formData.status}
-                    onChange={(e) => handleChange("status", String(e))}
+                    value={field.status.value}
+                    onChange={(e) => handleFieldChange("status", String(e))}
                   >
                     <Label>Status</Label>
                     <Select.Trigger className="h-10">
@@ -119,12 +122,12 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
                     </Select.Popover>
                   </Select>
                   <Select
-                    name="group"
+                    name={field.group.name}
                     variant="secondary"
                     placeholder="Select group"
                     isRequired
-                    value={formData.group}
-                    onChange={(e) => handleChange("group", String(e))}
+                    value={field.group.value}
+                    onChange={(e) => handleFieldChange("group", String(e))}
                   >
                     <Label>Group</Label>
                     <Select.Trigger className="h-10">
@@ -146,26 +149,26 @@ export default function EditDeviceModal({ isOpen, onOpenChange, data }: MoveDevi
                       </ListBox>
                     </Select.Popover>
                   </Select>
-                  <TextField type="text" name="serial-number" isRequired>
+                  <TextField type="text" name={field.serialNumber.name} isRequired>
                     <Label>Serial Number</Label>
                     <Input
                       variant="secondary"
                       placeholder="SN-LTP-1002"
                       autoComplete="off"
                       className="h-10"
-                      value={formData["serial-number"]}
-                      onChange={(e) => handleChange(e.target.name, e.target.value)}
+                      value={field.serialNumber.value}
+                      onChange={(e) => handleFieldChange("serialNumber", e.target.value)}
                     />
                   </TextField>
-                  <TextField type="text" name="ip-address">
+                  <TextField type="text" name={field.ipAddress.name}>
                     <Label>IP Address</Label>
                     <Input
                       variant="secondary"
                       placeholder="192.168.1.1"
                       autoComplete="off"
                       className="h-10"
-                      value={formData["ip-address"]}
-                      onChange={(e) => handleChange(e.target.name, e.target.value)}
+                      value={field.ipAddress.value}
+                      onChange={(e) => handleFieldChange("ipAddress", e.target.value)}
                     />
                   </TextField>
                 </Form>
