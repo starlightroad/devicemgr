@@ -31,3 +31,5 @@ export { default as DeviceActions } from "./components/device-actions";
 export { default as EditDeviceModal } from "./components/edit-device-modal";
 
 export { default as MoveDeviceModal } from "./components/move-device-modal";
+
+export { default as FieldErrorMessage } from "./components/field-error-message";
