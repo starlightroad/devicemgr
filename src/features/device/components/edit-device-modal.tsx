@@ -53,7 +53,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
   }, [selectedTypeId, selectedStatusId, selectedGroupId, handleFieldChange]);
 
   return (
-    <Modal isOpen onOpenChange={onClose}>
+    <Modal isOpen={!state?.success} onOpenChange={onClose}>
       <Button className="hidden">Edit Device</Button>
       <Modal.Backdrop>
         <Modal.Container placement="auto">
@@ -78,7 +78,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                       value={field.name.value}
                       onChange={(e) => handleFieldChange("name", e.target.value)}
                     />
-                    <FieldErrorMessage message={state?.serverErrors.name} isFormLoading={isFormLoading} />
+                    <FieldErrorMessage message={state?.serverErrors?.name} isFormLoading={isFormLoading} />
                   </TextField>
                   <Select
                     name={field.type.name}
@@ -109,7 +109,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                         })}
                       </ListBox>
                     </Select.Popover>
-                    <FieldErrorMessage message={state?.serverErrors.type} isFormLoading={isFormLoading} />
+                    <FieldErrorMessage message={state?.serverErrors?.type} isFormLoading={isFormLoading} />
                   </Select>
                   <Select
                     name={field.status.name}
@@ -140,7 +140,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                         })}
                       </ListBox>
                     </Select.Popover>
-                    <FieldErrorMessage message={state?.serverErrors.status} isFormLoading={isFormLoading} />
+                    <FieldErrorMessage message={state?.serverErrors?.status} isFormLoading={isFormLoading} />
                   </Select>
                   <Select
                     name={field.group.name}
@@ -171,7 +171,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                         })}
                       </ListBox>
                     </Select.Popover>
-                    <FieldErrorMessage message={state?.serverErrors.group} isFormLoading={isFormLoading} />
+                    <FieldErrorMessage message={state?.serverErrors?.group} isFormLoading={isFormLoading} />
                   </Select>
                   <TextField type="text" name={field.serialNumber.name} isRequired>
                     <Label>Serial Number</Label>
@@ -183,7 +183,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                       value={field.serialNumber.value}
                       onChange={(e) => handleFieldChange("serialNumber", e.target.value)}
                     />
-                    <FieldErrorMessage message={state?.serverErrors.serialNumber} isFormLoading={isFormLoading} />
+                    <FieldErrorMessage message={state?.serverErrors?.serialNumber} isFormLoading={isFormLoading} />
                   </TextField>
                   <TextField type="text" name={field.ipAddress.name}>
                     <Label>IP Address</Label>
@@ -195,7 +195,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                       value={field.ipAddress.value}
                       onChange={(e) => handleFieldChange("ipAddress", e.target.value)}
                     />
-                    <FieldErrorMessage message={state?.serverErrors.ipAddress} isFormLoading={isFormLoading} />
+                    <FieldErrorMessage message={state?.serverErrors?.ipAddress} isFormLoading={isFormLoading} />
                   </TextField>
                 </Form>
               </Surface>

@@ -13,6 +13,7 @@ import { devicesTable } from "@/db/schemas";
 import { EditDeviceSchema } from "@/features/device";
 
 type PreviousState = {
+  success: boolean;
   serverErrors?: Partial<{
     name: string;
     type: string;
@@ -40,6 +41,7 @@ export const updateDevice = async (deviceId: string, _previousState: PreviousSta
       const { fieldErrors } = z.flattenError(parsedFields.error);
 
       return {
+        success: false,
         serverErrors: {
           name: fieldErrors.name?.toString(),
           type: fieldErrors.typeId?.toString(),
@@ -66,9 +68,14 @@ export const updateDevice = async (deviceId: string, _previousState: PreviousSta
     });
   } catch {
     return {
+      success: false,
       serverErrors: {
         ipAddress: "A server error has occurred.",
       },
     };
   }
+
+  return {
+    success: true,
+  };
 };
