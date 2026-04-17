@@ -52,8 +52,12 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
     if (selectedGroupId) updateField("group", selectedGroupId);
   }, [selectedTypeId, selectedStatusId, selectedGroupId, handleFieldChange]);
 
+  useEffect(() => {
+    if (state?.success) onClose();
+  }, [state?.success, onClose]);
+
   return (
-    <Modal isOpen={!state?.success} onOpenChange={onClose}>
+    <Modal isOpen onOpenChange={onClose}>
       <Button className="hidden">Edit Device</Button>
       <Modal.Backdrop>
         <Modal.Container placement="auto">
