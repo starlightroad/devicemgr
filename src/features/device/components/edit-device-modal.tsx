@@ -192,7 +192,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                       value={field.ipAddress.value}
                       onChange={(e) => handleFieldChange("ipAddress", e.target.value)}
                     />
-                    <FieldErrorMessage message={state?.serverErrors.ipAddress} isFormLoading={false} />
+                    <FieldErrorMessage message={state?.serverErrors.ipAddress} isFormLoading={isFormLoading} />
                   </TextField>
                 </Form>
               </Surface>
