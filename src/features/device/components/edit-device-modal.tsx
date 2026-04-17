@@ -34,7 +34,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
 
   const [field, setField] = useState(generateDeviceFieldIds(device));
 
-  const [state, formAction, isFormLoading] = useActionState(updateDevice, undefined);
+  const [state, formAction, isFormLoading] = useActionState(updateDevice.bind(null, device.id), undefined);
 
   const handleFieldChange = useCallback((name: keyof typeof field, value: string) => {
     setField((prevState) => ({ ...prevState, [name]: { name: prevState[name].name, value } }));
