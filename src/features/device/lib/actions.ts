@@ -18,9 +18,9 @@ type PreviousState = {
 export const updateDevice = async (_previousState: PreviousState | undefined, formData: FormData) => {
   const parsedFields = EditDeviceSchema.safeParse({
     name: formData.get("name"),
-    type: formData.get("type"),
-    status: formData.get("status"),
-    group: formData.get("group"),
+    typeId: formData.get("type"),
+    statusId: formData.get("status"),
+    groupId: formData.get("group"),
     ipAddress: formData.get("ip-address"),
     serialNumber: formData.get("serial-number"),
   });
@@ -32,9 +32,9 @@ export const updateDevice = async (_previousState: PreviousState | undefined, fo
       return {
         serverErrors: {
           name: fieldErrors.name?.toString(),
-          type: fieldErrors.type?.toString(),
-          status: fieldErrors.status?.toString(),
-          group: fieldErrors.group?.toString(),
+          type: fieldErrors.typeId?.toString(),
+          status: fieldErrors.statusId?.toString(),
+          group: fieldErrors.groupId?.toString(),
           ipAddress: fieldErrors.ipAddress?.toString(),
           serialNumber: fieldErrors.serialNumber?.toString(),
         },
