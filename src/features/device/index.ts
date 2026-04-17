@@ -4,6 +4,8 @@ export * from "./lib/constants";
 
 export * from "./lib/utils";
 
+export * from "./lib/schemas";
+
 export { default as useDeviceGroups } from "./hooks/use-groups";
 
 export { default as useDeviceStatuses } from "./hooks/use-statuses";
