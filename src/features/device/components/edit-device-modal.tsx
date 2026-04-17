@@ -88,6 +88,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     value={field.type.value}
                     onChange={(e) => handleFieldChange("type", String(e))}
                     isDisabled={isTypesLoading}
+                    defaultValue={field.type.value}
                   >
                     <Label>Type</Label>
                     <Select.Trigger className="h-10">
@@ -118,6 +119,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     value={field.status.value}
                     onChange={(e) => handleFieldChange("status", String(e))}
                     isDisabled={isStatusesLoading}
+                    defaultValue={field.status.value}
                   >
                     <Label>Status</Label>
                     <Select.Trigger className="h-10">
@@ -148,6 +150,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     value={field.group.value}
                     onChange={(e) => handleFieldChange("group", String(e))}
                     isDisabled={isGroupsLoading}
+                    defaultValue={field.group.value}
                   >
                     <Label>Group</Label>
                     <Select.Trigger className="h-10">
