@@ -191,7 +191,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
               <Button type="button" slot="close" variant="secondary">
                 Cancel
               </Button>
-              <Button type="submit" form={FORM_ID}>
+              <Button type="submit" form={FORM_ID} isDisabled={isTypesLoading || isStatusesLoading || isGroupsLoading}>
                 Save
               </Button>
             </Modal.Footer>
