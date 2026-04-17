@@ -9,6 +9,7 @@ import { Button, Form, Input, Label, ListBox, Modal, Select, Surface, TextField 
 import {
   type EditDeviceModalProps,
   FieldErrorMessage,
+  FORM_ID,
   generateDeviceFieldIds,
   generateId,
   updateDevice,
@@ -16,8 +17,6 @@ import {
   useDeviceStatuses,
   useDeviceTypes,
 } from "@/features/device";
-
-const FORM_ID = "edit-device-form";
 
 export default function EditDeviceModal({ device, onClose }: EditDeviceModalProps) {
   const { types, loading: isTypesLoading } = useDeviceTypes();
