@@ -1,29 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
 import { Button, Form, Input, Label, ListBox, Modal, Select, Surface, TextField } from "@heroui/react";
 
 import {
-  type Device,
   type EditDeviceModalProps,
+  generateDeviceFieldIds,
   generateId,
   useDeviceGroups,
   useDeviceStatuses,
   useDeviceTypes,
 } from "@/features/device";
-
-const generateFieldIds = (device: Device) => ({
-  id: { name: "id", value: device.id },
-  name: { name: "name", value: device.name },
-  serialNumber: { name: "serial-number", value: device.serialNumber },
-  ipAddress: { name: "ip-address", value: device.ipAddress ?? "" },
-  type: { name: "type", value: generateId(device.type) },
-  status: { name: "status", value: generateId(device.status) },
-  group: { name: "group", value: generateId(device.group) },
-});
 
 const FORM_ID = "edit-device-form";
 
@@ -34,11 +24,29 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
 
   const { groups } = useDeviceGroups();
 
-  const [field, setField] = useState(generateFieldIds(device));
+  const selectedTypeId = types?.find((type) => type.name === device.type)?.id;
 
-  const handleFieldChange = (name: keyof typeof field, value: string) => {
+  const selectedStatusId = statuses?.find((status) => status.name === device.status)?.id;
+
+  const selectedGroupId = groups?.find((group) => group.name === device.group)?.id;
+
+  const [field, setField] = useState(generateDeviceFieldIds(device));
+
+  const handleFieldChange = useCallback((name: keyof typeof field, value: string) => {
     setField((prevState) => ({ ...prevState, [name]: { name: prevState[name].name, value } }));
-  };
+  }, []);
+
+  useEffect(() => {
+    const updateField = (name: keyof typeof field, value?: string) => {
+      handleFieldChange(name, value ?? "");
+    };
+
+    if (selectedTypeId) updateField("type", selectedTypeId);
+
+    if (selectedStatusId) updateField("status", selectedStatusId);
+
+    if (selectedGroupId) updateField("group", selectedGroupId);
+  }, [selectedTypeId, selectedStatusId, selectedGroupId, handleFieldChange]);
 
   return (
     <Modal isOpen onOpenChange={onClose}>
@@ -83,7 +91,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     <Select.Popover>
                       <ListBox>
                         {types?.map((type) => {
-                          const id = generateId(type.name);
+                          const id = generateId(type.id);
 
                           return (
                             <ListBox.Item key={id} id={id} textValue={type.name}>
@@ -111,7 +119,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     <Select.Popover>
                       <ListBox>
                         {statuses?.map((status) => {
-                          const id = generateId(status.name);
+                          const id = generateId(status.id);
 
                           return (
                             <ListBox.Item key={id} id={id} textValue={status.name}>
@@ -139,7 +147,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     <Select.Popover>
                       <ListBox>
                         {groups?.map((group) => {
-                          const id = generateId(group.name);
+                          const id = generateId(group.id);
 
                           return (
                             <ListBox.Item key={id} id={id} textValue={group.name}>
@@ -180,7 +188,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
               <Button type="button" slot="close" variant="secondary">
                 Cancel
               </Button>
-              <Button type="submit" form={FORM_ID} isDisabled>
+              <Button type="submit" form={FORM_ID}>
                 Save
               </Button>
             </Modal.Footer>
