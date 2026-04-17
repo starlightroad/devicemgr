@@ -18,11 +18,11 @@ import {
 const FORM_ID = "edit-device-form";
 
 export default function EditDeviceModal({ device, onClose }: EditDeviceModalProps) {
-  const { types } = useDeviceTypes();
+  const { types, loading: isTypesLoading } = useDeviceTypes();
 
-  const { statuses } = useDeviceStatuses();
+  const { statuses, loading: isStatusesLoading } = useDeviceStatuses();
 
-  const { groups } = useDeviceGroups();
+  const { groups, loading: isGroupsLoading } = useDeviceGroups();
 
   const selectedTypeId = types?.find((type) => type.name === device.type)?.id;
 
@@ -82,6 +82,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     isRequired
                     value={field.type.value}
                     onChange={(e) => handleFieldChange("type", String(e))}
+                    isDisabled={isTypesLoading}
                   >
                     <Label>Type</Label>
                     <Select.Trigger className="h-10">
@@ -110,6 +111,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     isRequired
                     value={field.status.value}
                     onChange={(e) => handleFieldChange("status", String(e))}
+                    isDisabled={isStatusesLoading}
                   >
                     <Label>Status</Label>
                     <Select.Trigger className="h-10">
@@ -138,6 +140,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     isRequired
                     value={field.group.value}
                     onChange={(e) => handleFieldChange("group", String(e))}
+                    isDisabled={isGroupsLoading}
                   >
                     <Label>Group</Label>
                     <Select.Trigger className="h-10">
