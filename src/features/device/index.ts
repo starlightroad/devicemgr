@@ -6,6 +6,8 @@ export * from "./lib/utils";
 
 export * from "./lib/schemas";
 
+export * from "./lib/actions";
+
 export { default as useDeviceGroups } from "./hooks/use-groups";
 
 export { default as useDeviceStatuses } from "./hooks/use-statuses";

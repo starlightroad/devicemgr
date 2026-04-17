@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useActionState, useCallback, useEffect, useState } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
@@ -10,6 +10,7 @@ import {
   type EditDeviceModalProps,
   generateDeviceFieldIds,
   generateId,
+  updateDevice,
   useDeviceGroups,
   useDeviceStatuses,
   useDeviceTypes,
@@ -31,6 +32,8 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
   const selectedGroupId = groups?.find((group) => group.name === device.group)?.id;
 
   const [field, setField] = useState(generateDeviceFieldIds(device));
+
+  const [state, formAction, isFormLoading] = useActionState(updateDevice, undefined);
 
   const handleFieldChange = useCallback((name: keyof typeof field, value: string) => {
     setField((prevState) => ({ ...prevState, [name]: { name: prevState[name].name, value } }));
@@ -63,7 +66,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
             </Modal.Header>
             <Modal.Body className="px-1 py-4">
               <Surface variant="default">
-                <Form id={FORM_ID} onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
+                <Form id={FORM_ID} action={formAction} className="flex flex-col gap-4">
                   <TextField type="text" name={field.name.name} isRequired>
                     <Label>Name</Label>
                     <Input
@@ -191,7 +194,12 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
               <Button type="button" slot="close" variant="secondary">
                 Cancel
               </Button>
-              <Button type="submit" form={FORM_ID} isDisabled={isTypesLoading || isStatusesLoading || isGroupsLoading}>
+              <Button
+                type="submit"
+                form={FORM_ID}
+                isPending={isFormLoading}
+                isDisabled={isTypesLoading || isStatusesLoading || isGroupsLoading}
+              >
                 Save
               </Button>
             </Modal.Footer>
