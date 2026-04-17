@@ -4,6 +4,8 @@ import { z } from "zod";
 
 import { eq, sql } from "drizzle-orm";
 
+import { revalidatePath } from "next/cache";
+
 import { db } from "@/db/client";
 
 import { getSession } from "@/dal/session";
@@ -74,6 +76,8 @@ export const updateDevice = async (deviceId: string, _previousState: PreviousSta
       },
     };
   }
+
+  revalidatePath("/dashboard");
 
   return {
     success: true,
