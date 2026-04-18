@@ -18,7 +18,7 @@ import {
 } from "@/features/device";
 
 export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: MoveDeviceModalProps) {
-  const { groups, loading, error: groupsError } = useDeviceGroups();
+  const { groups, loading: isGroupsLoading, error: groupsError } = useDeviceGroups();
 
   const selectedGroupId = groups?.find((group) => group.name === deviceGroup)?.id;
 
@@ -55,7 +55,7 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: Move
                     isRequired
                     value={field.group.value}
                     onChange={(value) => handleFieldChange("group", String(value))}
-                    isDisabled={loading || Boolean(groupsError)}
+                    isDisabled={isGroupsLoading || Boolean(groupsError)}
                     defaultValue={field.group.value}
                   >
                     <Label>Group</Label>
@@ -89,7 +89,12 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: Move
               <Button type="button" slot="close" variant="secondary">
                 Cancel
               </Button>
-              <Button type="submit" form={FORM_ID} isPending={isFormLoading} isDisabled={loading}>
+              <Button
+                type="submit"
+                form={FORM_ID}
+                isPending={isFormLoading}
+                isDisabled={isGroupsLoading || Boolean(groupsError)}
+              >
                 Save
               </Button>
             </Modal.Footer>
