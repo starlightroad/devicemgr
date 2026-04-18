@@ -9,7 +9,7 @@ import { Button, Form, type Key, Label, ListBox, Modal, Select, Surface } from "
 import { generateId, type MoveDeviceModalProps, useDeviceGroups } from "@/features/device";
 
 export default function MoveDeviceModal({ deviceGroup, onClose }: MoveDeviceModalProps) {
-  const { groups } = useDeviceGroups();
+  const { groups, loading } = useDeviceGroups();
 
   const [selectedGroup, setSelectedGroup] = useState<Key | null>(generateId(deviceGroup));
 
@@ -36,6 +36,7 @@ export default function MoveDeviceModal({ deviceGroup, onClose }: MoveDeviceModa
                     isRequired
                     value={selectedGroup}
                     onChange={(value) => setSelectedGroup(value)}
+                    isDisabled={loading}
                   >
                     <Label>Group</Label>
                     <Select.Trigger className="h-10">
@@ -64,7 +65,7 @@ export default function MoveDeviceModal({ deviceGroup, onClose }: MoveDeviceModa
               <Button type="button" slot="close" variant="secondary">
                 Cancel
               </Button>
-              <Button type="submit" isDisabled>
+              <Button type="submit" isDisabled={loading}>
                 Save
               </Button>
             </Modal.Footer>
