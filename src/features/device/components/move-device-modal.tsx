@@ -1,17 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useEffect } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
-import { Button, Form, type Key, Label, ListBox, Modal, Select, Surface } from "@heroui/react";
+import { Button, Form, Label, ListBox, Modal, Select, Surface } from "@heroui/react";
 
-import { FieldErrorMessage, generateId, type MoveDeviceModalProps, useDeviceGroups } from "@/features/device";
+import {
+  FieldErrorMessage,
+  FORM_ID,
+  generateId,
+  moveDevice,
+  type MoveDeviceModalProps,
+  useDeviceGroups,
+  useFields,
+} from "@/features/device";
 
-export default function MoveDeviceModal({ deviceGroup, onClose }: MoveDeviceModalProps) {
+export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: MoveDeviceModalProps) {
   const { groups, loading, error } = useDeviceGroups();
 
-  const [selectedGroup, setSelectedGroup] = useState<Key | null>(generateId(deviceGroup));
+  const selectedGroupId = groups?.find((group) => group.name === deviceGroup)?.id;
+
+  const { field, handleFieldChange } = useFields({ group: { name: "group", value: "" } });
+
+  const [state, formAction, isFormLoading] = useActionState(moveDevice.bind(null, deviceId), undefined);
+
+  useEffect(() => {
+    if (selectedGroupId) handleFieldChange("group", selectedGroupId);
+  }, [handleFieldChange, selectedGroupId]);
 
   return (
     <Modal isOpen onOpenChange={onClose}>
@@ -28,15 +44,16 @@ export default function MoveDeviceModal({ deviceGroup, onClose }: MoveDeviceModa
             </Modal.Header>
             <Modal.Body className="px-1 py-4">
               <Surface variant="default">
-                <Form id="edit-device-form" onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
+                <Form id={FORM_ID} action={formAction} className="flex flex-col gap-4">
                   <Select
-                    name="group"
+                    name={field.group.name}
                     variant="secondary"
                     placeholder="Select group"
                     isRequired
-                    value={selectedGroup}
-                    onChange={(value) => setSelectedGroup(value)}
+                    value={field.group.value}
+                    onChange={(value) => handleFieldChange("group", String(value))}
                     isDisabled={loading || Boolean(error)}
+                    defaultValue={field.group.value}
                   >
                     <Label>Group</Label>
                     <Select.Trigger className="h-10">
@@ -46,7 +63,7 @@ export default function MoveDeviceModal({ deviceGroup, onClose }: MoveDeviceModa
                     <Select.Popover>
                       <ListBox>
                         {groups?.map((group) => {
-                          const id = generateId(group.name);
+                          const id = generateId(group.id);
 
                           return (
                             <ListBox.Item key={id} id={id} textValue={group.name}>
@@ -66,7 +83,7 @@ export default function MoveDeviceModal({ deviceGroup, onClose }: MoveDeviceModa
               <Button type="button" slot="close" variant="secondary">
                 Cancel
               </Button>
-              <Button type="submit" isDisabled={loading}>
+              <Button type="submit" form={FORM_ID} isPending={isFormLoading} isDisabled={loading}>
                 Save
               </Button>
             </Modal.Footer>
