@@ -21,7 +21,7 @@ import {
 } from "@/features/device";
 
 export default function EditDeviceModal({ device, onClose }: EditDeviceModalProps) {
-  const { types, loading: isTypesLoading } = useDeviceTypes();
+  const { types, loading: isTypesLoading, error: typesError } = useDeviceTypes();
 
   const { statuses, loading: isStatusesLoading } = useDeviceStatuses();
 
@@ -80,7 +80,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     isRequired
                     value={field.type.value}
                     onChange={(e) => handleFieldChange("type", String(e))}
-                    isDisabled={isTypesLoading}
+                    isDisabled={typesError ? true : isTypesLoading}
                     defaultValue={field.type.value}
                   >
                     <Label>Type</Label>
@@ -102,7 +102,10 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                         })}
                       </ListBox>
                     </Select.Popover>
-                    <FieldErrorMessage message={state?.serverErrors?.type} isFormLoading={isFormLoading} />
+                    <FieldErrorMessage
+                      message={typesError ? typesError : state?.serverErrors?.type}
+                      isFormLoading={isFormLoading}
+                    />
                   </Select>
                   <Select
                     name={field.status.name}
@@ -201,7 +204,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                 type="submit"
                 form={FORM_ID}
                 isPending={isFormLoading}
-                isDisabled={isTypesLoading || isStatusesLoading || isGroupsLoading}
+                isDisabled={Boolean(typesError) || isTypesLoading || isStatusesLoading || isGroupsLoading}
               >
                 Save
               </Button>
