@@ -9,7 +9,7 @@ import { getDevices } from "@/dal/device";
 import { DeviceActions, getChipColorByStatus, TABLE_COLUMNS } from "@/features/device";
 
 export default async function RecentDevices() {
-  const { data, error } = await getDevices();
+  const { data, error } = await getDevices(5);
 
   const hasNoData = !data?.length && data?.length === 0;
 

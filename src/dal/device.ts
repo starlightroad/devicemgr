@@ -55,7 +55,7 @@ export const getDevicesCountByStatus = async (status: string): Promise<ActionRes
   }
 };
 
-export const getDevices = async (): Promise<ActionResult<Device[]>> => {
+export const getDevices = async (limit?: number): Promise<ActionResult<Device[]>> => {
   try {
     const session = await getSession();
 
@@ -75,7 +75,7 @@ export const getDevices = async (): Promise<ActionResult<Device[]>> => {
       .innerJoin(deviceGroupsTable, eq(devicesTable.groupId, deviceGroupsTable.id))
       .where(eq(devicesTable.userId, session.userId))
       .orderBy(desc(devicesTable.name))
-      .limit(MAX_ROWS);
+      .limit(limit ?? MAX_ROWS);
 
     return {
       data,
