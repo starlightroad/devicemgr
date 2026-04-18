@@ -67,7 +67,9 @@ export default function DeviceActions({ device }: { device: Device }) {
 
       {modal === "edit" && <EditDeviceModal device={device} onClose={() => setModal(null)} />}
 
-      {modal === "move" && <MoveDeviceModal deviceGroup={device.group} onClose={() => setModal(null)} />}
+      {modal === "move" && (
+        <MoveDeviceModal deviceId={device.id} deviceGroup={device.group} onClose={() => setModal(null)} />
+      )}
     </>
   );
 }

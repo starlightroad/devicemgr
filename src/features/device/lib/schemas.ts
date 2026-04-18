@@ -8,3 +8,7 @@ export const EditDeviceSchema = z.object({
   serialNumber: z.string().min(1, "Serial number is required.").max(64, "Serial Number is too long."),
   ipAddress: z.union([z.string().max(0), z.ipv4()], "Invalid IP address."),
 });
+
+export const MoveDeviceSchema = EditDeviceSchema.pick({
+  groupId: true,
+});
