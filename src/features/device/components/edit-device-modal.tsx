@@ -23,7 +23,7 @@ import {
 export default function EditDeviceModal({ device, onClose }: EditDeviceModalProps) {
   const { types, loading: isTypesLoading, error: typesError } = useDeviceTypes();
 
-  const { statuses, loading: isStatusesLoading } = useDeviceStatuses();
+  const { statuses, loading: isStatusesLoading, error: statusesError } = useDeviceStatuses();
 
   const { groups, loading: isGroupsLoading } = useDeviceGroups();
 
@@ -114,7 +114,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     isRequired
                     value={field.status.value}
                     onChange={(e) => handleFieldChange("status", String(e))}
-                    isDisabled={isStatusesLoading}
+                    isDisabled={Boolean(statusesError) || isStatusesLoading}
                     defaultValue={field.status.value}
                   >
                     <Label>Status</Label>
@@ -136,7 +136,10 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                         })}
                       </ListBox>
                     </Select.Popover>
-                    <FieldErrorMessage message={state?.serverErrors?.status} isFormLoading={isFormLoading} />
+                    <FieldErrorMessage
+                      message={statusesError ? statusesError : state?.serverErrors?.status}
+                      isFormLoading={isFormLoading}
+                    />
                   </Select>
                   <Select
                     name={field.group.name}
@@ -204,7 +207,13 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                 type="submit"
                 form={FORM_ID}
                 isPending={isFormLoading}
-                isDisabled={Boolean(typesError) || isTypesLoading || isStatusesLoading || isGroupsLoading}
+                isDisabled={
+                  Boolean(typesError) ||
+                  Boolean(statusesError) ||
+                  isTypesLoading ||
+                  isStatusesLoading ||
+                  isGroupsLoading
+                }
               >
                 Save
               </Button>
