@@ -14,6 +14,7 @@ import {
   type MoveDeviceModalProps,
   useDeviceGroups,
   useFields,
+  useFormSuccess,
 } from "@/features/device";
 
 export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: MoveDeviceModalProps) {
@@ -28,6 +29,8 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: Move
   useEffect(() => {
     if (selectedGroupId) handleFieldChange("group", selectedGroupId);
   }, [handleFieldChange, selectedGroupId]);
+
+  useFormSuccess(state?.success, onClose);
 
   return (
     <Modal isOpen onOpenChange={onClose}>
