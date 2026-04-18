@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useCallback, useEffect, useState } from "react";
+import { useActionState, useEffect } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
@@ -16,6 +16,7 @@ import {
   useDeviceGroups,
   useDeviceStatuses,
   useDeviceTypes,
+  useFields,
 } from "@/features/device";
 
 export default function EditDeviceModal({ device, onClose }: EditDeviceModalProps) {
@@ -31,25 +32,15 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
 
   const selectedGroupId = groups?.find((group) => group.name === device.group)?.id;
 
-  const [field, setField] = useState(generateDeviceFieldIds(device));
+  const { field, handleFieldChange } = useFields(generateDeviceFieldIds(device));
 
   const [state, formAction, isFormLoading] = useActionState(updateDevice.bind(null, device.id), undefined);
 
-  const handleFieldChange = useCallback((name: keyof typeof field, value: string) => {
-    setField((prevState) => ({ ...prevState, [name]: { name: prevState[name].name, value } }));
-  }, []);
-
   useEffect(() => {
-    const updateField = (name: keyof typeof field, value?: string) => {
-      handleFieldChange(name, value ?? "");
-    };
-
-    if (selectedTypeId) updateField("type", selectedTypeId);
-
-    if (selectedStatusId) updateField("status", selectedStatusId);
-
-    if (selectedGroupId) updateField("group", selectedGroupId);
-  }, [selectedTypeId, selectedStatusId, selectedGroupId, handleFieldChange]);
+    if (selectedTypeId) handleFieldChange("type", selectedTypeId);
+    if (selectedStatusId) handleFieldChange("status", selectedStatusId);
+    if (selectedGroupId) handleFieldChange("group", selectedGroupId);
+  }, [handleFieldChange, selectedTypeId, selectedStatusId, selectedGroupId]);
 
   useEffect(() => {
     if (state?.success) onClose();
