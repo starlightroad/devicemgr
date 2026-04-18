@@ -18,6 +18,8 @@ export { default as useFields } from "./hooks/use-fields";
 
 export { default as useFormSuccess } from "./hooks/use-form-success";
 
+export { default as useCopyToClipboard } from "./hooks/use-copy-to-clipboard";
+
 export { default as TotalDevices } from "./components/total-devices";
 
 export { default as DeviceStatSkeleton } from "./components/device-stat-skeleton";
@@ -35,5 +37,7 @@ export { default as DeviceActions } from "./components/device-actions";
 export { default as EditDeviceModal } from "./components/edit-device-modal";
 
 export { default as MoveDeviceModal } from "./components/move-device-modal";
+
+export { default as ShareDeviceModal } from "./components/share-device-modal";
 
 export { default as FieldErrorMessage } from "./components/field-error-message";

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { Button, Dropdown, type Key, Label, Separator } from "@heroui/react";
+import { Button, Dropdown, type Key, Label, Separator, toast } from "@heroui/react";
 
 import {
   CircleEllipsisIcon,
@@ -14,10 +14,21 @@ import {
   Trash2Icon,
 } from "lucide-react";
 
-import { type Device, EditDeviceModal, MoveDeviceModal } from "@/features/device";
+import { type Device, EditDeviceModal, MoveDeviceModal, ShareDeviceModal, useCopyToClipboard } from "@/features/device";
 
 export default function DeviceActions({ device }: { device: Device }) {
+  const { copy } = useCopyToClipboard();
+
   const [modal, setModal] = useState<Key | null>(null);
+
+  const copyDeviceId = async () => {
+    try {
+      await copy(device.id);
+      toast.success("Device ID copied to clipboard.");
+    } catch {
+      toast.danger("Failed to copy device ID.");
+    }
+  };
 
   useEffect(() => {
     if (modal === "view") {
@@ -48,7 +59,7 @@ export default function DeviceActions({ device }: { device: Device }) {
               <Label>Move...</Label>
             </Dropdown.Item>
             <Separator />
-            <Dropdown.Item id="copy-id" textValue="Copy ID">
+            <Dropdown.Item id="copy-id" textValue="Copy ID" onAction={copyDeviceId}>
               <CopyIcon className="text-muted size-4" />
               <Label>Copy ID</Label>
             </Dropdown.Item>
@@ -70,6 +81,8 @@ export default function DeviceActions({ device }: { device: Device }) {
       {modal === "move" && (
         <MoveDeviceModal deviceId={device.id} deviceGroup={device.group} onClose={() => setModal(null)} />
       )}
+
+      {modal === "share" && <ShareDeviceModal deviceId={device.id} onClose={() => setModal(null)} />}
     </>
   );
 }

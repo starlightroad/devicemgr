@@ -9,3 +9,5 @@ export type Device = Pick<typeof devicesTable.$inferSelect, "id" | "name" | "ser
 export type EditDeviceModalProps = { device: Device; onClose: () => void };
 
 export type MoveDeviceModalProps = { deviceId: string; deviceGroup: string; onClose: () => void };
+
+export type ShareDeviceModalProps = Pick<MoveDeviceModalProps, "deviceId" | "onClose">;

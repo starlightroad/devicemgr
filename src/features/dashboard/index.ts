@@ -6,6 +6,8 @@ export * from "./lib/config";
 
 export * from "./lib/utils";
 
+export { default as useTimer } from "./hooks/use-timer";
+
 export { default as Sidebar } from "./components/sidebar";
 
 export { default as NavList } from "./components/nav-list";

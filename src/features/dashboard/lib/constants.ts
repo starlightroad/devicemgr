@@ -9,3 +9,5 @@ export const AVATAR_FALLBACK_DELAY = 600;
 export const DASHBOARD_TITLE = "Dashboard";
 
 export const DASHBOARD_DESC = "An overview of your devices, location device data, and health status.";
+
+export const TIMER_IN_MILLISECONDS = 1500;
