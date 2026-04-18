@@ -25,7 +25,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
 
   const { statuses, loading: isStatusesLoading, error: statusesError } = useDeviceStatuses();
 
-  const { groups, loading: isGroupsLoading } = useDeviceGroups();
+  const { groups, loading: isGroupsLoading, error: groupsError } = useDeviceGroups();
 
   const selectedTypeId = types?.find((type) => type.name === device.type)?.id;
 
@@ -148,7 +148,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     isRequired
                     value={field.group.value}
                     onChange={(e) => handleFieldChange("group", String(e))}
-                    isDisabled={isGroupsLoading}
+                    isDisabled={Boolean(groupsError) || isGroupsLoading}
                     defaultValue={field.group.value}
                   >
                     <Label>Group</Label>
@@ -170,7 +170,10 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                         })}
                       </ListBox>
                     </Select.Popover>
-                    <FieldErrorMessage message={state?.serverErrors?.group} isFormLoading={isFormLoading} />
+                    <FieldErrorMessage
+                      message={groupsError ? groupsError : state?.serverErrors?.group}
+                      isFormLoading={isFormLoading}
+                    />
                   </Select>
                   <TextField type="text" name={field.serialNumber.name} isRequired>
                     <Label>Serial Number</Label>
@@ -210,6 +213,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                 isDisabled={
                   Boolean(typesError) ||
                   Boolean(statusesError) ||
+                  Boolean(groupsError) ||
                   isTypesLoading ||
                   isStatusesLoading ||
                   isGroupsLoading
