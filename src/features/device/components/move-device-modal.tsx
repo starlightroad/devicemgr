@@ -17,7 +17,7 @@ import {
 } from "@/features/device";
 
 export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: MoveDeviceModalProps) {
-  const { groups, loading, error } = useDeviceGroups();
+  const { groups, loading, error: groupsError } = useDeviceGroups();
 
   const selectedGroupId = groups?.find((group) => group.name === deviceGroup)?.id;
 
@@ -52,7 +52,7 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: Move
                     isRequired
                     value={field.group.value}
                     onChange={(value) => handleFieldChange("group", String(value))}
-                    isDisabled={loading || Boolean(error)}
+                    isDisabled={loading || Boolean(groupsError)}
                     defaultValue={field.group.value}
                   >
                     <Label>Group</Label>
@@ -74,7 +74,10 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: Move
                         })}
                       </ListBox>
                     </Select.Popover>
-                    <FieldErrorMessage message={error ? error : undefined} isFormLoading={false} />
+                    <FieldErrorMessage
+                      message={groupsError ? groupsError : state?.serverErrors?.group}
+                      isFormLoading={isFormLoading}
+                    />
                   </Select>
                 </Form>
               </Surface>
