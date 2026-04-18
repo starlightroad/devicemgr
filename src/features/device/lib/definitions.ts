@@ -1,5 +1,7 @@
 import { devicesTable } from "@/db/schemas";
 
+import type { ActionReturnType } from "@/lib/definitions";
+
 export type Device = Pick<typeof devicesTable.$inferSelect, "id" | "name" | "serialNumber" | "ipAddress"> & {
   type: string;
   status: string;
@@ -13,3 +15,5 @@ export type MoveDeviceModalProps = { deviceId: string; deviceGroup: string; onCl
 export type ShareDeviceModalProps = Pick<MoveDeviceModalProps, "deviceId" | "onClose">;
 
 export type DeleteDeviceModalProps = Pick<MoveDeviceModalProps, "deviceId" | "onClose"> & { deviceName: string };
+
+export type DeleteDeviceAction = ActionReturnType<{ serverError?: string }>;

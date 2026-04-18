@@ -12,7 +12,7 @@ import { getSession } from "@/dal/session";
 
 import { devicesTable } from "@/db/schemas";
 
-import { DeleteDeviceSchema, EditDeviceSchema, MoveDeviceSchema } from "@/features/device";
+import { type DeleteDeviceAction, DeleteDeviceSchema, EditDeviceSchema, MoveDeviceSchema } from "@/features/device";
 
 type PreviousState = {
   success: boolean;
@@ -133,9 +133,7 @@ export const moveDevice = async (
   };
 };
 
-type DeleteDevicePrevState = { success: boolean; serverError?: string };
-
-export const deleteDevice = async (deviceId: string): Promise<DeleteDevicePrevState> => {
+export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
   try {
     const { userId } = await getSession();
 
