@@ -17,6 +17,7 @@ import {
   useDeviceStatuses,
   useDeviceTypes,
   useFields,
+  useFormSuccess,
 } from "@/features/device";
 
 export default function EditDeviceModal({ device, onClose }: EditDeviceModalProps) {
@@ -36,15 +37,13 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
 
   const [state, formAction, isFormLoading] = useActionState(updateDevice.bind(null, device.id), undefined);
 
+  useFormSuccess(state?.success, onClose);
+
   useEffect(() => {
     if (selectedTypeId) handleFieldChange("type", selectedTypeId);
     if (selectedStatusId) handleFieldChange("status", selectedStatusId);
     if (selectedGroupId) handleFieldChange("group", selectedGroupId);
   }, [handleFieldChange, selectedTypeId, selectedStatusId, selectedGroupId]);
-
-  useEffect(() => {
-    if (state?.success) onClose();
-  }, [state?.success, onClose]);
 
   return (
     <Modal isOpen onOpenChange={onClose}>
