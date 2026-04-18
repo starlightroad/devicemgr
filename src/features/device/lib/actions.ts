@@ -12,7 +12,7 @@ import { getSession } from "@/dal/session";
 
 import { devicesTable } from "@/db/schemas";
 
-import { EditDeviceSchema } from "@/features/device";
+import { EditDeviceSchema, MoveDeviceSchema } from "@/features/device";
 
 type PreviousState = {
   success: boolean;
@@ -73,6 +73,55 @@ export const updateDevice = async (deviceId: string, _previousState: PreviousSta
       success: false,
       serverErrors: {
         ipAddress: "A server error has occurred.",
+      },
+    };
+  }
+
+  revalidatePath("/dashboard");
+
+  return {
+    success: true,
+  };
+};
+
+type MoveDevicePrevState = { success: boolean; serverErrors?: Partial<{ group: string }> };
+
+export const moveDevice = async (
+  deviceId: string,
+  _previousState: MoveDevicePrevState | undefined,
+  formData: FormData,
+) => {
+  try {
+    const { userId } = await getSession();
+
+    const parsedFields = MoveDeviceSchema.safeParse({
+      groupId: formData.get("group"),
+    });
+
+    if (!parsedFields.success) {
+      const { fieldErrors } = z.flattenError(parsedFields.error);
+
+      return {
+        success: false,
+        serverErrors: {
+          group: fieldErrors.groupId?.toString(),
+        },
+      };
+    }
+
+    await db.transaction(async (tx) => {
+      await tx
+        .update(devicesTable)
+        .set({
+          groupId: sql`(SELECT id FROM device_groups WHERE id = ${parsedFields.data.groupId} AND user_id = ${userId})`,
+        })
+        .where(eq(devicesTable.id, deviceId));
+    });
+  } catch {
+    return {
+      success: false,
+      serverErrors: {
+        group: "A server error has occurred.",
       },
     };
   }
