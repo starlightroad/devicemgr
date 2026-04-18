@@ -6,10 +6,10 @@ import { FolderClosedIcon } from "lucide-react";
 
 import { Button, Form, type Key, Label, ListBox, Modal, Select, Surface } from "@heroui/react";
 
-import { generateId, type MoveDeviceModalProps, useDeviceGroups } from "@/features/device";
+import { FieldErrorMessage, generateId, type MoveDeviceModalProps, useDeviceGroups } from "@/features/device";
 
 export default function MoveDeviceModal({ deviceGroup, onClose }: MoveDeviceModalProps) {
-  const { groups, loading } = useDeviceGroups();
+  const { groups, loading, error } = useDeviceGroups();
 
   const [selectedGroup, setSelectedGroup] = useState<Key | null>(generateId(deviceGroup));
 
@@ -36,7 +36,7 @@ export default function MoveDeviceModal({ deviceGroup, onClose }: MoveDeviceModa
                     isRequired
                     value={selectedGroup}
                     onChange={(value) => setSelectedGroup(value)}
-                    isDisabled={loading}
+                    isDisabled={loading || Boolean(error)}
                   >
                     <Label>Group</Label>
                     <Select.Trigger className="h-10">
@@ -57,6 +57,7 @@ export default function MoveDeviceModal({ deviceGroup, onClose }: MoveDeviceModa
                         })}
                       </ListBox>
                     </Select.Popover>
+                    <FieldErrorMessage message={error ? error : undefined} isFormLoading={false} />
                   </Select>
                 </Form>
               </Surface>
