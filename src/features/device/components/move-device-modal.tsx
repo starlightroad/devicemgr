@@ -26,11 +26,11 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: Move
 
   const [state, formAction, isFormLoading] = useActionState(moveDevice.bind(null, deviceId), undefined);
 
+  useFormSuccess(state?.success, onClose);
+
   useEffect(() => {
     if (selectedGroupId) handleFieldChange("group", selectedGroupId);
   }, [handleFieldChange, selectedGroupId]);
-
-  useFormSuccess(state?.success, onClose);
 
   return (
     <Modal isOpen onOpenChange={onClose}>
