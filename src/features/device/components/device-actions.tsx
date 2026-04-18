@@ -14,7 +14,7 @@ import {
   Trash2Icon,
 } from "lucide-react";
 
-import { type Device, EditDeviceModal, MoveDeviceModal, useCopyToClipboard } from "@/features/device";
+import { type Device, EditDeviceModal, MoveDeviceModal, ShareDeviceModal, useCopyToClipboard } from "@/features/device";
 
 export default function DeviceActions({ device }: { device: Device }) {
   const { copy } = useCopyToClipboard();
@@ -81,6 +81,8 @@ export default function DeviceActions({ device }: { device: Device }) {
       {modal === "move" && (
         <MoveDeviceModal deviceId={device.id} deviceGroup={device.group} onClose={() => setModal(null)} />
       )}
+
+      {modal === "share" && <ShareDeviceModal deviceId={device.id} onClose={() => setModal(null)} />}
     </>
   );
 }
