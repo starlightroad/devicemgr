@@ -16,7 +16,7 @@ export default function useDeviceTypes() {
 
         setTypes(response.data);
       } catch {
-        setError("Failed to get groups.");
+        setError("Failed to get types.");
       } finally {
         setLoading(false);
       }

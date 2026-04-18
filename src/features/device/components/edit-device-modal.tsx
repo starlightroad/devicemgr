@@ -1,42 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useEffect } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
 import { Button, Form, Input, Label, ListBox, Modal, Select, Surface, TextField } from "@heroui/react";
 
 import {
-  type Device,
   type EditDeviceModalProps,
+  FieldErrorMessage,
+  FORM_ID,
+  generateDeviceFieldIds,
   generateId,
+  updateDevice,
   useDeviceGroups,
   useDeviceStatuses,
   useDeviceTypes,
+  useFields,
+  useFormSuccess,
 } from "@/features/device";
 
-const generateFieldIds = (device: Device) => ({
-  id: { name: "id", value: device.id },
-  name: { name: "name", value: device.name },
-  serialNumber: { name: "serial-number", value: device.serialNumber },
-  ipAddress: { name: "ip-address", value: device.ipAddress ?? "" },
-  type: { name: "type", value: generateId(device.type) },
-  status: { name: "status", value: generateId(device.status) },
-  group: { name: "group", value: generateId(device.group) },
-});
-
 export default function EditDeviceModal({ device, onClose }: EditDeviceModalProps) {
-  const { types } = useDeviceTypes();
+  const { types, loading: isTypesLoading, error: typesError } = useDeviceTypes();
 
-  const { statuses } = useDeviceStatuses();
+  const { statuses, loading: isStatusesLoading, error: statusesError } = useDeviceStatuses();
 
-  const { groups } = useDeviceGroups();
+  const { groups, loading: isGroupsLoading, error: groupsError } = useDeviceGroups();
 
-  const [field, setField] = useState(generateFieldIds(device));
+  const selectedTypeId = types?.find((type) => type.name === device.type)?.id;
 
-  const handleFieldChange = (name: keyof typeof field, value: string) => {
-    setField((prevState) => ({ ...prevState, [name]: { name: prevState[name].name, value } }));
-  };
+  const selectedStatusId = statuses?.find((status) => status.name === device.status)?.id;
+
+  const selectedGroupId = groups?.find((group) => group.name === device.group)?.id;
+
+  const { field, handleFieldChange } = useFields(generateDeviceFieldIds(device));
+
+  const [state, formAction, isFormLoading] = useActionState(updateDevice.bind(null, device.id), undefined);
+
+  useFormSuccess(state?.success, onClose);
+
+  useEffect(() => {
+    if (selectedTypeId) handleFieldChange("type", selectedTypeId);
+    if (selectedStatusId) handleFieldChange("status", selectedStatusId);
+    if (selectedGroupId) handleFieldChange("group", selectedGroupId);
+  }, [handleFieldChange, selectedTypeId, selectedStatusId, selectedGroupId]);
 
   return (
     <Modal isOpen onOpenChange={onClose}>
@@ -53,7 +60,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
             </Modal.Header>
             <Modal.Body className="px-1 py-4">
               <Surface variant="default">
-                <Form id="edit-device-form" onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
+                <Form id={FORM_ID} action={formAction} className="flex flex-col gap-4">
                   <TextField type="text" name={field.name.name} isRequired>
                     <Label>Name</Label>
                     <Input
@@ -64,6 +71,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                       value={field.name.value}
                       onChange={(e) => handleFieldChange("name", e.target.value)}
                     />
+                    <FieldErrorMessage message={state?.serverErrors?.name} isFormLoading={isFormLoading} />
                   </TextField>
                   <Select
                     name={field.type.name}
@@ -72,6 +80,8 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     isRequired
                     value={field.type.value}
                     onChange={(e) => handleFieldChange("type", String(e))}
+                    isDisabled={typesError ? true : isTypesLoading}
+                    defaultValue={field.type.value}
                   >
                     <Label>Type</Label>
                     <Select.Trigger className="h-10">
@@ -81,7 +91,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     <Select.Popover>
                       <ListBox>
                         {types?.map((type) => {
-                          const id = generateId(type.name);
+                          const id = generateId(type.id);
 
                           return (
                             <ListBox.Item key={id} id={id} textValue={type.name}>
@@ -92,6 +102,10 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                         })}
                       </ListBox>
                     </Select.Popover>
+                    <FieldErrorMessage
+                      message={typesError ? typesError : state?.serverErrors?.type}
+                      isFormLoading={isFormLoading}
+                    />
                   </Select>
                   <Select
                     name={field.status.name}
@@ -100,6 +114,8 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     isRequired
                     value={field.status.value}
                     onChange={(e) => handleFieldChange("status", String(e))}
+                    isDisabled={Boolean(statusesError) || isStatusesLoading}
+                    defaultValue={field.status.value}
                   >
                     <Label>Status</Label>
                     <Select.Trigger className="h-10">
@@ -109,7 +125,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     <Select.Popover>
                       <ListBox>
                         {statuses?.map((status) => {
-                          const id = generateId(status.name);
+                          const id = generateId(status.id);
 
                           return (
                             <ListBox.Item key={id} id={id} textValue={status.name}>
@@ -120,6 +136,10 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                         })}
                       </ListBox>
                     </Select.Popover>
+                    <FieldErrorMessage
+                      message={statusesError ? statusesError : state?.serverErrors?.status}
+                      isFormLoading={isFormLoading}
+                    />
                   </Select>
                   <Select
                     name={field.group.name}
@@ -128,6 +148,8 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     isRequired
                     value={field.group.value}
                     onChange={(e) => handleFieldChange("group", String(e))}
+                    isDisabled={Boolean(groupsError) || isGroupsLoading}
+                    defaultValue={field.group.value}
                   >
                     <Label>Group</Label>
                     <Select.Trigger className="h-10">
@@ -137,7 +159,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     <Select.Popover>
                       <ListBox>
                         {groups?.map((group) => {
-                          const id = generateId(group.name);
+                          const id = generateId(group.id);
 
                           return (
                             <ListBox.Item key={id} id={id} textValue={group.name}>
@@ -148,6 +170,10 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                         })}
                       </ListBox>
                     </Select.Popover>
+                    <FieldErrorMessage
+                      message={groupsError ? groupsError : state?.serverErrors?.group}
+                      isFormLoading={isFormLoading}
+                    />
                   </Select>
                   <TextField type="text" name={field.serialNumber.name} isRequired>
                     <Label>Serial Number</Label>
@@ -159,6 +185,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                       value={field.serialNumber.value}
                       onChange={(e) => handleFieldChange("serialNumber", e.target.value)}
                     />
+                    <FieldErrorMessage message={state?.serverErrors?.serialNumber} isFormLoading={isFormLoading} />
                   </TextField>
                   <TextField type="text" name={field.ipAddress.name}>
                     <Label>IP Address</Label>
@@ -170,6 +197,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                       value={field.ipAddress.value}
                       onChange={(e) => handleFieldChange("ipAddress", e.target.value)}
                     />
+                    <FieldErrorMessage message={state?.serverErrors?.ipAddress} isFormLoading={isFormLoading} />
                   </TextField>
                 </Form>
               </Surface>
@@ -178,7 +206,19 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
               <Button type="button" slot="close" variant="secondary">
                 Cancel
               </Button>
-              <Button type="submit" isDisabled>
+              <Button
+                type="submit"
+                form={FORM_ID}
+                isPending={isFormLoading}
+                isDisabled={
+                  Boolean(typesError) ||
+                  Boolean(statusesError) ||
+                  Boolean(groupsError) ||
+                  isTypesLoading ||
+                  isStatusesLoading ||
+                  isGroupsLoading
+                }
+              >
                 Save
               </Button>
             </Modal.Footer>
