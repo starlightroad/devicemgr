@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { APP_DESC, APP_NAME } from "@/lib/constants";
 
+import { Toast } from "@heroui/react";
+
 import { ThemeProvider } from "@wrksz/themes/next";
 
 const interSans = Inter({
@@ -27,6 +29,7 @@ export default function RootLayout({
     <html lang="en" className={`${interSans.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="flex min-h-full flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <Toast.Provider />
           {children}
         </ThemeProvider>
       </body>

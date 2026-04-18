@@ -18,6 +18,8 @@ export { default as useFields } from "./hooks/use-fields";
 
 export { default as useFormSuccess } from "./hooks/use-form-success";
 
+export { default as useCopyToClipboard } from "./hooks/use-copy-to-clipboard";
+
 export { default as TotalDevices } from "./components/total-devices";
 
 export { default as DeviceStatSkeleton } from "./components/device-stat-skeleton";
