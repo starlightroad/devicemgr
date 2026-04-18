@@ -74,7 +74,7 @@ export const getDevices = async (limit?: number): Promise<ActionResult<Device[]>
       .innerJoin(deviceStatusesTable, eq(devicesTable.statusId, deviceStatusesTable.id))
       .innerJoin(deviceGroupsTable, eq(devicesTable.groupId, deviceGroupsTable.id))
       .where(eq(devicesTable.userId, session.userId))
-      .orderBy(desc(devicesTable.name))
+      .orderBy(desc(devicesTable.createdAt))
       .limit(limit ?? MAX_ROWS);
 
     return {
