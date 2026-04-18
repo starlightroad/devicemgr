@@ -1,12 +1,18 @@
 "use client";
 
+import { useActionState } from "react";
+
 import { Trash2Icon } from "lucide-react";
 
-import { AlertDialog, Button, Form } from "@heroui/react";
+import { AlertDialog, Button, ErrorMessage, Form } from "@heroui/react";
 
-import type { DeleteDeviceModalProps } from "@/features/device";
+import { deleteDevice, useFormSuccess, type DeleteDeviceModalProps } from "@/features/device";
 
-export default function DeleteDeviceModal({ deviceName, onClose }: DeleteDeviceModalProps) {
+export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: DeleteDeviceModalProps) {
+  const [state, formAction, isFormLoading] = useActionState(deleteDevice.bind(null, deviceId), undefined);
+
+  useFormSuccess(state?.success, onClose);
+
   return (
     <AlertDialog isOpen onOpenChange={onClose}>
       <Button type="button" variant="danger" className="hidden">
@@ -24,16 +30,16 @@ export default function DeleteDeviceModal({ deviceName, onClose }: DeleteDeviceM
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                This will permanently delete <strong>{deviceName}</strong> and all of its data. This action cannot be
-                undone.
+                This will permanently delete <strong>{deviceName}</strong>. This action cannot be undone.
               </p>
+              {state?.serverError && <ErrorMessage>{state.serverError}</ErrorMessage>}
             </AlertDialog.Body>
             <AlertDialog.Footer>
               <Button type="button" slot="close" variant="secondary">
                 Cancel
               </Button>
-              <Form onSubmit={(e) => e.preventDefault()}>
-                <Button type="submit" variant="danger">
+              <Form action={formAction}>
+                <Button type="submit" variant="danger" isPending={isFormLoading}>
                   Delete
                 </Button>
               </Form>

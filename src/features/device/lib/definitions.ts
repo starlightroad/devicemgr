@@ -12,4 +12,4 @@ export type MoveDeviceModalProps = { deviceId: string; deviceGroup: string; onCl
 
 export type ShareDeviceModalProps = Pick<MoveDeviceModalProps, "deviceId" | "onClose">;
 
-export type DeleteDeviceModalProps = Pick<EditDeviceModalProps, "onClose"> & { deviceName: string };
+export type DeleteDeviceModalProps = Pick<MoveDeviceModalProps, "deviceId" | "onClose"> & { deviceName: string };

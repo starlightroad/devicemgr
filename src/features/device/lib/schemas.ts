@@ -12,3 +12,5 @@ export const EditDeviceSchema = z.object({
 export const MoveDeviceSchema = EditDeviceSchema.pick({
   groupId: true,
 });
+
+export const DeleteDeviceSchema = z.string();
