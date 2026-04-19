@@ -4,14 +4,17 @@ import { useActionState } from "react";
 
 import { Trash2Icon } from "lucide-react";
 
-import { AlertDialog, Button, ErrorMessage, Form } from "@heroui/react";
+import { AlertDialog, Button, ErrorMessage, Form, toast } from "@heroui/react";
 
-import { deleteDevice, useFormSuccess, type DeleteDeviceModalProps } from "@/features/device";
+import { ACTION_MESSAGE, deleteDevice, useFormSuccess, type DeleteDeviceModalProps } from "@/features/device";
 
 export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: DeleteDeviceModalProps) {
   const [state, formAction, isFormLoading] = useActionState(deleteDevice.bind(null, deviceId), undefined);
 
-  useFormSuccess(state?.success, onClose);
+  useFormSuccess(state?.success, () => {
+    onClose();
+    toast.success(ACTION_MESSAGE.deleted);
+  });
 
   return (
     <AlertDialog isOpen onOpenChange={onClose}>
