@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Button, Dropdown, type Key, Label, Separator, toast } from "@heroui/react";
 
@@ -38,12 +38,10 @@ export default function DeviceActions({ device }: { device: Device }) {
     }
   };
 
-  useEffect(() => {
-    if (modal === "view") {
-      // Will need to change the URL in the future.
-      window.open("#", "_blank");
-    }
-  }, [modal]);
+  const viewDeviceInNewTab = () => {
+    // Will need to change the URL in the future.
+    window.open("#", "_blank");
+  };
 
   return (
     <>
@@ -53,7 +51,7 @@ export default function DeviceActions({ device }: { device: Device }) {
         </Button>
         <Dropdown.Popover placement="bottom right">
           <Dropdown.Menu onAction={(key) => setModal(key)}>
-            <Dropdown.Item id="view" textValue="View">
+            <Dropdown.Item id="view" textValue="View" onAction={viewDeviceInNewTab}>
               <SquareArrowUpRightIcon className="text-muted size-4" />
               <Label>View</Label>
             </Dropdown.Item>
