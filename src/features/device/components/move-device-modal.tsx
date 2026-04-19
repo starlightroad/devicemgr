@@ -16,14 +16,12 @@ import type { MoveDeviceModalProps } from "@/features/device/lib/definitions";
 
 import useFields from "@/features/device/hooks/use-fields";
 
-import useDeviceGroups from "@/features/device/hooks/use-groups";
-
 import useFormSuccess from "@/features/device/hooks/use-form-success";
 
 import FieldErrorMessage from "@/features/device/components/field-error-message";
 
-export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: MoveDeviceModalProps) {
-  const { groups, loading: isGroupsLoading, error: groupsError } = useDeviceGroups();
+export default function MoveDeviceModal({ deviceId, deviceGroup, groups, onClose }: MoveDeviceModalProps) {
+  const isGroupsEmpty = groups.length === 0;
 
   const selectedGroupId = groups?.find((group) => group.name === deviceGroup)?.id;
 
@@ -63,7 +61,7 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: Move
                     isRequired
                     value={field.group.value}
                     onChange={(value) => handleFieldChange("group", String(value))}
-                    isDisabled={isGroupsLoading || Boolean(groupsError)}
+                    isDisabled={isGroupsEmpty}
                     defaultValue={field.group.value}
                   >
                     <Label>Group</Label>
@@ -86,7 +84,7 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: Move
                       </ListBox>
                     </Select.Popover>
                     <FieldErrorMessage
-                      message={groupsError ? groupsError : state?.serverErrors?.group}
+                      message={isGroupsEmpty ? "No entries found." : state?.serverErrors?.group}
                       isFormLoading={isFormLoading}
                     />
                   </Select>
@@ -97,12 +95,7 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: Move
               <Button type="button" slot="close" variant="secondary">
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                form={FORM_ID}
-                isPending={isFormLoading}
-                isDisabled={isGroupsLoading || Boolean(groupsError)}
-              >
+              <Button type="submit" form={FORM_ID} isPending={isFormLoading} isDisabled={isGroupsEmpty}>
                 Save
               </Button>
             </Modal.Footer>

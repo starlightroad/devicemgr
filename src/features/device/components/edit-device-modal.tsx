@@ -18,20 +18,18 @@ import useFields from "@/features/device/hooks/use-fields";
 
 import useDeviceTypes from "@/features/device/hooks/use-types";
 
-import useDeviceGroups from "@/features/device/hooks/use-groups";
-
 import useDeviceStatuses from "@/features/device/hooks/use-statuses";
 
 import useFormSuccess from "@/features/device/hooks/use-form-success";
 
 import FieldErrorMessage from "@/features/device/components/field-error-message";
 
-export default function EditDeviceModal({ device, onClose }: EditDeviceModalProps) {
+export default function EditDeviceModal({ device, groups, onClose }: EditDeviceModalProps) {
   const { types, loading: isTypesLoading, error: typesError } = useDeviceTypes();
 
   const { statuses, loading: isStatusesLoading, error: statusesError } = useDeviceStatuses();
 
-  const { groups, loading: isGroupsLoading, error: groupsError } = useDeviceGroups();
+  const isGroupsEmpty = groups.length === 0;
 
   const selectedTypeId = types?.find((type) => type.name === device.type)?.id;
 
@@ -157,7 +155,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     isRequired
                     value={field.group.value}
                     onChange={(e) => handleFieldChange("group", String(e))}
-                    isDisabled={Boolean(groupsError) || isGroupsLoading}
+                    isDisabled={isGroupsEmpty}
                     defaultValue={field.group.value}
                   >
                     <Label>Group</Label>
@@ -180,7 +178,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                       </ListBox>
                     </Select.Popover>
                     <FieldErrorMessage
-                      message={groupsError ? groupsError : state?.serverErrors?.group}
+                      message={isGroupsEmpty ? "No entries found." : state?.serverErrors?.group}
                       isFormLoading={isFormLoading}
                     />
                   </Select>
@@ -220,12 +218,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                 form={FORM_ID}
                 isPending={isFormLoading}
                 isDisabled={
-                  Boolean(typesError) ||
-                  Boolean(statusesError) ||
-                  Boolean(groupsError) ||
-                  isTypesLoading ||
-                  isStatusesLoading ||
-                  isGroupsLoading
+                  Boolean(typesError) || Boolean(statusesError) || isTypesLoading || isStatusesLoading || isGroupsEmpty
                 }
               >
                 Save
