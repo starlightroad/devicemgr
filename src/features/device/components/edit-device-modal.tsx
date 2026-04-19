@@ -6,20 +6,25 @@ import { FolderClosedIcon } from "lucide-react";
 
 import { Button, Form, Input, Label, ListBox, Modal, Select, Surface, TextField, toast } from "@heroui/react";
 
-import {
-  ACTION_MESSAGE,
-  type EditDeviceModalProps,
-  FieldErrorMessage,
-  FORM_ID,
-  generateDeviceFieldIds,
-  generateId,
-  updateDevice,
-  useDeviceGroups,
-  useDeviceStatuses,
-  useDeviceTypes,
-  useFields,
-  useFormSuccess,
-} from "@/features/device";
+import { ACTION_MESSAGE, FORM_ID } from "@/features/device/lib/constants";
+
+import type { EditDeviceModalProps } from "@/features/device/lib/definitions";
+
+import { generateDeviceFieldIds, generateId } from "@/features/device/lib/utils";
+
+import { updateDevice } from "@/features/device/lib/actions";
+
+import useFields from "@/features/device/hooks/use-fields";
+
+import useDeviceTypes from "@/features/device/hooks/use-types";
+
+import useDeviceGroups from "@/features/device/hooks/use-groups";
+
+import useDeviceStatuses from "@/features/device/hooks/use-statuses";
+
+import useFormSuccess from "@/features/device/hooks/use-form-success";
+
+import FieldErrorMessage from "@/features/device/components/field-error-message";
 
 export default function EditDeviceModal({ device, onClose }: EditDeviceModalProps) {
   const { types, loading: isTypesLoading, error: typesError } = useDeviceTypes();

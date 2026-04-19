@@ -8,9 +8,11 @@ import { FolderGit2Icon, LogOutIcon } from "lucide-react";
 
 import { GITHUB_REPO } from "@/lib/constants";
 
-import { useSignOut } from "@/features/auth";
+import { getNavIcon } from "@/features/dashboard/lib/utils";
 
-import { getNavIcon, mobileNavItems } from "@/features/dashboard";
+import { mobileNavItems } from "@/features/dashboard/lib/config";
+
+import useSignOut from "@/features/auth/hooks/use-sign-out";
 
 export default function MobileNavMenu() {
   const { signOut } = useSignOut();

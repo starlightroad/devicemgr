@@ -6,17 +6,21 @@ import { FolderClosedIcon } from "lucide-react";
 
 import { Button, Form, Label, ListBox, Modal, Select, Surface, toast } from "@heroui/react";
 
-import {
-  ACTION_MESSAGE,
-  FieldErrorMessage,
-  FORM_ID,
-  generateId,
-  moveDevice,
-  type MoveDeviceModalProps,
-  useDeviceGroups,
-  useFields,
-  useFormSuccess,
-} from "@/features/device";
+import { generateId } from "@/features/device/lib/utils";
+
+import { moveDevice } from "@/features/device/lib/actions";
+
+import { ACTION_MESSAGE, FORM_ID } from "@/features/device/lib/constants";
+
+import type { MoveDeviceModalProps } from "@/features/device/lib/definitions";
+
+import useFields from "@/features/device/hooks/use-fields";
+
+import useDeviceGroups from "@/features/device/hooks/use-groups";
+
+import useFormSuccess from "@/features/device/hooks/use-form-success";
+
+import FieldErrorMessage from "@/features/device/components/field-error-message";
 
 export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: MoveDeviceModalProps) {
   const { groups, loading: isGroupsLoading, error: groupsError } = useDeviceGroups();

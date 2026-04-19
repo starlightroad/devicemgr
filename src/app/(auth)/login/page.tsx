@@ -4,7 +4,7 @@ import { Card } from "@heroui/react";
 
 import { APP_NAME } from "@/lib/constants";
 
-import { LoginForm } from "@/features/auth";
+import LoginForm from "@/features/auth/components/login-form";
 
 export const metadata: Metadata = {
   title: "Login",

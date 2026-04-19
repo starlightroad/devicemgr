@@ -4,7 +4,9 @@ import { Button, Dropdown, Tooltip } from "@heroui/react";
 
 import { TOOLTIP_OFFSET } from "@/lib/constants";
 
-import { MobileNavMenu, UserProfile } from "@/features/dashboard";
+import UserProfile from "@/features/dashboard/components/user-profile";
+
+import MobileNavMenu from "@/features/dashboard/components/mobile-nav-menu";
 
 export default function MobileNav() {
   return (

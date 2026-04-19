@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+
 import { Inter } from "next/font/google";
+
 import "./globals.css";
-import { APP_DESC, APP_NAME } from "@/lib/constants";
 
 import { Toast } from "@heroui/react";
 
 import { ThemeProvider } from "@wrksz/themes/next";
+
+import { APP_DESC, APP_NAME } from "@/lib/constants";
 
 const interSans = Inter({
   variable: "--font-inter-sans",

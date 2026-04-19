@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-import { client } from "@/features/auth";
+import { client } from "@/features/auth/lib/client";
 
 export default function useSignOut() {
   const router = useRouter();

@@ -14,15 +14,19 @@ import {
   Trash2Icon,
 } from "lucide-react";
 
-import {
-  ACTION_MESSAGE,
-  DeleteDeviceModal,
-  type Device,
-  EditDeviceModal,
-  MoveDeviceModal,
-  ShareDeviceModal,
-  useCopyToClipboard,
-} from "@/features/device";
+import type { Device } from "@/features/device/lib/definitions";
+
+import { ACTION_MESSAGE } from "@/features/device/lib/constants";
+
+import useCopyToClipboard from "@/features/device/hooks/use-copy-to-clipboard";
+
+import EditDeviceModal from "@/features/device/components/edit-device-modal";
+
+import MoveDeviceModal from "@/features/device/components/move-device-modal";
+
+import ShareDeviceModal from "@/features/device/components/share-device-modal";
+
+import DeleteDeviceModal from "@/features/device/components/delete-device-modal";
 
 export default function DeviceActions({ device }: { device: Device }) {
   const { copy } = useCopyToClipboard();

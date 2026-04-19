@@ -6,7 +6,7 @@ import { Button, FieldError, Form, Input, Label, TextField } from "@heroui/react
 
 import usersJSON from "@/lib/data/users.json";
 
-import { authenticateUser } from "@/features/auth";
+import { authenticateUser } from "@/features/auth/lib/actions";
 
 export default function LoginForm() {
   const [state, formAction, loading] = useActionState(authenticateUser, undefined);

@@ -8,7 +8,7 @@ import { APIError, isAPIError } from "better-auth/api";
 
 import { auth } from "@/lib/auth";
 
-import { LoginFormSchema } from "@/features/auth";
+import { LoginFormSchema } from "@/features/auth/lib/schemas";
 
 type PreviousState = {
   serverErrors?: {

@@ -6,7 +6,13 @@ import { Trash2Icon } from "lucide-react";
 
 import { AlertDialog, Button, ErrorMessage, Form, toast } from "@heroui/react";
 
-import { ACTION_MESSAGE, deleteDevice, useFormSuccess, type DeleteDeviceModalProps } from "@/features/device";
+import { deleteDevice } from "@/features/device/lib/actions";
+
+import { ACTION_MESSAGE } from "@/features/device/lib/constants";
+
+import type { DeleteDeviceModalProps } from "@/features/device/lib/definitions";
+
+import useFormSuccess from "@/features/device/hooks/use-form-success";
 
 export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: DeleteDeviceModalProps) {
   const [state, formAction, isFormLoading] = useActionState(deleteDevice.bind(null, deviceId), undefined);

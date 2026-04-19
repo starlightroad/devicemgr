@@ -4,7 +4,7 @@ import { Button } from "@heroui/react";
 
 import { LogOutIcon } from "lucide-react";
 
-import { useSignOut } from "@/features/auth";
+import useSignOut from "@/features/auth/hooks/use-sign-out";
 
 export default function SignOutButton() {
   const { signOut } = useSignOut();

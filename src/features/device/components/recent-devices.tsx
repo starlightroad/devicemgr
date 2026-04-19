@@ -6,7 +6,11 @@ import { DatabaseIcon, DatabaseZapIcon } from "lucide-react";
 
 import { getDevices } from "@/dal/device";
 
-import { DeviceActions, getChipColorByStatus, TABLE_COLUMNS } from "@/features/device";
+import { TABLE_COLUMNS } from "@/features/device/lib/constants";
+
+import { getChipColorByStatus } from "@/features/device/lib/utils";
+
+import DeviceActions from "@/features/device/components/device-actions";
 
 export default async function RecentDevices() {
   const { data, error } = await getDevices(5);

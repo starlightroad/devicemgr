@@ -8,7 +8,7 @@ import { db } from "@/db/client";
 
 import * as schemas from "@/db/schemas";
 
-import { MAX_PASSWORD, MIN_PASSWORD } from "@/features/auth";
+import { MAX_PASSWORD, MIN_PASSWORD } from "@/features/auth/lib/constants";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {

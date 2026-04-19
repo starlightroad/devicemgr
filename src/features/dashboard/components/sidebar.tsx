@@ -6,7 +6,13 @@ import { buttonVariants, Separator } from "@heroui/react";
 
 import { GITHUB_REPO } from "@/lib/constants";
 
-import { navItems, NavList, SignOutButton, UserProfile } from "@/features/dashboard";
+import { navItems } from "@/features/dashboard/lib/config";
+
+import NavList from "@/features/dashboard/components/nav-list";
+
+import UserProfile from "@/features/dashboard/components/user-profile";
+
+import SignOutButton from "@/features/dashboard/components/sign-out-button";
 
 export default function Sidebar() {
   return (
