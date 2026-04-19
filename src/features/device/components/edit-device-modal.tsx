@@ -18,16 +18,14 @@ import useFields from "@/features/device/hooks/use-fields";
 
 import useDeviceTypes from "@/features/device/hooks/use-types";
 
-import useDeviceStatuses from "@/features/device/hooks/use-statuses";
-
 import useFormSuccess from "@/features/device/hooks/use-form-success";
 
 import FieldErrorMessage from "@/features/device/components/field-error-message";
 
-export default function EditDeviceModal({ device, groups, onClose }: EditDeviceModalProps) {
+export default function EditDeviceModal({ device, groups, statuses, onClose }: EditDeviceModalProps) {
   const { types, loading: isTypesLoading, error: typesError } = useDeviceTypes();
 
-  const { statuses, loading: isStatusesLoading, error: statusesError } = useDeviceStatuses();
+  const isStatusesEmpty = statuses.length === 0;
 
   const isGroupsEmpty = groups.length === 0;
 
@@ -121,7 +119,7 @@ export default function EditDeviceModal({ device, groups, onClose }: EditDeviceM
                     isRequired
                     value={field.status.value}
                     onChange={(e) => handleFieldChange("status", String(e))}
-                    isDisabled={Boolean(statusesError) || isStatusesLoading}
+                    isDisabled={isStatusesEmpty}
                     defaultValue={field.status.value}
                   >
                     <Label>Status</Label>
@@ -144,7 +142,7 @@ export default function EditDeviceModal({ device, groups, onClose }: EditDeviceM
                       </ListBox>
                     </Select.Popover>
                     <FieldErrorMessage
-                      message={statusesError ? statusesError : state?.serverErrors?.status}
+                      message={isStatusesEmpty ? "No entries found." : state?.serverErrors?.status}
                       isFormLoading={isFormLoading}
                     />
                   </Select>
@@ -217,9 +215,7 @@ export default function EditDeviceModal({ device, groups, onClose }: EditDeviceM
                 type="submit"
                 form={FORM_ID}
                 isPending={isFormLoading}
-                isDisabled={
-                  Boolean(typesError) || Boolean(statusesError) || isTypesLoading || isStatusesLoading || isGroupsEmpty
-                }
+                isDisabled={Boolean(typesError) || isTypesLoading || isStatusesEmpty || isGroupsEmpty}
               >
                 Save
               </Button>
