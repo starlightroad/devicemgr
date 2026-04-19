@@ -28,3 +28,5 @@ export type EditDeviceAction = ActionReturnType<{
     serialNumber: string;
   }>;
 }>;
+
+export type MoveDeviceAction = ActionReturnType<{ serverErrors?: Partial<{ group: string }> }>;
