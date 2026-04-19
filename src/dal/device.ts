@@ -1,4 +1,4 @@
-"use server";
+import "server-only";
 
 import { count, desc, eq, ilike } from "drizzle-orm";
 
