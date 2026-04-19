@@ -4,9 +4,10 @@ import { useActionState, useEffect } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
-import { Button, Form, Input, Label, ListBox, Modal, Select, Surface, TextField } from "@heroui/react";
+import { Button, Form, Input, Label, ListBox, Modal, Select, Surface, TextField, toast } from "@heroui/react";
 
 import {
+  ACTION_MESSAGE,
   type EditDeviceModalProps,
   FieldErrorMessage,
   FORM_ID,
@@ -37,7 +38,10 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
 
   const [state, formAction, isFormLoading] = useActionState(updateDevice.bind(null, device.id), undefined);
 
-  useFormSuccess(state?.success, onClose);
+  useFormSuccess(state?.success, () => {
+    onClose();
+    toast.success(ACTION_MESSAGE.updated);
+  });
 
   useEffect(() => {
     if (selectedTypeId) handleFieldChange("type", selectedTypeId);

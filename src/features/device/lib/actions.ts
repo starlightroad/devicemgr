@@ -12,21 +12,16 @@ import { getSession } from "@/dal/session";
 
 import { devicesTable } from "@/db/schemas";
 
-import { type DeleteDeviceAction, DeleteDeviceSchema, EditDeviceSchema, MoveDeviceSchema } from "@/features/device";
+import {
+  type DeleteDeviceAction,
+  DeleteDeviceSchema,
+  type EditDeviceAction,
+  EditDeviceSchema,
+  type MoveDeviceAction,
+  MoveDeviceSchema,
+} from "@/features/device";
 
-type PreviousState = {
-  success: boolean;
-  serverErrors?: Partial<{
-    name: string;
-    type: string;
-    status: string;
-    group: string;
-    ipAddress: string;
-    serialNumber: string;
-  }>;
-};
-
-export const updateDevice = async (deviceId: string, _previousState: PreviousState | undefined, formData: FormData) => {
+export const updateDevice = async (deviceId: string, _prevState: unknown, formData: FormData): EditDeviceAction => {
   const { userId } = await getSession();
 
   const parsedFields = EditDeviceSchema.safeParse({
@@ -84,13 +79,7 @@ export const updateDevice = async (deviceId: string, _previousState: PreviousSta
   };
 };
 
-type MoveDevicePrevState = { success: boolean; serverErrors?: Partial<{ group: string }> };
-
-export const moveDevice = async (
-  deviceId: string,
-  _previousState: MoveDevicePrevState | undefined,
-  formData: FormData,
-) => {
+export const moveDevice = async (deviceId: string, _prevState: unknown, formData: FormData): MoveDeviceAction => {
   try {
     const { userId } = await getSession();
 
