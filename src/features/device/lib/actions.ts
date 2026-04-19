@@ -12,21 +12,15 @@ import { getSession } from "@/dal/session";
 
 import { devicesTable } from "@/db/schemas";
 
-import { type DeleteDeviceAction, DeleteDeviceSchema, EditDeviceSchema, MoveDeviceSchema } from "@/features/device";
+import {
+  type DeleteDeviceAction,
+  DeleteDeviceSchema,
+  EditDeviceAction,
+  EditDeviceSchema,
+  MoveDeviceSchema,
+} from "@/features/device";
 
-type PreviousState = {
-  success: boolean;
-  serverErrors?: Partial<{
-    name: string;
-    type: string;
-    status: string;
-    group: string;
-    ipAddress: string;
-    serialNumber: string;
-  }>;
-};
-
-export const updateDevice = async (deviceId: string, _previousState: PreviousState | undefined, formData: FormData) => {
+export const updateDevice = async (deviceId: string, _prevState: unknown, formData: FormData): EditDeviceAction => {
   const { userId } = await getSession();
 
   const parsedFields = EditDeviceSchema.safeParse({
