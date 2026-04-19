@@ -86,7 +86,9 @@ export default function DeviceActions({ device }: { device: Device }) {
         </Dropdown.Popover>
       </Dropdown>
 
-      {modal === "edit" && <EditDeviceModal device={device} statuses={[]} groups={[]} onClose={() => setModal(null)} />}
+      {modal === "edit" && (
+        <EditDeviceModal device={device} types={[]} statuses={[]} groups={[]} onClose={() => setModal(null)} />
+      )}
 
       {modal === "move" && (
         <MoveDeviceModal deviceId={device.id} deviceGroup={device.group} groups={[]} onClose={() => setModal(null)} />

@@ -16,14 +16,12 @@ import { updateDevice } from "@/features/device/lib/actions";
 
 import useFields from "@/features/device/hooks/use-fields";
 
-import useDeviceTypes from "@/features/device/hooks/use-types";
-
 import useFormSuccess from "@/features/device/hooks/use-form-success";
 
 import FieldErrorMessage from "@/features/device/components/field-error-message";
 
-export default function EditDeviceModal({ device, groups, statuses, onClose }: EditDeviceModalProps) {
-  const { types, loading: isTypesLoading, error: typesError } = useDeviceTypes();
+export default function EditDeviceModal({ device, types, groups, statuses, onClose }: EditDeviceModalProps) {
+  const isTypesEmpty = statuses.length === 0;
 
   const isStatusesEmpty = statuses.length === 0;
 
@@ -85,7 +83,7 @@ export default function EditDeviceModal({ device, groups, statuses, onClose }: E
                     isRequired
                     value={field.type.value}
                     onChange={(e) => handleFieldChange("type", String(e))}
-                    isDisabled={typesError ? true : isTypesLoading}
+                    isDisabled={isTypesEmpty}
                     defaultValue={field.type.value}
                   >
                     <Label>Type</Label>
@@ -108,7 +106,7 @@ export default function EditDeviceModal({ device, groups, statuses, onClose }: E
                       </ListBox>
                     </Select.Popover>
                     <FieldErrorMessage
-                      message={typesError ? typesError : state?.serverErrors?.type}
+                      message={isTypesEmpty ? "No entries found." : state?.serverErrors?.type}
                       isFormLoading={isFormLoading}
                     />
                   </Select>
@@ -215,7 +213,7 @@ export default function EditDeviceModal({ device, groups, statuses, onClose }: E
                 type="submit"
                 form={FORM_ID}
                 isPending={isFormLoading}
-                isDisabled={Boolean(typesError) || isTypesLoading || isStatusesEmpty || isGroupsEmpty}
+                isDisabled={isTypesEmpty || isStatusesEmpty || isGroupsEmpty}
               >
                 Save
               </Button>

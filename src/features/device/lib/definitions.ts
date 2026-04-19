@@ -10,6 +10,7 @@ export type Device = Pick<typeof devicesTable.$inferSelect, "id" | "name" | "ser
 
 export type EditDeviceModalProps = {
   device: Device;
+  types: { id: string; name: string }[];
   groups: { id: string; name: string }[];
   statuses: { id: string; name: string }[];
   onClose: () => void;
