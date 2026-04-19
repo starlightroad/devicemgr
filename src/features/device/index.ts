@@ -40,4 +40,6 @@ export { default as MoveDeviceModal } from "./components/move-device-modal";
 
 export { default as ShareDeviceModal } from "./components/share-device-modal";
 
+export { default as DeleteDeviceModal } from "./components/delete-device-modal";
+
 export { default as FieldErrorMessage } from "./components/field-error-message";

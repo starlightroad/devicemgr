@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 
-import { eq, sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 
 import { revalidatePath } from "next/cache";
 
@@ -12,7 +12,7 @@ import { getSession } from "@/dal/session";
 
 import { devicesTable } from "@/db/schemas";
 
-import { EditDeviceSchema, MoveDeviceSchema } from "@/features/device";
+import { type DeleteDeviceAction, DeleteDeviceSchema, EditDeviceSchema, MoveDeviceSchema } from "@/features/device";
 
 type PreviousState = {
   success: boolean;
@@ -123,6 +123,36 @@ export const moveDevice = async (
       serverErrors: {
         group: "A server error has occurred.",
       },
+    };
+  }
+
+  revalidatePath("/dashboard");
+
+  return {
+    success: true,
+  };
+};
+
+export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
+  try {
+    const { userId } = await getSession();
+
+    const parsedDeviceId = DeleteDeviceSchema.safeParse(deviceId);
+
+    if (!parsedDeviceId.success) {
+      return {
+        success: false,
+        serverError: "Failed to delete device.",
+      };
+    }
+
+    await db.transaction(async (tx) => {
+      await tx.delete(devicesTable).where(and(eq(devicesTable.id, deviceId), eq(devicesTable.userId, userId)));
+    });
+  } catch {
+    return {
+      success: false,
+      serverError: "A server error has occurred.",
     };
   }
 
