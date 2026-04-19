@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 import {
+  ACTION_MESSAGE,
   DeleteDeviceModal,
   type Device,
   EditDeviceModal,
@@ -31,7 +32,7 @@ export default function DeviceActions({ device }: { device: Device }) {
   const copyDeviceId = async () => {
     try {
       await copy(device.id);
-      toast.success("Device ID copied to clipboard.");
+      toast.success(ACTION_MESSAGE.copied);
     } catch {
       toast.danger("Failed to copy device ID.");
     }
