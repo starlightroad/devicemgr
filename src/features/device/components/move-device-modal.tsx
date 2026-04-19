@@ -4,9 +4,10 @@ import { useActionState, useEffect } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
-import { Button, Form, Label, ListBox, Modal, Select, Surface } from "@heroui/react";
+import { Button, Form, Label, ListBox, Modal, Select, Surface, toast } from "@heroui/react";
 
 import {
+  ACTION_MESSAGE,
   FieldErrorMessage,
   FORM_ID,
   generateId,
@@ -26,7 +27,10 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, onClose }: Move
 
   const [state, formAction, isFormLoading] = useActionState(moveDevice.bind(null, deviceId), undefined);
 
-  useFormSuccess(state?.success, onClose);
+  useFormSuccess(state?.success, () => {
+    onClose();
+    toast.success(ACTION_MESSAGE.moved);
+  });
 
   useEffect(() => {
     if (selectedGroupId) handleFieldChange("group", selectedGroupId);

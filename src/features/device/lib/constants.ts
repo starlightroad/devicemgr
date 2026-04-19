@@ -5,6 +5,6 @@ export const FORM_ID = "device-form";
 export const ACTION_MESSAGE = {
   created: null,
   updated: "The device was successfully updated.",
-  moved: null,
+  moved: "The device was successfully moved.",
   deleted: "The device was successfully deleted.",
 };
