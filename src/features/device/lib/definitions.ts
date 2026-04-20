@@ -25,7 +25,7 @@ export type EditDeviceModalProps = {
 export type MoveDeviceModalProps = {
   deviceId: string;
   deviceGroup: string;
-  groups: { id: string; name: string }[];
+  groups: DeviceGroup[] | null;
   onClose: () => void;
 };
 

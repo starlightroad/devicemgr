@@ -21,7 +21,7 @@ import useFormSuccess from "@/features/device/hooks/use-form-success";
 import FieldErrorMessage from "@/features/device/components/field-error-message";
 
 export default function MoveDeviceModal({ deviceId, deviceGroup, groups, onClose }: MoveDeviceModalProps) {
-  const isGroupsEmpty = groups.length === 0;
+  const isGroupsEmpty = groups?.length === 0;
 
   const selectedGroupId = groups?.find((group) => group.name === deviceGroup)?.id;
 

@@ -107,7 +107,12 @@ export default function DeviceActions({
       )}
 
       {modal === "move" && (
-        <MoveDeviceModal deviceId={device.id} deviceGroup={device.group} groups={[]} onClose={() => setModal(null)} />
+        <MoveDeviceModal
+          deviceId={device.id}
+          deviceGroup={device.group}
+          groups={groups}
+          onClose={() => setModal(null)}
+        />
       )}
 
       {modal === "share" && <ShareDeviceModal deviceId={device.id} onClose={() => setModal(null)} />}
