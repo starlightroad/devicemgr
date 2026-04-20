@@ -28,17 +28,14 @@ import ShareDeviceModal from "@/features/device/components/share-device-modal";
 
 import DeleteDeviceModal from "@/features/device/components/delete-device-modal";
 
-export default function DeviceActions({
-  device,
-  types,
-  statuses,
-  groups,
-}: {
+type DeviceActionsProps = {
   device: Device;
   types: DeviceType[] | null;
   statuses: DeviceStatus[] | null;
   groups: DeviceGroup[] | null;
-}) {
+};
+
+export default function DeviceActions({ device, types, statuses, groups }: DeviceActionsProps) {
   const { copy } = useCopyToClipboard();
 
   const [modal, setModal] = useState<Key | null>(null);
