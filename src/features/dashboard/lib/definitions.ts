@@ -1,5 +1,7 @@
 export type NavItem = {
   id: string;
-  label: "dashboard" | "devices" | "profile";
+  label: NavItemLabel;
   href: string;
 };
+
+export type NavItemLabel = "dashboard" | "devices" | "profile";
