@@ -8,16 +8,13 @@ import { APIError, isAPIError } from "better-auth/api";
 
 import { auth } from "@/lib/auth";
 
+import type { ActionReturnType } from "@/lib/definitions";
+
 import { LoginFormSchema } from "@/features/auth/lib/schemas";
 
-type PreviousState = {
-  serverErrors?: {
-    email?: string;
-    password?: string;
-  };
-};
+type AuthenticateUserReturnType = ActionReturnType<Partial<{ email: string; password: string }>>;
 
-export const authenticateUser = async (_previousState: PreviousState | undefined, formData: FormData) => {
+export const authenticateUser = async (_prevState: unknown, formData: FormData): AuthenticateUserReturnType => {
   const parsedFields = LoginFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -28,6 +25,7 @@ export const authenticateUser = async (_previousState: PreviousState | undefined
       const { fieldErrors } = z.flattenError(parsedFields.error);
 
       return {
+        success: false,
         serverErrors: {
           email: fieldErrors.email?.toString(),
           password: fieldErrors.password?.toString(),
@@ -53,6 +51,7 @@ export const authenticateUser = async (_previousState: PreviousState | undefined
     if (isAPIError(error)) {
       if (error.body?.code === auth.$ERROR_CODES.INVALID_EMAIL_OR_PASSWORD.code) {
         return {
+          success: false,
           serverErrors: {
             password: `${error.message}.`,
           },
@@ -61,6 +60,7 @@ export const authenticateUser = async (_previousState: PreviousState | undefined
     }
 
     return {
+      success: false,
       serverErrors: {
         password: "A server error has occurred.",
       },

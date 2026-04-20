@@ -8,9 +8,11 @@ import { listboxItemVariants, listboxVariants } from "@heroui/react";
 
 import { getNavIcon } from "@/features/dashboard/lib/utils";
 
-import { type NavItem } from "@/features/dashboard/lib/definitions";
+import type { NavItem } from "@/features/dashboard/lib/definitions";
 
-export default function NavList({ items }: { items: NavItem[] }) {
+type NavListProps = { items: NavItem[] };
+
+export default function NavList({ items }: NavListProps) {
   const pathname = usePathname();
 
   return (

@@ -12,13 +12,15 @@ import { moveDevice } from "@/features/device/lib/actions";
 
 import { ACTION_MESSAGE, FORM_ID } from "@/features/device/lib/constants";
 
-import type { MoveDeviceModalProps } from "@/features/device/lib/definitions";
+import type { BaseDeviceModalProps, DeviceGroup } from "@/features/device/lib/definitions";
 
 import useFields from "@/features/device/hooks/use-fields";
 
 import useFormSuccess from "@/features/device/hooks/use-form-success";
 
 import FieldErrorMessage from "@/features/device/components/field-error-message";
+
+type MoveDeviceModalProps = BaseDeviceModalProps<{ deviceGroup: string; groups: DeviceGroup[] | null }>;
 
 export default function MoveDeviceModal({ deviceId, deviceGroup, groups, onClose }: MoveDeviceModalProps) {
   const isGroupsEmpty = groups?.length === 0;

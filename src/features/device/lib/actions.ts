@@ -12,18 +12,13 @@ import { getSession } from "@/dal/session";
 
 import { devicesTable } from "@/db/schemas";
 
+import type { ActionReturnType } from "@/lib/definitions";
+
+import type { Device } from "@/features/device/lib/definitions";
+
 import { DeleteDeviceSchema, EditDeviceSchema, MoveDeviceSchema } from "@/features/device/lib/schemas";
 
-import type { DeleteDeviceAction, EditDeviceAction, MoveDeviceAction } from "@/features/device/lib/definitions";
-
-// import {
-//   type DeleteDeviceAction,
-//   DeleteDeviceSchema,
-//   type EditDeviceAction,
-//   EditDeviceSchema,
-//   type MoveDeviceAction,
-//   MoveDeviceSchema,
-// } from "@/features/device";
+type EditDeviceAction = ActionReturnType<Partial<Omit<Device, "id">> & { ipAddress?: string }>;
 
 export const updateDevice = async (deviceId: string, _prevState: unknown, formData: FormData): EditDeviceAction => {
   const { userId } = await getSession();
@@ -80,8 +75,11 @@ export const updateDevice = async (deviceId: string, _prevState: unknown, formDa
 
   return {
     success: true,
+    serverErrors: null,
   };
 };
+
+type MoveDeviceAction = ActionReturnType<Partial<{ group: string }>>;
 
 export const moveDevice = async (deviceId: string, _prevState: unknown, formData: FormData): MoveDeviceAction => {
   try {
@@ -123,8 +121,11 @@ export const moveDevice = async (deviceId: string, _prevState: unknown, formData
 
   return {
     success: true,
+    serverErrors: null,
   };
 };
+
+type DeleteDeviceAction = ActionReturnType<{ message: string }>;
 
 export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
   try {
@@ -135,7 +136,9 @@ export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
     if (!parsedDeviceId.success) {
       return {
         success: false,
-        serverError: "Failed to delete device.",
+        serverErrors: {
+          message: "Failed to delete device.",
+        },
       };
     }
 
@@ -145,7 +148,9 @@ export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
   } catch {
     return {
       success: false,
-      serverError: "A server error has occurred.",
+      serverErrors: {
+        message: "A server error has occurred.",
+      },
     };
   }
 
@@ -153,5 +158,6 @@ export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
 
   return {
     success: true,
+    serverErrors: null,
   };
 };

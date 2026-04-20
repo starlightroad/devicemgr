@@ -26,7 +26,7 @@ export default function LoginForm() {
           value={userEmail}
           onChange={(e) => setUserEmail(e.target.value)}
         />
-        {state?.serverErrors.email && !loading ? (
+        {state?.serverErrors?.email && !loading ? (
           <p aria-live="polite" className="text-danger px-1 text-xs">
             {state.serverErrors.email}
           </p>
@@ -43,7 +43,7 @@ export default function LoginForm() {
           value={userPassword}
           onChange={(e) => setUserPassword(e.target.value)}
         />
-        {state?.serverErrors.password && !loading ? (
+        {state?.serverErrors?.password && !loading ? (
           <p aria-live="polite" className="text-danger px-1 text-xs">
             {state.serverErrors.password}
           </p>

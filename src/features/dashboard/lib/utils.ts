@@ -1,8 +1,8 @@
 import { HouseIcon, MonitorSmartphoneIcon, UserRoundIcon } from "lucide-react";
 
-import type { NavItem } from "@/features/dashboard/lib/definitions";
+import type { NavItemLabel } from "@/features/dashboard/lib/definitions";
 
-export const getNavIcon = (label: NavItem["label"]) => {
+export const getNavIcon = (label: NavItemLabel) => {
   switch (label) {
     case "dashboard":
       return HouseIcon;
