@@ -16,14 +16,6 @@ export type DeviceStatus = DeviceIdAndName;
 
 export type DeviceGroup = DeviceIdAndName;
 
-export type EditDeviceModalProps = {
-  device: Device;
-  types: DeviceType[] | null;
-  statuses: DeviceStatus[] | null;
-  groups: DeviceGroup[] | null;
-  onClose: () => void;
-};
-
 export type MoveDeviceModalProps = {
   deviceId: string;
   deviceGroup: string;

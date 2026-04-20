@@ -8,17 +8,25 @@ import { Button, Form, Input, Label, ListBox, Modal, Select, Surface, TextField,
 
 import { ACTION_MESSAGE, FORM_ID } from "@/features/device/lib/constants";
 
-import type { EditDeviceModalProps } from "@/features/device/lib/definitions";
-
 import { generateDeviceFieldIds, generateId } from "@/features/device/lib/utils";
 
 import { updateDevice } from "@/features/device/lib/actions";
+
+import type { Device, DeviceGroup, DeviceStatus, DeviceType } from "@/features/device/lib/definitions";
 
 import useFields from "@/features/device/hooks/use-fields";
 
 import useFormSuccess from "@/features/device/hooks/use-form-success";
 
 import FieldErrorMessage from "@/features/device/components/field-error-message";
+
+type EditDeviceModalProps = {
+  device: Device;
+  types: DeviceType[] | null;
+  statuses: DeviceStatus[] | null;
+  groups: DeviceGroup[] | null;
+  onClose: () => void;
+};
 
 export default function EditDeviceModal({ device, types, statuses, groups, onClose }: EditDeviceModalProps) {
   const isTypesEmpty = types?.length === 0;
