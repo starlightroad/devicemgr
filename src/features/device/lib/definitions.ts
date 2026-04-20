@@ -16,16 +16,10 @@ export type DeviceStatus = DeviceIdAndName;
 
 export type DeviceGroup = DeviceIdAndName;
 
-export type MoveDeviceModalProps = {
+export type BaseDeviceModalProps<T = object> = {
   deviceId: string;
-  deviceGroup: string;
-  groups: DeviceGroup[] | null;
   onClose: () => void;
-};
-
-export type ShareDeviceModalProps = Pick<MoveDeviceModalProps, "deviceId" | "onClose">;
-
-export type DeleteDeviceModalProps = Pick<MoveDeviceModalProps, "deviceId" | "onClose"> & { deviceName: string };
+} & T;
 
 export type DeleteDeviceAction = ActionReturnType<{ message: string }>;
 

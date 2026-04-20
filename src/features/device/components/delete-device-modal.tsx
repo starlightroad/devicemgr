@@ -10,9 +10,11 @@ import { deleteDevice } from "@/features/device/lib/actions";
 
 import { ACTION_MESSAGE } from "@/features/device/lib/constants";
 
-import type { DeleteDeviceModalProps } from "@/features/device/lib/definitions";
+import type { BaseDeviceModalProps } from "@/features/device/lib/definitions";
 
 import useFormSuccess from "@/features/device/hooks/use-form-success";
+
+type DeleteDeviceModalProps = BaseDeviceModalProps & { deviceName: string };
 
 export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: DeleteDeviceModalProps) {
   const [state, formAction, isFormLoading] = useActionState(deleteDevice.bind(null, deviceId), undefined);

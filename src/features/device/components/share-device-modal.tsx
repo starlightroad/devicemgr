@@ -4,7 +4,7 @@ import { CheckIcon, CopyIcon, Share2Icon } from "lucide-react";
 
 import { Button, InputGroup, Label, Modal, Surface, TextField } from "@heroui/react";
 
-import type { ShareDeviceModalProps } from "@/features/device/lib/definitions";
+import type { BaseDeviceModalProps } from "@/features/device/lib/definitions";
 
 import useTimer from "@/features/dashboard/hooks/use-timer";
 
@@ -14,6 +14,8 @@ const getUrlProtocolAndDomain = () => {
   const { protocol, host } = window.location;
   return `${protocol}//${host}`;
 };
+
+type ShareDeviceModalProps = BaseDeviceModalProps;
 
 export default function ShareDeviceModal({ deviceId, onClose }: ShareDeviceModalProps) {
   const { copy } = useCopyToClipboard();
