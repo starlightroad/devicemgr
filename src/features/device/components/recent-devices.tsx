@@ -8,6 +8,8 @@ import { getDevices } from "@/dal/device";
 
 import { getDeviceTypes } from "@/dal/type";
 
+import { getDeviceStatuses } from "@/dal/status";
+
 import { TABLE_COLUMNS } from "@/features/device/lib/constants";
 
 import { getChipColorByStatus } from "@/features/device/lib/utils";
@@ -18,6 +20,8 @@ export default async function RecentDevices() {
   const { data, error } = await getDevices(5);
 
   const types = await getDeviceTypes();
+
+  const statuses = await getDeviceStatuses();
 
   const hasNoData = !data?.length && data?.length === 0;
 
@@ -81,7 +85,7 @@ export default async function RecentDevices() {
                       <Table.Cell>{device.group}</Table.Cell>
                       <Table.Cell>{device.serialNumber}</Table.Cell>
                       <Table.Cell>
-                        <DeviceActions device={device} types={types.data} />
+                        <DeviceActions device={device} types={types.data} statuses={statuses.data} />
                       </Table.Cell>
                     </Table.Row>
                   );
