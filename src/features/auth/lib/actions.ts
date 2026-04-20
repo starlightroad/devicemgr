@@ -10,14 +10,7 @@ import { auth } from "@/lib/auth";
 
 import { LoginFormSchema } from "@/features/auth/lib/schemas";
 
-type PreviousState = {
-  serverErrors?: {
-    email?: string;
-    password?: string;
-  };
-};
-
-export const authenticateUser = async (_previousState: PreviousState | undefined, formData: FormData) => {
+export const authenticateUser = async (_prevState: unknown, formData: FormData) => {
   const parsedFields = LoginFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
