@@ -8,15 +8,17 @@ export type Device = Pick<typeof devicesTable.$inferSelect, "id" | "name" | "ser
   group: string;
 };
 
-export type DeviceType = Pick<Device, "id" | "name">;
+type DeviceIdAndName = Pick<Device, "id" | "name">;
 
-export type DeviceStatus = Pick<Device, "id" | "name">;
+export type DeviceType = DeviceIdAndName;
 
-export type DeviceGroup = Pick<Device, "id" | "name">;
+export type DeviceStatus = DeviceIdAndName;
+
+export type DeviceGroup = DeviceIdAndName;
 
 export type EditDeviceModalProps = {
   device: Device;
-  types: { id: string; name: string }[] | null;
+  types: DeviceType[] | null;
   statuses: DeviceStatus[] | null;
   groups: DeviceGroup[] | null;
   onClose: () => void;
