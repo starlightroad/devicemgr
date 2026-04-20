@@ -41,7 +41,7 @@ export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: Del
               <p>
                 This will permanently delete <strong>{deviceName}</strong>. This action cannot be undone.
               </p>
-              {state?.serverError && <ErrorMessage>{state.serverError}</ErrorMessage>}
+              {state?.serverErrors?.message && <ErrorMessage>{state.serverErrors.message}</ErrorMessage>}
             </AlertDialog.Body>
             <AlertDialog.Footer>
               <Button type="button" slot="close" variant="secondary">

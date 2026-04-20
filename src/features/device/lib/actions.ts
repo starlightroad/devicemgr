@@ -80,6 +80,7 @@ export const updateDevice = async (deviceId: string, _prevState: unknown, formDa
 
   return {
     success: true,
+    serverErrors: null,
   };
 };
 
@@ -123,6 +124,7 @@ export const moveDevice = async (deviceId: string, _prevState: unknown, formData
 
   return {
     success: true,
+    serverErrors: null,
   };
 };
 
@@ -135,7 +137,9 @@ export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
     if (!parsedDeviceId.success) {
       return {
         success: false,
-        serverError: "Failed to delete device.",
+        serverErrors: {
+          message: "Failed to delete device.",
+        },
       };
     }
 
@@ -145,7 +149,9 @@ export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
   } catch {
     return {
       success: false,
-      serverError: "A server error has occurred.",
+      serverErrors: {
+        message: "A server error has occurred.",
+      },
     };
   }
 
@@ -153,5 +159,6 @@ export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
 
   return {
     success: true,
+    serverErrors: null,
   };
 };

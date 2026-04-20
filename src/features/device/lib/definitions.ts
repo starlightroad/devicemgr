@@ -33,17 +33,17 @@ export type ShareDeviceModalProps = Pick<MoveDeviceModalProps, "deviceId" | "onC
 
 export type DeleteDeviceModalProps = Pick<MoveDeviceModalProps, "deviceId" | "onClose"> & { deviceName: string };
 
-export type DeleteDeviceAction = ActionReturnType<{ serverError?: string }>;
+export type DeleteDeviceAction = ActionReturnType<{ message: string }>;
 
-export type EditDeviceAction = ActionReturnType<{
-  serverErrors?: Partial<{
+export type EditDeviceAction = ActionReturnType<
+  Partial<{
     name: string;
     type: string;
     status: string;
     group: string;
     ipAddress: string;
     serialNumber: string;
-  }>;
-}>;
+  }>
+>;
 
-export type MoveDeviceAction = ActionReturnType<{ serverErrors?: Partial<{ group: string }> }>;
+export type MoveDeviceAction = ActionReturnType<Partial<{ group: string }>>;
