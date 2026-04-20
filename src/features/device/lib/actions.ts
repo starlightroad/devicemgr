@@ -16,15 +16,6 @@ import { DeleteDeviceSchema, EditDeviceSchema, MoveDeviceSchema } from "@/featur
 
 import type { DeleteDeviceAction, EditDeviceAction, MoveDeviceAction } from "@/features/device/lib/definitions";
 
-// import {
-//   type DeleteDeviceAction,
-//   DeleteDeviceSchema,
-//   type EditDeviceAction,
-//   EditDeviceSchema,
-//   type MoveDeviceAction,
-//   MoveDeviceSchema,
-// } from "@/features/device";
-
 export const updateDevice = async (deviceId: string, _prevState: unknown, formData: FormData): EditDeviceAction => {
   const { userId } = await getSession();
 
