@@ -14,18 +14,11 @@ import { devicesTable } from "@/db/schemas";
 
 import type { ActionReturnType } from "@/lib/definitions";
 
+import type { Device } from "@/features/device/lib/definitions";
+
 import { DeleteDeviceSchema, EditDeviceSchema, MoveDeviceSchema } from "@/features/device/lib/schemas";
 
-type EditDeviceAction = ActionReturnType<
-  Partial<{
-    name: string;
-    type: string;
-    status: string;
-    group: string;
-    ipAddress: string;
-    serialNumber: string;
-  }>
->;
+type EditDeviceAction = ActionReturnType<Partial<Omit<Device, "id">> & { ipAddress?: string }>;
 
 export const updateDevice = async (deviceId: string, _prevState: unknown, formData: FormData): EditDeviceAction => {
   const { userId } = await getSession();
