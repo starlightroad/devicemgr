@@ -12,11 +12,13 @@ export type DeviceType = Pick<Device, "id" | "name">;
 
 export type DeviceStatus = Pick<Device, "id" | "name">;
 
+export type DeviceGroup = Pick<Device, "id" | "name">;
+
 export type EditDeviceModalProps = {
   device: Device;
   types: { id: string; name: string }[] | null;
-  groups: { id: string; name: string }[];
-  statuses: { id: string; name: string }[] | null;
+  statuses: DeviceStatus[] | null;
+  groups: DeviceGroup[] | null;
   onClose: () => void;
 };
 

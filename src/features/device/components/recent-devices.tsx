@@ -8,6 +8,8 @@ import { getDevices } from "@/dal/device";
 
 import { getDeviceTypes } from "@/dal/type";
 
+import { getDeviceGroups } from "@/dal/group";
+
 import { getDeviceStatuses } from "@/dal/status";
 
 import { TABLE_COLUMNS } from "@/features/device/lib/constants";
@@ -22,6 +24,8 @@ export default async function RecentDevices() {
   const types = await getDeviceTypes();
 
   const statuses = await getDeviceStatuses();
+
+  const groups = await getDeviceGroups();
 
   const hasNoData = !data?.length && data?.length === 0;
 
@@ -85,7 +89,12 @@ export default async function RecentDevices() {
                       <Table.Cell>{device.group}</Table.Cell>
                       <Table.Cell>{device.serialNumber}</Table.Cell>
                       <Table.Cell>
-                        <DeviceActions device={device} types={types.data} statuses={statuses.data} />
+                        <DeviceActions
+                          device={device}
+                          types={types.data}
+                          statuses={statuses.data}
+                          groups={groups.data}
+                        />
                       </Table.Cell>
                     </Table.Row>
                   );

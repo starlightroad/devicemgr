@@ -25,7 +25,7 @@ export default function EditDeviceModal({ device, types, groups, statuses, onClo
 
   const isStatusesEmpty = statuses?.length === 0;
 
-  const isGroupsEmpty = groups.length === 0;
+  const isGroupsEmpty = groups?.length === 0;
 
   const selectedTypeId = types?.find((type) => type.name === device.type)?.id;
 
