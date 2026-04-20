@@ -12,9 +12,20 @@ import { getSession } from "@/dal/session";
 
 import { devicesTable } from "@/db/schemas";
 
+import type { ActionReturnType } from "@/lib/definitions";
+
 import { DeleteDeviceSchema, EditDeviceSchema, MoveDeviceSchema } from "@/features/device/lib/schemas";
 
-import type { DeleteDeviceAction, EditDeviceAction, MoveDeviceAction } from "@/features/device/lib/definitions";
+type EditDeviceAction = ActionReturnType<
+  Partial<{
+    name: string;
+    type: string;
+    status: string;
+    group: string;
+    ipAddress: string;
+    serialNumber: string;
+  }>
+>;
 
 export const updateDevice = async (deviceId: string, _prevState: unknown, formData: FormData): EditDeviceAction => {
   const { userId } = await getSession();
@@ -75,6 +86,8 @@ export const updateDevice = async (deviceId: string, _prevState: unknown, formDa
   };
 };
 
+type MoveDeviceAction = ActionReturnType<Partial<{ group: string }>>;
+
 export const moveDevice = async (deviceId: string, _prevState: unknown, formData: FormData): MoveDeviceAction => {
   try {
     const { userId } = await getSession();
@@ -118,6 +131,8 @@ export const moveDevice = async (deviceId: string, _prevState: unknown, formData
     serverErrors: null,
   };
 };
+
+type DeleteDeviceAction = ActionReturnType<{ message: string }>;
 
 export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
   try {
