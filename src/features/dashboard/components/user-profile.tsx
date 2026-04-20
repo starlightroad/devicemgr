@@ -2,7 +2,9 @@ import { Avatar } from "@heroui/react";
 
 import { getUserNameAndEmail } from "@/dal/user";
 
-import { AVATAR_FALLBACK_DELAY, getUserInitials } from "@/features/dashboard";
+import { getUserInitials } from "@/features/dashboard/lib/utils";
+
+import { AVATAR_FALLBACK_DELAY } from "@/features/dashboard/lib/constants";
 
 export default async function UserProfile() {
   const user = await getUserNameAndEmail();

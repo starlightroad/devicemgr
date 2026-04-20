@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { MAX_PASSWORD, MIN_PASSWORD } from "@/features/auth";
+import { MAX_PASSWORD, MIN_PASSWORD } from "@/features/auth/lib/constants";
 
 export const LoginFormSchema = z.object({
   email: z.email("Email is required."),

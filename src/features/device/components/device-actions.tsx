@@ -14,17 +14,31 @@ import {
   Trash2Icon,
 } from "lucide-react";
 
-import {
-  ACTION_MESSAGE,
-  DeleteDeviceModal,
-  type Device,
-  EditDeviceModal,
-  MoveDeviceModal,
-  ShareDeviceModal,
-  useCopyToClipboard,
-} from "@/features/device";
+import type { Device, DeviceGroup, DeviceStatus, DeviceType } from "@/features/device/lib/definitions";
 
-export default function DeviceActions({ device }: { device: Device }) {
+import { ACTION_MESSAGE } from "@/features/device/lib/constants";
+
+import useCopyToClipboard from "@/features/device/hooks/use-copy-to-clipboard";
+
+import EditDeviceModal from "@/features/device/components/edit-device-modal";
+
+import MoveDeviceModal from "@/features/device/components/move-device-modal";
+
+import ShareDeviceModal from "@/features/device/components/share-device-modal";
+
+import DeleteDeviceModal from "@/features/device/components/delete-device-modal";
+
+export default function DeviceActions({
+  device,
+  types,
+  statuses,
+  groups,
+}: {
+  device: Device;
+  types: DeviceType[] | null;
+  statuses: DeviceStatus[] | null;
+  groups: DeviceGroup[] | null;
+}) {
   const { copy } = useCopyToClipboard();
 
   const [modal, setModal] = useState<Key | null>(null);
@@ -82,10 +96,23 @@ export default function DeviceActions({ device }: { device: Device }) {
         </Dropdown.Popover>
       </Dropdown>
 
-      {modal === "edit" && <EditDeviceModal device={device} onClose={() => setModal(null)} />}
+      {modal === "edit" && (
+        <EditDeviceModal
+          device={device}
+          types={types}
+          statuses={statuses}
+          groups={groups}
+          onClose={() => setModal(null)}
+        />
+      )}
 
       {modal === "move" && (
-        <MoveDeviceModal deviceId={device.id} deviceGroup={device.group} onClose={() => setModal(null)} />
+        <MoveDeviceModal
+          deviceId={device.id}
+          deviceGroup={device.group}
+          groups={groups}
+          onClose={() => setModal(null)}
+        />
       )}
 
       {modal === "share" && <ShareDeviceModal deviceId={device.id} onClose={() => setModal(null)} />}

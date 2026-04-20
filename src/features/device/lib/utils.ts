@@ -1,6 +1,6 @@
 import type { ChipVariants } from "@heroui/styles";
 
-import type { Device } from "@/features/device";
+import type { Device } from "@/features/device/lib/definitions";
 
 export const getChipColorByStatus = (status: string): ChipVariants["color"] => {
   switch (status) {

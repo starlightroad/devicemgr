@@ -1,18 +1,18 @@
-"use server";
+import "server-only";
 
 import { count, desc, eq, ilike } from "drizzle-orm";
 
 import { db } from "@/db/client";
 
-import type { ActionResult } from "@/lib/definitions";
-
-import { deviceGroupsTable, devicesTable, deviceStatusesTable, deviceTypesTable, usersTable } from "@/db/schemas";
-
 import { getSession } from "@/dal/session";
 
 import { MAX_ROWS } from "@/lib/constants";
 
-import type { Device } from "@/features/device";
+import type { ActionResult } from "@/lib/definitions";
+
+import type { Device } from "@/features/device/lib/definitions";
+
+import { deviceGroupsTable, devicesTable, deviceStatusesTable, deviceTypesTable, usersTable } from "@/db/schemas";
 
 export const getDevicesCount = async (): Promise<ActionResult<number>> => {
   try {

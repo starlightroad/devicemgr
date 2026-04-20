@@ -6,7 +6,9 @@ import { usePathname } from "next/navigation";
 
 import { listboxItemVariants, listboxVariants } from "@heroui/react";
 
-import { getNavIcon, type NavItem } from "@/features/dashboard";
+import { getNavIcon } from "@/features/dashboard/lib/utils";
+
+import { type NavItem } from "@/features/dashboard/lib/definitions";
 
 export default function NavList({ items }: { items: NavItem[] }) {
   const pathname = usePathname();

@@ -1,14 +1,14 @@
-"use server";
+import "server-only";
 
 import { asc, eq } from "drizzle-orm";
 
 import { db } from "@/db/client";
 
+import { getSession } from "@/dal/session";
+
 import type { ActionResult } from "@/lib/definitions";
 
 import { deviceTypesTable, usersTable } from "@/db/schemas";
-
-import { getSession } from "@/dal/session";
 
 export const getDeviceTypes = async (): Promise<ActionResult<Array<{ id: string; name: string }>>> => {
   try {

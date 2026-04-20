@@ -6,27 +6,26 @@ import { FolderClosedIcon } from "lucide-react";
 
 import { Button, Form, Input, Label, ListBox, Modal, Select, Surface, TextField, toast } from "@heroui/react";
 
-import {
-  ACTION_MESSAGE,
-  type EditDeviceModalProps,
-  FieldErrorMessage,
-  FORM_ID,
-  generateDeviceFieldIds,
-  generateId,
-  updateDevice,
-  useDeviceGroups,
-  useDeviceStatuses,
-  useDeviceTypes,
-  useFields,
-  useFormSuccess,
-} from "@/features/device";
+import { ACTION_MESSAGE, FORM_ID } from "@/features/device/lib/constants";
 
-export default function EditDeviceModal({ device, onClose }: EditDeviceModalProps) {
-  const { types, loading: isTypesLoading, error: typesError } = useDeviceTypes();
+import type { EditDeviceModalProps } from "@/features/device/lib/definitions";
 
-  const { statuses, loading: isStatusesLoading, error: statusesError } = useDeviceStatuses();
+import { generateDeviceFieldIds, generateId } from "@/features/device/lib/utils";
 
-  const { groups, loading: isGroupsLoading, error: groupsError } = useDeviceGroups();
+import { updateDevice } from "@/features/device/lib/actions";
+
+import useFields from "@/features/device/hooks/use-fields";
+
+import useFormSuccess from "@/features/device/hooks/use-form-success";
+
+import FieldErrorMessage from "@/features/device/components/field-error-message";
+
+export default function EditDeviceModal({ device, types, statuses, groups, onClose }: EditDeviceModalProps) {
+  const isTypesEmpty = types?.length === 0;
+
+  const isStatusesEmpty = statuses?.length === 0;
+
+  const isGroupsEmpty = groups?.length === 0;
 
   const selectedTypeId = types?.find((type) => type.name === device.type)?.id;
 
@@ -84,7 +83,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     isRequired
                     value={field.type.value}
                     onChange={(e) => handleFieldChange("type", String(e))}
-                    isDisabled={typesError ? true : isTypesLoading}
+                    isDisabled={isTypesEmpty}
                     defaultValue={field.type.value}
                   >
                     <Label>Type</Label>
@@ -107,7 +106,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                       </ListBox>
                     </Select.Popover>
                     <FieldErrorMessage
-                      message={typesError ? typesError : state?.serverErrors?.type}
+                      message={isTypesEmpty ? "No entries found." : state?.serverErrors?.type}
                       isFormLoading={isFormLoading}
                     />
                   </Select>
@@ -118,7 +117,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     isRequired
                     value={field.status.value}
                     onChange={(e) => handleFieldChange("status", String(e))}
-                    isDisabled={Boolean(statusesError) || isStatusesLoading}
+                    isDisabled={isStatusesEmpty}
                     defaultValue={field.status.value}
                   >
                     <Label>Status</Label>
@@ -141,7 +140,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                       </ListBox>
                     </Select.Popover>
                     <FieldErrorMessage
-                      message={statusesError ? statusesError : state?.serverErrors?.status}
+                      message={isStatusesEmpty ? "No entries found." : state?.serverErrors?.status}
                       isFormLoading={isFormLoading}
                     />
                   </Select>
@@ -152,7 +151,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                     isRequired
                     value={field.group.value}
                     onChange={(e) => handleFieldChange("group", String(e))}
-                    isDisabled={Boolean(groupsError) || isGroupsLoading}
+                    isDisabled={isGroupsEmpty}
                     defaultValue={field.group.value}
                   >
                     <Label>Group</Label>
@@ -175,7 +174,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                       </ListBox>
                     </Select.Popover>
                     <FieldErrorMessage
-                      message={groupsError ? groupsError : state?.serverErrors?.group}
+                      message={isGroupsEmpty ? "No entries found." : state?.serverErrors?.group}
                       isFormLoading={isFormLoading}
                     />
                   </Select>
@@ -214,14 +213,7 @@ export default function EditDeviceModal({ device, onClose }: EditDeviceModalProp
                 type="submit"
                 form={FORM_ID}
                 isPending={isFormLoading}
-                isDisabled={
-                  Boolean(typesError) ||
-                  Boolean(statusesError) ||
-                  Boolean(groupsError) ||
-                  isTypesLoading ||
-                  isStatusesLoading ||
-                  isGroupsLoading
-                }
+                isDisabled={isTypesEmpty || isStatusesEmpty || isGroupsEmpty}
               >
                 Save
               </Button>

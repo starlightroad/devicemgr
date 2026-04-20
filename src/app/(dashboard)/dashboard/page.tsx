@@ -2,16 +2,19 @@ import { Suspense } from "react";
 
 import { Card } from "@heroui/react";
 
-import { MobileNav } from "@/features/dashboard";
+import MobileNav from "@/features/dashboard/components/mobile-nav";
 
-import {
-  DecommissionedDevices,
-  DeviceStatSkeleton,
-  InUseDevices,
-  RecentDevices,
-  StorageDevices,
-  TotalDevices,
-} from "@/features/device";
+import TotalDevices from "@/features/device/components/total-devices";
+
+import InUseDevices from "@/features/device/components/in-use-devices";
+
+import RecentDevices from "@/features/device/components/recent-devices";
+
+import StorageDevices from "@/features/device/components/storage-devices";
+
+import DeviceStatSkeleton from "@/features/device/components/device-stat-skeleton";
+
+import DecommissionedDevices from "@/features/device/components/decommissioned-devices";
 
 export default function DashboardPage() {
   return (

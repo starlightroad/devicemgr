@@ -4,9 +4,11 @@ import { CheckIcon, CopyIcon, Share2Icon } from "lucide-react";
 
 import { Button, InputGroup, Label, Modal, Surface, TextField } from "@heroui/react";
 
-import { useTimer } from "@/features/dashboard";
+import type { ShareDeviceModalProps } from "@/features/device/lib/definitions";
 
-import { useCopyToClipboard, type ShareDeviceModalProps } from "@/features/device";
+import useTimer from "@/features/dashboard/hooks/use-timer";
+
+import useCopyToClipboard from "@/features/device/hooks/use-copy-to-clipboard";
 
 const getUrlProtocolAndDomain = () => {
   const { protocol, host } = window.location;

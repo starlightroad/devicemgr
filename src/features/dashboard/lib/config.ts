@@ -1,4 +1,6 @@
-import { DASHBOARD_PATH, DEVICES_PATH, type NavItem, PROFILE_PATH } from "@/features/dashboard";
+import type { NavItem } from "@/features/dashboard/lib/definitions";
+
+import { DASHBOARD_PATH, DEVICES_PATH, PROFILE_PATH } from "@/features/dashboard/lib/constants";
 
 export const navItems: NavItem[] = [
   {

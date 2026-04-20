@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
-import { DASHBOARD_DESC, DASHBOARD_TITLE, Sidebar } from "@/features/dashboard";
+import { DASHBOARD_DESC, DASHBOARD_TITLE } from "@/features/dashboard/lib/constants";
+
+import Sidebar from "@/features/dashboard/components/sidebar";
 
 type LayoutProps = {
   children: React.ReactNode;

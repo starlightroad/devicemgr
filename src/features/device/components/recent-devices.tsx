@@ -6,10 +6,26 @@ import { DatabaseIcon, DatabaseZapIcon } from "lucide-react";
 
 import { getDevices } from "@/dal/device";
 
-import { DeviceActions, getChipColorByStatus, TABLE_COLUMNS } from "@/features/device";
+import { getDeviceTypes } from "@/dal/type";
+
+import { getDeviceGroups } from "@/dal/group";
+
+import { getDeviceStatuses } from "@/dal/status";
+
+import { TABLE_COLUMNS } from "@/features/device/lib/constants";
+
+import { getChipColorByStatus } from "@/features/device/lib/utils";
+
+import DeviceActions from "@/features/device/components/device-actions";
 
 export default async function RecentDevices() {
   const { data, error } = await getDevices(5);
+
+  const types = await getDeviceTypes();
+
+  const statuses = await getDeviceStatuses();
+
+  const groups = await getDeviceGroups();
 
   const hasNoData = !data?.length && data?.length === 0;
 
@@ -73,7 +89,12 @@ export default async function RecentDevices() {
                       <Table.Cell>{device.group}</Table.Cell>
                       <Table.Cell>{device.serialNumber}</Table.Cell>
                       <Table.Cell>
-                        <DeviceActions device={device} />
+                        <DeviceActions
+                          device={device}
+                          types={types.data}
+                          statuses={statuses.data}
+                          groups={groups.data}
+                        />
                       </Table.Cell>
                     </Table.Row>
                   );

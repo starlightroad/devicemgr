@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { TIMER_IN_MILLISECONDS } from "@/features/dashboard";
+import { TIMER_IN_MILLISECONDS } from "@/features/dashboard/lib/constants";
 
 export default function useTimer() {
   const [state, setState] = useState<{ isRunning: boolean; delay: number }>({
