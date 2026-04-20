@@ -21,7 +21,7 @@ import useFormSuccess from "@/features/device/hooks/use-form-success";
 import FieldErrorMessage from "@/features/device/components/field-error-message";
 
 export default function EditDeviceModal({ device, types, groups, statuses, onClose }: EditDeviceModalProps) {
-  const isTypesEmpty = statuses.length === 0;
+  const isTypesEmpty = types?.length === 0;
 
   const isStatusesEmpty = statuses.length === 0;
 
