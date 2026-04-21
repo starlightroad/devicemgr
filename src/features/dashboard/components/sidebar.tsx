@@ -16,7 +16,7 @@ import SignOutButton from "@/features/dashboard/components/sign-out-button";
 
 export default function Sidebar() {
   return (
-    <aside className="hidden h-full flex-col border-r px-4 md:flex">
+    <aside className="sticky top-0 hidden h-full max-h-screen flex-col overflow-auto border-r px-4 md:flex">
       <UserProfile />
       <NavList items={navItems} />
       <Separator className="my-1" />
