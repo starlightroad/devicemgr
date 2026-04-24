@@ -34,7 +34,7 @@ export default async function DashboardPage() {
         <MobileNav />
       </header>
       <main className="flex flex-col gap-5">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           <article>
             <Suspense fallback={<DeviceStatSkeleton />}>
               <TotalDevices />
@@ -55,7 +55,7 @@ export default async function DashboardPage() {
               <DecommissionedDevices />
             </Suspense>
           </article>
-        </div>
+        </section>
         <section className="grid gap-5 lg:grid-cols-2">
           <article>
             <Card className="h-full gap-4">
