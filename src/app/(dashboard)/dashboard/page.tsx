@@ -91,14 +91,6 @@ export default async function DashboardPage() {
             <RecentDevices />
           </article>
         </section>
-        <article>
-          <Card>
-            <Card.Header>
-              <Card.Title>Map</Card.Title>
-              <Card.Description>A map of your devices.</Card.Description>
-            </Card.Header>
-          </Card>
-        </article>
       </main>
     </>
   );
