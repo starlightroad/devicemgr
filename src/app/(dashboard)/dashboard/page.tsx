@@ -2,6 +2,8 @@ import { Suspense } from "react";
 
 import { Card } from "@heroui/react";
 
+import { getDeviceCountsByGroup } from "@/dal/device";
+
 import MobileNav from "@/features/dashboard/components/mobile-nav";
 
 import TotalDevices from "@/features/device/components/total-devices";
@@ -16,7 +18,11 @@ import DeviceStatSkeleton from "@/features/device/components/device-stat-skeleto
 
 import DecommissionedDevices from "@/features/device/components/decommissioned-devices";
 
-export default function DashboardPage() {
+import DevicesByGroupChart from "@/features/device/components/devices-by-group-chart";
+
+export default async function DashboardPage() {
+  const { data, error } = await getDeviceCountsByGroup();
+
   return (
     <>
       <header className="flex items-center justify-between py-5">
@@ -46,6 +52,18 @@ export default function DashboardPage() {
             </Suspense>
           </article>
         </div>
+        <section className="grid gap-5 lg:grid-cols-2">
+          <article>
+            <Card className="h-full gap-4">
+              <Card.Header>
+                <Card.Title className="text-base font-medium">Devices by Group</Card.Title>
+              </Card.Header>
+              <Card.Content>
+                {data ? <DevicesByGroupChart chartData={data} /> : <p className="text-danger text-sm">{error}</p>}
+              </Card.Content>
+            </Card>
+          </article>
+        </section>
         <section>
           <article>
             <RecentDevices />

@@ -1,6 +1,6 @@
 import "server-only";
 
-import { count, desc, eq, ilike } from "drizzle-orm";
+import { asc, count, desc, eq, ilike } from "drizzle-orm";
 
 import { db } from "@/db/client";
 
@@ -76,6 +76,33 @@ export const getDevices = async (limit?: number): Promise<ActionResult<Device[]>
       .where(eq(devicesTable.userId, session.userId))
       .orderBy(desc(devicesTable.createdAt))
       .limit(limit ?? MAX_ROWS);
+
+    return {
+      data,
+      error: null,
+    };
+  } catch {
+    return {
+      data: null,
+      error: "Failed to load data.",
+    };
+  }
+};
+
+export const getDeviceCountsByGroup = async (): Promise<ActionResult<{ name: string; devices: number }[]>> => {
+  try {
+    const session = await getSession();
+
+    const data = await db
+      .select({
+        name: deviceGroupsTable.name,
+        devices: count(),
+      })
+      .from(deviceGroupsTable)
+      .innerJoin(devicesTable, eq(devicesTable.groupId, deviceGroupsTable.id))
+      .where(eq(deviceGroupsTable.userId, session.userId))
+      .groupBy(deviceGroupsTable.name)
+      .orderBy(asc(deviceGroupsTable.name));
 
     return {
       data,
