@@ -4,7 +4,7 @@ import { Card } from "@heroui/react";
 
 import { getDeviceCountsByType } from "@/dal/type";
 
-import { getDeviceCountsByGroup } from "@/dal/device";
+import { getDeviceCountsByGroup } from "@/dal/group";
 
 import MobileNav from "@/features/dashboard/components/mobile-nav";
 
