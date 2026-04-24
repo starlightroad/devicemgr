@@ -33,7 +33,7 @@ export default async function DashboardPage() {
         <h1 className="font-semibold">Dashboard</h1>
         <MobileNav />
       </header>
-      <main className="flex flex-col gap-5">
+      <main className="flex flex-col gap-5 pb-5">
         <section className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           <article>
             <Suspense fallback={<DeviceStatSkeleton />}>
