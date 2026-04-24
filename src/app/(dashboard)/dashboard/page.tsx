@@ -2,6 +2,8 @@ import { Suspense } from "react";
 
 import { Card } from "@heroui/react";
 
+import { getDeviceCountsByType } from "@/dal/type";
+
 import { getDeviceCountsByGroup } from "@/dal/device";
 
 import MobileNav from "@/features/dashboard/components/mobile-nav";
@@ -16,12 +18,15 @@ import StorageDevices from "@/features/device/components/storage-devices";
 
 import DeviceStatSkeleton from "@/features/device/components/device-stat-skeleton";
 
-import DecommissionedDevices from "@/features/device/components/decommissioned-devices";
+import DevicesByTypeChart from "@/features/device/components/devices-by-type-chart";
 
 import DevicesByGroupChart from "@/features/device/components/devices-by-group-chart";
 
+import DecommissionedDevices from "@/features/device/components/decommissioned-devices";
+
 export default async function DashboardPage() {
   const { data, error } = await getDeviceCountsByGroup();
+  const typeDeviceCounts = await getDeviceCountsByType();
 
   return (
     <>
@@ -60,6 +65,20 @@ export default async function DashboardPage() {
               </Card.Header>
               <Card.Content>
                 {data ? <DevicesByGroupChart chartData={data} /> : <p className="text-danger text-sm">{error}</p>}
+              </Card.Content>
+            </Card>
+          </article>
+          <article>
+            <Card className="h-full gap-4">
+              <Card.Header>
+                <Card.Title className="text-base font-medium">Devices by Type</Card.Title>
+              </Card.Header>
+              <Card.Content>
+                {typeDeviceCounts.data ? (
+                  <DevicesByTypeChart chartData={typeDeviceCounts.data} />
+                ) : (
+                  <p className="text-danger text-sm">{typeDeviceCounts.error}</p>
+                )}
               </Card.Content>
             </Card>
           </article>
