@@ -25,8 +25,7 @@ import DevicesByGroupChart from "@/features/device/components/devices-by-group-c
 import DecommissionedDevices from "@/features/device/components/decommissioned-devices";
 
 export default async function DashboardPage() {
-  const { data, error } = await getDeviceCountsByGroup();
-  const typeDeviceCounts = await getDeviceCountsByType();
+  const [groupDeviceCounts, typeDeviceCounts] = await Promise.all([getDeviceCountsByGroup(), getDeviceCountsByType()]);
 
   return (
     <>
@@ -64,7 +63,11 @@ export default async function DashboardPage() {
                 <Card.Title className="text-base font-medium">Devices by Group</Card.Title>
               </Card.Header>
               <Card.Content>
-                {data ? <DevicesByGroupChart chartData={data} /> : <p className="text-danger text-sm">{error}</p>}
+                {groupDeviceCounts.data ? (
+                  <DevicesByGroupChart chartData={groupDeviceCounts.data} />
+                ) : (
+                  <p className="text-danger text-sm">{groupDeviceCounts.error}</p>
+                )}
               </Card.Content>
             </Card>
           </article>
