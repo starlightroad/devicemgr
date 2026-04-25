@@ -4,7 +4,7 @@ import { useActionState, useEffect } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
-import { Form, Label, ListBox, Modal, Select, Surface, toast } from "@heroui/react";
+import { Label, ListBox, Modal, Select, Surface, toast } from "@heroui/react";
 
 import { generateId } from "@/features/device/lib/utils";
 
@@ -57,7 +57,7 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, groups, onClose
             </Modal.Header>
             <Modal.Body className="px-1 py-4">
               <Surface variant="default">
-                <Form id={FORM_ID} action={formAction} className="flex flex-col gap-4">
+                <form id={FORM_ID} action={formAction} className="flex flex-col gap-4">
                   <Select
                     name={field.group.name}
                     variant="secondary"
@@ -92,7 +92,7 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, groups, onClose
                       isFormLoading={isFormLoading}
                     />
                   </Select>
-                </Form>
+                </form>
               </Surface>
             </Modal.Body>
             <Modal.Footer>

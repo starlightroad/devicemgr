@@ -1,4 +1,4 @@
-import { FieldError } from "@heroui/react";
+import { FieldError } from "@/components/ui/field";
 
 export default function FieldErrorMessage({ message, isFormLoading }: { message?: string; isFormLoading: boolean }) {
   return message && !isFormLoading ? (

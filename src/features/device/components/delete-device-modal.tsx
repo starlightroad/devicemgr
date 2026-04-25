@@ -4,7 +4,7 @@ import { useActionState } from "react";
 
 import { Trash2Icon } from "lucide-react";
 
-import { AlertDialog, ErrorMessage, Form, toast } from "@heroui/react";
+import { AlertDialog, ErrorMessage, toast } from "@heroui/react";
 
 import { deleteDevice } from "@/features/device/lib/actions";
 
@@ -51,11 +51,11 @@ export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: Del
               <Button type="button" slot="close" variant="secondary">
                 Cancel
               </Button>
-              <Form action={formAction}>
+              <form action={formAction}>
                 <Button type="submit" variant="destructive" disabled={isFormLoading}>
                   Delete
                 </Button>
-              </Form>
+              </form>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>
         </AlertDialog.Container>

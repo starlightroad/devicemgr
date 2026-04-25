@@ -4,7 +4,7 @@ import { useActionState, useEffect } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
-import { Form, Input, Label, ListBox, Modal, Select, Surface, TextField, toast } from "@heroui/react";
+import { Label, ListBox, Modal, Select, Surface, toast } from "@heroui/react";
 
 import { ACTION_MESSAGE, FORM_ID } from "@/features/device/lib/constants";
 
@@ -21,6 +21,8 @@ import useFormSuccess from "@/features/device/hooks/use-form-success";
 import { Button } from "@/components/ui/button";
 
 import FieldErrorMessage from "@/features/device/components/field-error-message";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
 type EditDeviceModalProps = {
   device: Device;
@@ -73,19 +75,22 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
             </Modal.Header>
             <Modal.Body className="px-1 py-4">
               <Surface variant="default">
-                <Form id={FORM_ID} action={formAction} className="flex flex-col gap-4">
-                  <TextField type="text" name={field.name.name} isRequired>
-                    <Label>Name</Label>
+                <form id={FORM_ID} action={formAction} className="flex flex-col gap-4">
+                  <Field>
+                    <FieldLabel htmlFor={field.name.name}>Name</FieldLabel>
                     <Input
-                      variant="secondary"
+                      id={field.name.name}
+                      type="text"
+                      name={field.name.name}
                       placeholder="John's MacBook Pro"
                       autoComplete="off"
-                      className="h-10"
                       value={field.name.value}
+                      required
+                      className="h-10"
                       onChange={(e) => handleFieldChange("name", e.target.value)}
                     />
                     <FieldErrorMessage message={state?.serverErrors?.name} isFormLoading={isFormLoading} />
-                  </TextField>
+                  </Field>
                   <Select
                     name={field.type.name}
                     variant="secondary"
@@ -188,31 +193,36 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
                       isFormLoading={isFormLoading}
                     />
                   </Select>
-                  <TextField type="text" name={field.serialNumber.name} isRequired>
-                    <Label>Serial Number</Label>
+                  <Field>
+                    <FieldLabel htmlFor={field.serialNumber.name}>Serial Number</FieldLabel>
                     <Input
-                      variant="secondary"
+                      id={field.serialNumber.name}
+                      type="text"
+                      name={field.serialNumber.name}
                       placeholder="SN-LTP-1002"
                       autoComplete="off"
-                      className="h-10"
                       value={field.serialNumber.value}
+                      required
+                      className="h-10"
                       onChange={(e) => handleFieldChange("serialNumber", e.target.value)}
                     />
                     <FieldErrorMessage message={state?.serverErrors?.serialNumber} isFormLoading={isFormLoading} />
-                  </TextField>
-                  <TextField type="text" name={field.ipAddress.name}>
+                  </Field>
+                  <Field>
                     <Label>IP Address</Label>
                     <Input
-                      variant="secondary"
+                      id={field.ipAddress.name}
+                      type="text"
+                      name={field.ipAddress.name}
                       placeholder="192.168.1.1"
                       autoComplete="off"
-                      className="h-10"
                       value={field.ipAddress.value}
+                      className="h-10"
                       onChange={(e) => handleFieldChange("ipAddress", e.target.value)}
                     />
                     <FieldErrorMessage message={state?.serverErrors?.ipAddress} isFormLoading={isFormLoading} />
-                  </TextField>
-                </Form>
+                  </Field>
+                </form>
               </Surface>
             </Modal.Body>
             <Modal.Footer>

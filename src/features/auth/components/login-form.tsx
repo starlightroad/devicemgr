@@ -2,13 +2,15 @@
 
 import { useActionState, useState } from "react";
 
-import { FieldError, Form, Input, Label, TextField } from "@heroui/react";
-
 import usersJSON from "@/lib/data/users.json";
 
 import { authenticateUser } from "@/features/auth/lib/actions";
 
+import { Input } from "@/components/ui/input";
+
 import { Button } from "@/components/ui/button";
+
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 export default function LoginForm() {
   const [state, formAction, loading] = useActionState(authenticateUser, undefined);
@@ -17,15 +19,20 @@ export default function LoginForm() {
   const [userPassword, setUserPassword] = useState("");
 
   return (
-    <Form action={formAction} className="flex flex-col gap-4">
-      <TextField type="email" name="email" isRequired>
-        <Label className="sr-only">Email</Label>
+    <form action={formAction} className="flex flex-col gap-4">
+      <Field>
+        <FieldLabel htmlFor="email" className="sr-only">
+          Email
+        </FieldLabel>
         <Input
-          variant="secondary"
+          id="email"
+          type="email"
+          name="email"
           placeholder="Email"
           autoComplete="off"
-          className="h-10"
           value={userEmail}
+          required
+          className="h-10"
           onChange={(e) => setUserEmail(e.target.value)}
         />
         {state?.serverErrors?.email && !loading ? (
@@ -35,14 +42,19 @@ export default function LoginForm() {
         ) : (
           <FieldError />
         )}
-      </TextField>
-      <TextField type="password" name="password" isRequired>
-        <Label className="sr-only">Password</Label>
+      </Field>
+      <Field>
+        <FieldLabel htmlFor="password" className="sr-only">
+          Password
+        </FieldLabel>
         <Input
-          variant="secondary"
+          id="password"
+          type="password"
+          name="password"
           placeholder="Password"
-          className="h-10"
           value={userPassword}
+          required
+          className="h-10"
           onChange={(e) => setUserPassword(e.target.value)}
         />
         {state?.serverErrors?.password && !loading ? (
@@ -52,7 +64,7 @@ export default function LoginForm() {
         ) : (
           <FieldError />
         )}
-      </TextField>
+      </Field>
       <Button type="submit" disabled={loading} className="h-10 w-full">
         Continue
       </Button>
@@ -70,6 +82,6 @@ export default function LoginForm() {
       >
         Log in as guest
       </Button>
-    </Form>
+    </form>
   );
 }

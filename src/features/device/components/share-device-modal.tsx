@@ -2,7 +2,7 @@
 
 import { CheckIcon, CopyIcon, Share2Icon } from "lucide-react";
 
-import { InputGroup, Label, Modal, Surface, TextField } from "@heroui/react";
+import { Label, Modal, Surface } from "@heroui/react";
 
 import type { BaseDeviceModalProps } from "@/features/device/lib/definitions";
 
@@ -10,7 +10,11 @@ import useTimer from "@/features/dashboard/hooks/use-timer";
 
 import useCopyToClipboard from "@/features/device/hooks/use-copy-to-clipboard";
 
+import { Input } from "@/components/ui/input";
+
 import { Button } from "@/components/ui/button";
+
+import { Field, FieldGroup } from "@/components/ui/field";
 
 const getUrlProtocolAndDomain = () => {
   const { protocol, host } = window.location;
@@ -49,16 +53,15 @@ export default function ShareDeviceModal({ deviceId, onClose }: ShareDeviceModal
             </Modal.Header>
             <Modal.Body className="px-1 py-4">
               <Surface variant="default">
-                <TextField defaultValue={shareUrl} name="share" isReadOnly>
-                  <Label className="sr-only">Share</Label>
-                  <InputGroup variant="secondary">
-                    <InputGroup.Input className="w-full_" />
-                    <InputGroup.Suffix className="pr-0" />
-                    <Button aria-label="Copy" size="icon-sm" variant="ghost" onClick={copyShareUrl}>
-                      {isRunning ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}
-                    </Button>
-                  </InputGroup>
-                </TextField>
+                <FieldGroup>
+                  <Field>
+                    <Label className="sr-only">Share</Label>
+                    <Input name="share" defaultValue={shareUrl} readOnly />
+                  </Field>
+                  <Button aria-label="Copy" size="icon-sm" variant="ghost" onClick={copyShareUrl}>
+                    {isRunning ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}
+                  </Button>
+                </FieldGroup>
               </Surface>
             </Modal.Body>
             <Modal.Footer>
