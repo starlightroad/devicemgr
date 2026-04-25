@@ -1,7 +1,5 @@
 import { Suspense } from "react";
 
-import { Card } from "@heroui/react";
-
 import { getDeviceCountsByType } from "@/dal/type";
 
 import { getDeviceCountsByGroup } from "@/dal/group";
@@ -23,6 +21,8 @@ import DevicesByTypeChart from "@/features/device/components/devices-by-type-cha
 import DevicesByGroupChart from "@/features/device/components/devices-by-group-chart";
 
 import DecommissionedDevices from "@/features/device/components/decommissioned-devices";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function DashboardPage() {
   const [groupDeviceCounts, typeDeviceCounts] = await Promise.all([getDeviceCountsByGroup(), getDeviceCountsByType()]);
@@ -59,30 +59,30 @@ export default async function DashboardPage() {
         <section className="grid gap-5 lg:grid-cols-2">
           <article>
             <Card className="h-full gap-4">
-              <Card.Header>
-                <Card.Title className="text-base font-medium">Devices by Group</Card.Title>
-              </Card.Header>
-              <Card.Content>
+              <CardHeader>
+                <CardTitle>Devices by Group</CardTitle>
+              </CardHeader>
+              <CardContent>
                 {groupDeviceCounts.data ? (
                   <DevicesByGroupChart chartData={groupDeviceCounts.data} />
                 ) : (
                   <p className="text-danger text-sm">{groupDeviceCounts.error}</p>
                 )}
-              </Card.Content>
+              </CardContent>
             </Card>
           </article>
           <article>
             <Card className="h-full gap-4">
-              <Card.Header>
-                <Card.Title className="text-base font-medium">Devices by Type</Card.Title>
-              </Card.Header>
-              <Card.Content>
+              <CardHeader>
+                <CardTitle className="text-base font-medium">Devices by Type</CardTitle>
+              </CardHeader>
+              <CardContent>
                 {typeDeviceCounts.data ? (
                   <DevicesByTypeChart chartData={typeDeviceCounts.data} />
                 ) : (
                   <p className="text-danger text-sm">{typeDeviceCounts.error}</p>
                 )}
-              </Card.Content>
+              </CardContent>
             </Card>
           </article>
         </section>
