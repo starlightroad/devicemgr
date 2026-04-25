@@ -2,8 +2,6 @@
 
 import { CircleIcon } from "lucide-react";
 
-import { tooltipVariants } from "@heroui/react";
-
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 import { CHART_CONTAINER_HEIGHT } from "@/lib/constants";
@@ -48,7 +46,7 @@ export default function DevicesByGroupChart({ chartData }: DevicesByStatusChartP
               const groupName = pd.name;
 
               return (
-                <div className={tooltipVariants().base({ className: "min-w-32 px-3 py-2.5" })}>
+                <div className="min-w-32 px-3 py-2.5">
                   <p className="mb-1 font-semibold">{groupName}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">

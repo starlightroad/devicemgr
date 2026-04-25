@@ -12,6 +12,8 @@ import { APP_DESC, APP_NAME } from "@/lib/constants";
 
 import { Toaster } from "@/components/ui/sonner";
 
+import { TooltipProvider } from "@/components/ui/tooltip";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -38,7 +40,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
+          <TooltipProvider>{children}</TooltipProvider>
           <Toaster />
         </ThemeProvider>
       </body>
