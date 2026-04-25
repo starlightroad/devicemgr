@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-import { Chip, Table } from "@heroui/react";
+import { Table } from "@heroui/react";
 
-import { DatabaseIcon, DatabaseZapIcon } from "lucide-react";
+import { CircleIcon, DatabaseIcon, DatabaseZapIcon } from "lucide-react";
 
 import { getDevices } from "@/dal/device";
 
@@ -14,7 +14,9 @@ import { getDeviceStatuses } from "@/dal/status";
 
 import { TABLE_COLUMNS } from "@/features/device/lib/constants";
 
-import { getChipColorByStatus } from "@/features/device/lib/utils";
+import { getBadgeIconColorClassesByStatus } from "@/features/device/lib/utils";
+
+import { Badge } from "@/components/ui/badge";
 
 import DeviceActions from "@/features/device/components/device-actions";
 
@@ -33,7 +35,7 @@ export default async function RecentDevices() {
     <>
       <div className="mb-5 flex items-center gap-2">
         <h2 className="text-foreground font-semibold">Recent Devices</h2>
-        <Chip>{data?.length ?? 0}</Chip>
+        <Badge>{data?.length ?? 0}</Badge>
       </div>
       <Table>
         <Table.ScrollContainer>
@@ -82,9 +84,13 @@ export default async function RecentDevices() {
                       </Table.Cell>
                       <Table.Cell>{device.type}</Table.Cell>
                       <Table.Cell>
-                        <Chip color={getChipColorByStatus(device.status)} size="sm" variant="soft">
+                        <Badge variant="outline">
+                          <CircleIcon
+                            data-icon="inline-start"
+                            className={getBadgeIconColorClassesByStatus(device.status)}
+                          />
                           {device.status}
-                        </Chip>
+                        </Badge>
                       </Table.Cell>
                       <Table.Cell>{device.group}</Table.Cell>
                       <Table.Cell>{device.serialNumber}</Table.Cell>

@@ -1,15 +1,13 @@
-import type { ChipVariants } from "@heroui/styles";
-
 import type { Device } from "@/features/device/lib/definitions";
 
-export const getChipColorByStatus = (status: string): ChipVariants["color"] => {
+export const getBadgeIconColorClassesByStatus = (status: string) => {
   switch (status) {
-    case "In Use":
-      return "success";
-    case "Storage":
-      return "warning";
-    case "Decommissioned":
-      return "danger";
+    case "in use":
+      return "bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300";
+    case "storage":
+      return "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300";
+    case "decommissioned":
+      return "bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300";
     default:
       throw new Error("Invalid status.");
   }
