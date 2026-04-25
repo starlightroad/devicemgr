@@ -1,12 +1,14 @@
 "use client";
 
-import { Button, Tooltip } from "@heroui/react";
+import { Tooltip } from "@heroui/react";
 
 import { useTheme } from "@wrksz/themes/client";
 
 import { MoonIcon, SunIcon } from "lucide-react";
 
 import { TOOLTIP_OFFSET } from "@/lib/constants";
+
+import { Button } from "@/components/ui/button";
 
 export default function ThemeButton() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -16,8 +18,7 @@ export default function ThemeButton() {
       <Button
         type="button"
         variant="ghost"
-        size="sm"
-        isIconOnly
+        size="icon-sm"
         aria-label="Toggle theme"
         onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
       >

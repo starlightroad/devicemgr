@@ -2,13 +2,15 @@
 
 import { CheckIcon, CopyIcon, Share2Icon } from "lucide-react";
 
-import { Button, InputGroup, Label, Modal, Surface, TextField } from "@heroui/react";
+import { InputGroup, Label, Modal, Surface, TextField } from "@heroui/react";
 
 import type { BaseDeviceModalProps } from "@/features/device/lib/definitions";
 
 import useTimer from "@/features/dashboard/hooks/use-timer";
 
 import useCopyToClipboard from "@/features/device/hooks/use-copy-to-clipboard";
+
+import { Button } from "@/components/ui/button";
 
 const getUrlProtocolAndDomain = () => {
   const { protocol, host } = window.location;
@@ -52,7 +54,7 @@ export default function ShareDeviceModal({ deviceId, onClose }: ShareDeviceModal
                   <InputGroup variant="secondary">
                     <InputGroup.Input className="w-full_" />
                     <InputGroup.Suffix className="pr-0" />
-                    <Button aria-label="Copy" size="sm" variant="ghost" isIconOnly onPress={copyShareUrl}>
+                    <Button aria-label="Copy" size="icon-sm" variant="ghost" onClick={copyShareUrl}>
                       {isRunning ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}
                     </Button>
                   </InputGroup>

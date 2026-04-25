@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Button, Dropdown, type Key, Label, Separator, toast } from "@heroui/react";
+import { Dropdown, type Key, Label, Separator, toast } from "@heroui/react";
 
 import {
   CircleEllipsisIcon,
@@ -19,6 +19,8 @@ import type { Device, DeviceGroup, DeviceStatus, DeviceType } from "@/features/d
 import { ACTION_MESSAGE } from "@/features/device/lib/constants";
 
 import useCopyToClipboard from "@/features/device/hooks/use-copy-to-clipboard";
+
+import { Button } from "@/components/ui/button";
 
 import EditDeviceModal from "@/features/device/components/edit-device-modal";
 
@@ -57,7 +59,7 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
   return (
     <>
       <Dropdown>
-        <Button type="button" variant="outline" size="sm" isIconOnly aria-label="Actions">
+        <Button type="button" variant="outline" size="icon-sm" aria-label="Actions">
           <MoreVerticalIcon />
         </Button>
         <Dropdown.Popover placement="bottom right">

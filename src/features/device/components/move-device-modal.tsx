@@ -4,7 +4,7 @@ import { useActionState, useEffect } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
-import { Button, Form, Label, ListBox, Modal, Select, Surface, toast } from "@heroui/react";
+import { Form, Label, ListBox, Modal, Select, Surface, toast } from "@heroui/react";
 
 import { generateId } from "@/features/device/lib/utils";
 
@@ -17,6 +17,8 @@ import type { BaseDeviceModalProps, DeviceGroup } from "@/features/device/lib/de
 import useFields from "@/features/device/hooks/use-fields";
 
 import useFormSuccess from "@/features/device/hooks/use-form-success";
+
+import { Button } from "@/components/ui/button";
 
 import FieldErrorMessage from "@/features/device/components/field-error-message";
 
@@ -97,7 +99,7 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, groups, onClose
               <Button type="button" slot="close" variant="secondary">
                 Cancel
               </Button>
-              <Button type="submit" form={FORM_ID} isPending={isFormLoading} isDisabled={isGroupsEmpty}>
+              <Button type="submit" form={FORM_ID} disabled={isGroupsEmpty || isFormLoading}>
                 Save
               </Button>
             </Modal.Footer>

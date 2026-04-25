@@ -2,11 +2,13 @@ import Link from "next/link";
 
 import { FolderGit2Icon } from "lucide-react";
 
-import { buttonVariants, Separator } from "@heroui/react";
+import { Separator } from "@heroui/react";
 
 import { GITHUB_REPO } from "@/lib/constants";
 
 import { navItems } from "@/features/dashboard/lib/config";
+
+import { buttonVariants } from "@/components/ui/button";
 
 import NavList from "@/features/dashboard/components/nav-list";
 
@@ -25,7 +27,7 @@ export default function Sidebar() {
           href={GITHUB_REPO}
           target="_blank"
           rel="noopener noreferrer"
-          className={buttonVariants({ variant: "ghost", size: "sm", fullWidth: true, className: "justify-start" })}
+          className={buttonVariants({ variant: "ghost", size: "sm", className: "w-full justify-start" })}
         >
           <FolderGit2Icon className="text-muted size-4" />
           GitHub

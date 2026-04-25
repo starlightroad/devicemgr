@@ -4,7 +4,7 @@ import { useActionState } from "react";
 
 import { Trash2Icon } from "lucide-react";
 
-import { AlertDialog, Button, ErrorMessage, Form, toast } from "@heroui/react";
+import { AlertDialog, ErrorMessage, Form, toast } from "@heroui/react";
 
 import { deleteDevice } from "@/features/device/lib/actions";
 
@@ -13,6 +13,8 @@ import { ACTION_MESSAGE } from "@/features/device/lib/constants";
 import type { BaseDeviceModalProps } from "@/features/device/lib/definitions";
 
 import useFormSuccess from "@/features/device/hooks/use-form-success";
+
+import { Button } from "@/components/ui/button";
 
 type DeleteDeviceModalProps = BaseDeviceModalProps & { deviceName: string };
 
@@ -26,7 +28,7 @@ export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: Del
 
   return (
     <AlertDialog isOpen onOpenChange={onClose}>
-      <Button type="button" variant="danger" className="hidden">
+      <Button type="button" variant="destructive" className="hidden">
         Delete Device
       </Button>
       <AlertDialog.Backdrop>
@@ -50,7 +52,7 @@ export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: Del
                 Cancel
               </Button>
               <Form action={formAction}>
-                <Button type="submit" variant="danger" isPending={isFormLoading}>
+                <Button type="submit" variant="destructive" disabled={isFormLoading}>
                   Delete
                 </Button>
               </Form>

@@ -2,11 +2,13 @@
 
 import { useActionState, useState } from "react";
 
-import { Button, FieldError, Form, Input, Label, TextField } from "@heroui/react";
+import { FieldError, Form, Input, Label, TextField } from "@heroui/react";
 
 import usersJSON from "@/lib/data/users.json";
 
 import { authenticateUser } from "@/features/auth/lib/actions";
+
+import { Button } from "@/components/ui/button";
 
 export default function LoginForm() {
   const [state, formAction, loading] = useActionState(authenticateUser, undefined);
@@ -51,15 +53,14 @@ export default function LoginForm() {
           <FieldError />
         )}
       </TextField>
-      <Button type="submit" isDisabled={loading} fullWidth className="h-10">
+      <Button type="submit" disabled={loading} className="h-10 w-full">
         Continue
       </Button>
       <Button
         type="submit"
         variant="ghost"
-        isDisabled={loading}
-        fullWidth
-        className="h-10"
+        disabled={loading}
+        className="h-10 w-full"
         onClick={() => {
           const demoUserId = usersJSON.findIndex((user) => user.email.startsWith("guest"));
 

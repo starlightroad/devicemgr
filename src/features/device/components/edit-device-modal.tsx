@@ -4,7 +4,7 @@ import { useActionState, useEffect } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
-import { Button, Form, Input, Label, ListBox, Modal, Select, Surface, TextField, toast } from "@heroui/react";
+import { Form, Input, Label, ListBox, Modal, Select, Surface, TextField, toast } from "@heroui/react";
 
 import { ACTION_MESSAGE, FORM_ID } from "@/features/device/lib/constants";
 
@@ -17,6 +17,8 @@ import type { Device, DeviceGroup, DeviceStatus, DeviceType } from "@/features/d
 import useFields from "@/features/device/hooks/use-fields";
 
 import useFormSuccess from "@/features/device/hooks/use-form-success";
+
+import { Button } from "@/components/ui/button";
 
 import FieldErrorMessage from "@/features/device/components/field-error-message";
 
@@ -220,8 +222,7 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
               <Button
                 type="submit"
                 form={FORM_ID}
-                isPending={isFormLoading}
-                isDisabled={isTypesEmpty || isStatusesEmpty || isGroupsEmpty}
+                disabled={isTypesEmpty || isStatusesEmpty || isGroupsEmpty || isFormLoading}
               >
                 Save
               </Button>
