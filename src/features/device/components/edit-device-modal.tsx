@@ -6,11 +6,11 @@ import { useActionState, useEffect } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
-import { Label, ListBox, Modal, Select, Surface } from "@heroui/react";
+import { Modal, Surface } from "@heroui/react";
 
 import { ACTION_MESSAGE, FORM_ID } from "@/features/device/lib/constants";
 
-import { generateDeviceFieldIds, generateId } from "@/features/device/lib/utils";
+import { generateDeviceFieldIds } from "@/features/device/lib/utils";
 
 import { updateDevice } from "@/features/device/lib/actions";
 
@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
 
 import FieldErrorMessage from "@/features/device/components/field-error-message";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type EditDeviceModalProps = {
   device: Device;
@@ -96,106 +97,76 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
                     <FieldErrorMessage message={state?.serverErrors?.name} isFormLoading={isFormLoading} />
                   </Field>
                   <Select
-                    name={field.type.name}
-                    variant="secondary"
-                    placeholder="Select type"
-                    isRequired
-                    value={field.type.value}
-                    onChange={(e) => handleFieldChange("type", String(e))}
-                    isDisabled={isTypesEmpty}
+                    items={types?.map((type) => ({ label: type.name, value: type.name }))}
+                    disabled={isTypesEmpty}
                     defaultValue={field.type.value}
                   >
-                    <Label>Type</Label>
-                    <Select.Trigger className="h-10">
-                      <Select.Value className="leading-6" />
-                      <Select.Indicator />
-                    </Select.Trigger>
-                    <Select.Popover>
-                      <ListBox>
-                        {types?.map((type) => {
-                          const id = generateId(type.id);
-
-                          return (
-                            <ListBox.Item key={id} id={id} textValue={type.name}>
-                              {type.name}
-                              <ListBox.ItemIndicator />
-                            </ListBox.Item>
-                          );
-                        })}
-                      </ListBox>
-                    </Select.Popover>
-                    <FieldErrorMessage
-                      message={isTypesEmpty ? "No entries found." : state?.serverErrors?.type}
-                      isFormLoading={isFormLoading}
-                    />
+                    <SelectTrigger className="h-10">
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {types?.map((type) => (
+                          <SelectItem key={type.name} value={type.name}>
+                            {type.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
                   </Select>
                   <Select
-                    name={field.status.name}
-                    variant="secondary"
-                    placeholder="Select status"
-                    isRequired
-                    value={field.status.value}
-                    onChange={(e) => handleFieldChange("status", String(e))}
-                    isDisabled={isStatusesEmpty}
+                    items={statuses?.map((status) => ({ label: status.name, value: status.name }))}
+                    disabled={isStatusesEmpty}
                     defaultValue={field.status.value}
                   >
-                    <Label>Status</Label>
-                    <Select.Trigger className="h-10">
-                      <Select.Value className="leading-6" />
-                      <Select.Indicator />
-                    </Select.Trigger>
-                    <Select.Popover>
-                      <ListBox>
-                        {statuses?.map((status) => {
-                          const id = generateId(status.id);
-
-                          return (
-                            <ListBox.Item key={id} id={id} textValue={status.name}>
-                              {status.name}
-                              <ListBox.ItemIndicator />
-                            </ListBox.Item>
-                          );
-                        })}
-                      </ListBox>
-                    </Select.Popover>
-                    <FieldErrorMessage
-                      message={isStatusesEmpty ? "No entries found." : state?.serverErrors?.status}
-                      isFormLoading={isFormLoading}
-                    />
+                    <SelectTrigger className="h-10">
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {statuses?.map((status) => (
+                          <SelectItem key={status.name} value={status.name}>
+                            {status.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
                   </Select>
                   <Select
-                    name={field.group.name}
-                    variant="secondary"
-                    placeholder="Select group"
-                    isRequired
-                    value={field.group.value}
-                    onChange={(e) => handleFieldChange("group", String(e))}
-                    isDisabled={isGroupsEmpty}
+                    items={groups?.map((group) => ({ label: group.name, value: group.name }))}
+                    disabled={isGroupsEmpty}
                     defaultValue={field.group.value}
                   >
-                    <Label>Group</Label>
-                    <Select.Trigger className="h-10">
-                      <Select.Value className="leading-6" />
-                      <Select.Indicator />
-                    </Select.Trigger>
-                    <Select.Popover>
-                      <ListBox>
-                        {groups?.map((group) => {
-                          const id = generateId(group.id);
-
-                          return (
-                            <ListBox.Item key={id} id={id} textValue={group.name}>
-                              {group.name}
-                              <ListBox.ItemIndicator />
-                            </ListBox.Item>
-                          );
-                        })}
-                      </ListBox>
-                    </Select.Popover>
-                    <FieldErrorMessage
-                      message={isGroupsEmpty ? "No entries found." : state?.serverErrors?.group}
-                      isFormLoading={isFormLoading}
-                    />
+                    <SelectTrigger className="h-10">
+                      <SelectValue placeholder="Select group" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {groups?.map((group) => (
+                          <SelectItem key={group.name} value={group.name}>
+                            {group.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <Select
+                    items={groups?.map((group) => ({ label: group.name, value: group.name }))}
+                    disabled={isGroupsEmpty}
+                    defaultValue={field.group.value}
+                  >
+                    <SelectTrigger className="h-10">
+                      <SelectValue placeholder="Select group" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {groups?.map((group) => (
+                          <SelectItem key={group.name} value={group.name}>
+                            {group.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
                   </Select>
                   <Field>
                     <FieldLabel htmlFor={field.serialNumber.name}>Serial Number</FieldLabel>
@@ -213,7 +184,7 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
                     <FieldErrorMessage message={state?.serverErrors?.serialNumber} isFormLoading={isFormLoading} />
                   </Field>
                   <Field>
-                    <Label>IP Address</Label>
+                    <FieldLabel>IP Address</FieldLabel>
                     <Input
                       id={field.ipAddress.name}
                       type="text"
