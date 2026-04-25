@@ -1,10 +1,12 @@
 "use client";
 
+import { toast } from "sonner";
+
 import { useActionState, useEffect } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
-import { Label, ListBox, Modal, Select, Surface, toast } from "@heroui/react";
+import { Label, ListBox, Modal, Select, Surface } from "@heroui/react";
 
 import { ACTION_MESSAGE, FORM_ID } from "@/features/device/lib/constants";
 
@@ -18,11 +20,13 @@ import useFields from "@/features/device/hooks/use-fields";
 
 import useFormSuccess from "@/features/device/hooks/use-form-success";
 
+import { Input } from "@/components/ui/input";
+
 import { Button } from "@/components/ui/button";
 
-import FieldErrorMessage from "@/features/device/components/field-error-message";
 import { Field, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+
+import FieldErrorMessage from "@/features/device/components/field-error-message";
 
 type EditDeviceModalProps = {
   device: Device;

@@ -1,10 +1,12 @@
 "use client";
 
+import { toast } from "sonner";
+
 import { useActionState, useEffect } from "react";
 
 import { FolderClosedIcon } from "lucide-react";
 
-import { Label, ListBox, Modal, Select, Surface, toast } from "@heroui/react";
+import { Label, ListBox, Modal, Select, Surface } from "@heroui/react";
 
 import { generateId } from "@/features/device/lib/utils";
 

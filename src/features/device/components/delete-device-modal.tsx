@@ -1,10 +1,12 @@
 "use client";
 
+import { toast } from "sonner";
+
 import { useActionState } from "react";
 
 import { Trash2Icon } from "lucide-react";
 
-import { AlertDialog, ErrorMessage, toast } from "@heroui/react";
+import { AlertDialog, ErrorMessage } from "@heroui/react";
 
 import { deleteDevice } from "@/features/device/lib/actions";
 

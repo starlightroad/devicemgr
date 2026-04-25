@@ -1,8 +1,10 @@
 "use client";
 
+import { toast } from "sonner";
+
 import { useState } from "react";
 
-import { Dropdown, type Key, Label, Separator, toast } from "@heroui/react";
+import { Dropdown, type Key, Label, Separator } from "@heroui/react";
 
 import {
   CircleEllipsisIcon,
@@ -47,7 +49,7 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
       await copy(device.id);
       toast.success(ACTION_MESSAGE.copied);
     } catch {
-      toast.danger("Failed to copy device ID.");
+      toast.error("Failed to copy device ID.");
     }
   };
 

@@ -4,13 +4,13 @@ import { Geist } from "next/font/google";
 
 import "./globals.css";
 
-import { Toast } from "@heroui/react";
-
 import { ThemeProvider } from "@wrksz/themes/next";
 
 import { cn } from "@/lib/utils";
 
 import { APP_DESC, APP_NAME } from "@/lib/constants";
+
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,8 +38,8 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Toast.Provider />
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
