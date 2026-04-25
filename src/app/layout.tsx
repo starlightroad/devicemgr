@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { Inter } from "next/font/google";
+import { Geist } from "next/font/google";
 
 import "./globals.css";
 
@@ -8,10 +8,12 @@ import { Toast } from "@heroui/react";
 
 import { ThemeProvider } from "@wrksz/themes/next";
 
+import { cn } from "@/lib/utils";
+
 import { APP_DESC, APP_NAME } from "@/lib/constants";
 
-const interSans = Inter({
-  variable: "--font-inter-sans",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
@@ -29,7 +31,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${interSans.variable} h-full antialiased`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={cn("h-full", "antialiased", geistSans.variable, geistSans.variable)}
+      suppressHydrationWarning
+    >
       <body className="flex min-h-full flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Toast.Provider />
