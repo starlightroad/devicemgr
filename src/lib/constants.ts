@@ -7,3 +7,5 @@ export const GITHUB_REPO = "https://github.com/starlightroad/devicemgr";
 export const TOOLTIP_OFFSET = 12;
 
 export const MAX_ROWS = 10;
+
+export const CHART_CONTAINER_HEIGHT = 256;
