@@ -9,13 +9,13 @@ export default async function TotalDevices() {
 
   return (
     <Card>
-      <CardHeader className="flex-row items-center gap-2">
-        <CpuIcon className="text-muted size-4" />
-        <CardTitle className="text-muted">Total Devices</CardTitle>
+      <CardHeader className="flex items-center gap-2">
+        <CpuIcon className="text-muted-foreground size-4" />
+        <CardTitle className="">Total Devices</CardTitle>
       </CardHeader>
       <CardContent>
         {error ? (
-          <p className="text-foreground mb-4 text-center text-base">{error}</p>
+          <p className="text-destructive mb-4">{error}</p>
         ) : (
           <p className="text-foreground text-4xl font-semibold">{devicesCount}</p>
         )}
