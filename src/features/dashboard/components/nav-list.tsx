@@ -31,7 +31,7 @@ export default function NavList({ items }: NavListProps) {
                 className={buttonVariants({
                   variant: "ghost",
                   size: "lg",
-                  className: cn("w-full justify-start px-3", isActive ? "bg-muted/50" : ""),
+                  className: cn("w-full justify-start px-3", isActive ? "bg-muted dark:bg-muted/50" : ""),
                 })}
               >
                 <Icon className={cn("h-4 w-4", !isActive ? "text-muted-foreground" : "")} />
