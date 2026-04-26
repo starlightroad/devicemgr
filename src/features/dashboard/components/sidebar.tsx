@@ -2,11 +2,11 @@ import Link from "next/link";
 
 import { FolderGit2Icon } from "lucide-react";
 
-import { Separator } from "@heroui/react";
-
 import { GITHUB_REPO } from "@/lib/constants";
 
 import { navItems } from "@/features/dashboard/lib/config";
+
+import { Separator } from "@/components/ui/separator";
 
 import { buttonVariants } from "@/components/ui/button";
 
