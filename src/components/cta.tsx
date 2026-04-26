@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import { getSessionFromHomePage } from "@/dal/session";
 
+import { Skeleton } from "@/components/ui/skeleton";
+
 import { buttonVariants } from "@/components/ui/button";
 
 export async function CTA() {
@@ -16,5 +18,5 @@ export async function CTA() {
 }
 
 export function CTASkeleton() {
-  return <div className="h-8 w-16 animate-pulse rounded-lg bg-neutral-200"></div>;
+  return <Skeleton className="h-8 w-16 rounded-lg" />;
 }
