@@ -14,7 +14,7 @@ export default function HomePage() {
           <h1 className="mb-6 w-full max-w-md text-center text-4xl font-semibold lg:max-w-3xl lg:text-6xl">
             {headline}
           </h1>
-          <p className="text-muted mb-6 max-w-sm text-center lg:max-w-lg">{subheadline}</p>
+          <p className="text-muted-foreground mb-6 max-w-sm text-center lg:max-w-lg">{subheadline}</p>
           <ul className="flex gap-4">
             <li className="rounded-3xl bg-red-300 p-6 dark:bg-red-400">
               <ComputerIcon size={24} className="text-red-900" />
