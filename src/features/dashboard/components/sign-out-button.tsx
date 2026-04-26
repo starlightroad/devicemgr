@@ -13,12 +13,12 @@ export default function SignOutButton() {
     <Button
       type="button"
       variant="ghost"
-      size="sm"
-      className="w-full justify-start"
+      size="lg"
+      className="justify-start gap-3 px-3"
       onClick={async () => await signOut()}
     >
-      <LogOutIcon className="text-muted size-4" />
-      Sign Out
+      <LogOutIcon className="text-muted-foreground" />
+      <span className="text-sm">Sign Out</span>
     </Button>
   );
 }

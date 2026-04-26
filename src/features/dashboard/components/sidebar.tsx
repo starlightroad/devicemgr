@@ -6,8 +6,6 @@ import { GITHUB_REPO } from "@/lib/constants";
 
 import { navItems } from "@/features/dashboard/lib/config";
 
-import { Separator } from "@/components/ui/separator";
-
 import { buttonVariants } from "@/components/ui/button";
 
 import NavList from "@/features/dashboard/components/nav-list";
@@ -18,19 +16,18 @@ import SignOutButton from "@/features/dashboard/components/sign-out-button";
 
 export default function Sidebar() {
   return (
-    <aside className="sticky top-0 hidden h-full max-h-screen flex-col overflow-auto border-r px-4 md:flex">
+    <aside className="sticky top-0 hidden h-full max-h-screen flex-col overflow-auto border-r md:flex">
       <UserProfile />
       <NavList items={navItems} />
-      <Separator className="my-1" />
-      <div className="mt-auto flex flex-col gap-1 px-1 py-5">
+      <div className="mt-auto flex flex-col py-4">
         <Link
           href={GITHUB_REPO}
           target="_blank"
           rel="noopener noreferrer"
-          className={buttonVariants({ variant: "ghost", size: "sm", className: "w-full justify-start" })}
+          className={buttonVariants({ size: "lg", variant: "ghost", className: "justify-start gap-3 px-3" })}
         >
-          <FolderGit2Icon className="text-muted size-4" />
-          GitHub
+          <FolderGit2Icon className="text-muted-foreground" />
+          <span className="text-sm">GitHub</span>
         </Link>
         <SignOutButton />
       </div>
