@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 
-import { Dropdown, Label } from "@heroui/react";
-
 import { FolderGit2Icon, LogOutIcon } from "lucide-react";
 
 import { GITHUB_REPO } from "@/lib/constants";
@@ -14,35 +12,35 @@ import { mobileNavItems } from "@/features/dashboard/lib/config";
 
 import useSignOut from "@/features/auth/hooks/use-sign-out";
 
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+
 export default function MobileNavMenu() {
   const { signOut } = useSignOut();
 
   return (
-    <Dropdown.Menu>
+    <>
       {mobileNavItems.map((navItem) => {
         const Icon = getNavIcon(navItem.label);
 
         return (
-          <Dropdown.Item
-            key={navItem.id}
-            textValue={navItem.label}
-            className="capitalize"
-            href={navItem.href}
-            render={(props) => ("href" in props ? <Link {...props}></Link> : <div {...props}></div>)}
-          >
-            <Icon className="text-muted size-4" />
-            <Label>{navItem.label}</Label>
-          </Dropdown.Item>
+          <DropdownMenuItem key={navItem.id} className="capitalize">
+            <Link href={navItem.href}>
+              <Icon />
+              {navItem.label}
+            </Link>
+          </DropdownMenuItem>
         );
       })}
-      <Dropdown.Item id="github" textValue="GitHub" href={GITHUB_REPO} target="_blank" rel="noopener noreferrer">
-        <FolderGit2Icon className="text-muted size-4" />
-        <Label>GitHub</Label>
-      </Dropdown.Item>
-      <Dropdown.Item id="signout" textValue="Sign Out" variant="danger" onAction={async () => await signOut()}>
-        <LogOutIcon className="text-muted size-4" />
-        <Label>Sign Out</Label>
-      </Dropdown.Item>
-    </Dropdown.Menu>
+      <DropdownMenuItem>
+        <Link href={GITHUB_REPO} target="_blank" rel="noopener noreferrer">
+          <FolderGit2Icon />
+          GitHub
+        </Link>
+      </DropdownMenuItem>
+      <DropdownMenuItem variant="destructive" onClick={async () => await signOut()}>
+        <LogOutIcon />
+        Sign Out
+      </DropdownMenuItem>
+    </>
   );
 }

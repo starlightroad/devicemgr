@@ -4,8 +4,6 @@ import { toast } from "sonner";
 
 import { useState } from "react";
 
-import { Dropdown, type Key, Label, Separator } from "@heroui/react";
-
 import {
   CircleEllipsisIcon,
   CopyIcon,
@@ -32,6 +30,14 @@ import ShareDeviceModal from "@/features/device/components/share-device-modal";
 
 import DeleteDeviceModal from "@/features/device/components/delete-device-modal";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 type DeviceActionsProps = {
   device: Device;
   types: DeviceType[] | null;
@@ -42,7 +48,7 @@ type DeviceActionsProps = {
 export default function DeviceActions({ device, types, statuses, groups }: DeviceActionsProps) {
   const { copy } = useCopyToClipboard();
 
-  const [modal, setModal] = useState<Key | null>(null);
+  const [modal, setModal] = useState<string | null>(null);
 
   const copyDeviceId = async () => {
     try {
@@ -60,42 +66,44 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
 
   return (
     <>
-      <Dropdown>
-        <Button type="button" variant="outline" size="icon-sm" aria-label="Actions">
-          <MoreVerticalIcon />
-        </Button>
-        <Dropdown.Popover placement="bottom right">
-          <Dropdown.Menu onAction={(key) => setModal(key)}>
-            <Dropdown.Item id="view" textValue="View" onAction={viewDeviceInNewTab}>
-              <SquareArrowUpRightIcon className="text-muted size-4" />
-              <Label>View</Label>
-            </Dropdown.Item>
-            <Dropdown.Item id="edit" textValue="Edit">
-              <CircleEllipsisIcon className="text-muted size-4" />
-              <Label>Edit</Label>
-            </Dropdown.Item>
-            <Separator />
-            <Dropdown.Item id="move" textValue="Move">
-              <FolderClosedIcon className="text-muted size-4" />
-              <Label>Move...</Label>
-            </Dropdown.Item>
-            <Separator />
-            <Dropdown.Item id="copy-id" textValue="Copy ID" onAction={copyDeviceId}>
-              <CopyIcon className="text-muted size-4" />
-              <Label>Copy ID</Label>
-            </Dropdown.Item>
-            <Dropdown.Item id="share" textValue="Share">
-              <Share2Icon className="text-muted size-4" />
-              <Label>Share</Label>
-            </Dropdown.Item>
-            <Separator />
-            <Dropdown.Item id="delete" textValue="Delete" variant="danger">
-              <Trash2Icon className="text-danger size-4" />
-              <Label>Delete</Label>
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown.Popover>
-      </Dropdown>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <Button type="button" variant="outline" size="icon-sm" aria-label="Actions">
+              <MoreVerticalIcon />
+            </Button>
+          }
+        />
+        <DropdownMenuContent>
+          <DropdownMenuItem onClick={viewDeviceInNewTab}>
+            <SquareArrowUpRightIcon className="text-muted" />
+            View
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setModal("edit")}>
+            <CircleEllipsisIcon className="text-muted" />
+            Edit
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => setModal("move")}>
+            <FolderClosedIcon className="text-muted" />
+            Move...
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={copyDeviceId}>
+            <CopyIcon className="text-muted" />
+            Copy ID
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setModal("share")}>
+            <Share2Icon className="text-muted" />
+            Share
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem variant="destructive" onClick={() => setModal("delete")}>
+            <Trash2Icon className="text-danger" />
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       {modal === "edit" && (
         <EditDeviceModal
@@ -106,7 +114,6 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
           onClose={() => setModal(null)}
         />
       )}
-
       {modal === "move" && (
         <MoveDeviceModal
           deviceId={device.id}
@@ -115,9 +122,7 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
           onClose={() => setModal(null)}
         />
       )}
-
       {modal === "share" && <ShareDeviceModal deviceId={device.id} onClose={() => setModal(null)} />}
-
       {modal === "delete" && (
         <DeleteDeviceModal deviceId={device.id} deviceName={device.name} onClose={() => setModal(null)} />
       )}
