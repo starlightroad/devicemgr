@@ -14,12 +14,12 @@ import useFormSuccess from "@/features/device/hooks/use-form-success";
 
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
@@ -29,14 +29,15 @@ type DeleteDeviceModalProps = BaseDeviceModalProps & { deviceName: string };
 export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: DeleteDeviceModalProps) {
   const [state, formAction, isFormLoading] = useActionState(deleteDevice.bind(null, deviceId), undefined);
 
-  useFormSuccess(state?.success, () => {
+  const closeModalAndShowToast = () => {
     onClose();
     toast.success(ACTION_MESSAGE.deleted);
-  });
+  };
+
+  useFormSuccess(state?.success, closeModalAndShowToast);
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogTrigger hidden>Delete Device</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Delete device permanently?</DialogTitle>
@@ -50,9 +51,13 @@ export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: Del
           </p>
         )}
         <DialogFooter>
-          <Button type="button" slot="close" variant="secondary">
-            Cancel
-          </Button>
+          <DialogClose
+            render={
+              <Button type="button" variant="outline">
+                Cancel
+              </Button>
+            }
+          />
           <form action={formAction}>
             <Button type="submit" variant="destructive" disabled={isFormLoading}>
               Delete
