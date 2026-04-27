@@ -18,7 +18,15 @@ import { Button } from "@/components/ui/button";
 
 import FieldErrorMessage from "@/features/device/components/field-error-message";
 
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 import {
   Select,
@@ -83,9 +91,13 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, groups, onClose
           />
         </form>
         <DialogFooter>
-          <Button type="button" slot="close" variant="secondary">
-            Cancel
-          </Button>
+          <DialogClose
+            render={
+              <Button type="button" variant="outline">
+                Cancel
+              </Button>
+            }
+          />
           <Button type="submit" form={FORM_ID} disabled={isGroupsEmpty || isFormLoading}>
             Save
           </Button>
