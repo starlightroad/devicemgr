@@ -8,11 +8,11 @@ import useTimer from "@/features/dashboard/hooks/use-timer";
 
 import useCopyToClipboard from "@/features/device/hooks/use-copy-to-clipboard";
 
-import { Input } from "@/components/ui/input";
-
 import { Button } from "@/components/ui/button";
 
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 
 import {
   Dialog,
@@ -57,11 +57,15 @@ export default function ShareDeviceModal({ deviceId, onClose }: ShareDeviceModal
             <FieldLabel htmlFor="share" className="sr-only">
               Share
             </FieldLabel>
-            <Input id="share" defaultValue={shareUrl} readOnly />
+            <InputGroup>
+              <InputGroupInput id="share" defaultValue={shareUrl} readOnly />
+              <InputGroupAddon align="inline-end">
+                <Button aria-label="Copy" size="icon-sm" variant="ghost" onClick={copyShareUrl}>
+                  {isRunning ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}
+                </Button>
+              </InputGroupAddon>
+            </InputGroup>
           </Field>
-          <Button aria-label="Copy" size="icon-sm" variant="ghost" onClick={copyShareUrl}>
-            {isRunning ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}
-          </Button>
         </FieldGroup>
         <DialogFooter>
           <DialogClose render={<Button type="button">Close</Button>}></DialogClose>
