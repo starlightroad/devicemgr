@@ -86,25 +86,25 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
           </TooltipContent>
         </Tooltip>
         <DropdownMenuContent className="w-40">
-          <DropdownMenuItem onClick={viewDeviceInNewTab}>
+          <DropdownMenuItem onClick={viewDeviceInNewTab} className="focus:[&>svg]:stroke-muted-foreground">
             <SquareArrowUpRightIcon className="text-muted-foreground" />
             View
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setModal("edit")}>
+          <DropdownMenuItem onClick={() => setModal("edit")} className="focus:[&>svg]:stroke-muted-foreground">
             <CircleEllipsisIcon className="text-muted-foreground" />
             Edit
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => setModal("move")}>
+          <DropdownMenuItem onClick={() => setModal("move")} className="focus:[&>svg]:stroke-muted-foreground">
             <FolderClosedIcon className="text-muted-foreground" />
             Move...
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={copyDeviceId}>
+          <DropdownMenuItem onClick={copyDeviceId} className="focus:[&>svg]:stroke-muted-foreground">
             <CopyIcon className="text-muted-foreground" />
             Copy ID
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setModal("share")}>
+          <DropdownMenuItem onClick={() => setModal("share")} className="focus:[&>svg]:stroke-muted-foreground">
             <Share2Icon className="text-muted-foreground" />
             Share
           </DropdownMenuItem>
