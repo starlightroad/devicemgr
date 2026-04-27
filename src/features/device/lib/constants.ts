@@ -1,4 +1,4 @@
-export const TABLE_COLUMNS = ["Name", "Type", "Status", "Group", "Serial Number", "Actions"];
+export const TABLE_COLUMNS = ["Name", "Type", "Status", "Group", "Serial Number", ""];
 
 export const FORM_ID = "device-form";
 

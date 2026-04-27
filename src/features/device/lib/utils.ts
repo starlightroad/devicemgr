@@ -3,11 +3,11 @@ import type { Device } from "@/features/device/lib/definitions";
 export const getBadgeIconColorClassesByStatus = (status: string) => {
   switch (status) {
     case "in use":
-      return "bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300";
+      return "bg-green-700 dark:bg-green-300";
     case "storage":
-      return "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300";
+      return "bg-amber-700 dark:bg-amber-300";
     case "decommissioned":
-      return "bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300";
+      return "bg-purple-700 dark:bg-purple-300";
     default:
       throw new Error("Invalid status.");
   }

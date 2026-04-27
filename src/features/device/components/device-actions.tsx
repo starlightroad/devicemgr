@@ -30,6 +30,8 @@ import ShareDeviceModal from "@/features/device/components/share-device-modal";
 
 import DeleteDeviceModal from "@/features/device/components/delete-device-modal";
 
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -67,34 +69,43 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger
-          render={
-            <Button type="button" variant="outline" size="icon-sm" aria-label="Actions">
-              <MoreVerticalIcon />
-            </Button>
-          }
-        />
-        <DropdownMenuContent>
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <DropdownMenuTrigger
+                render={
+                  <Button type="button" variant="ghost" size="icon-xs" aria-label="Actions">
+                    <MoreVerticalIcon />
+                  </Button>
+                }
+              />
+            }
+          />
+          <TooltipContent>
+            <p>Actions</p>
+          </TooltipContent>
+        </Tooltip>
+        <DropdownMenuContent className="w-40">
           <DropdownMenuItem onClick={viewDeviceInNewTab}>
-            <SquareArrowUpRightIcon className="text-muted" />
+            <SquareArrowUpRightIcon className="text-muted-foreground" />
             View
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setModal("edit")}>
-            <CircleEllipsisIcon className="text-muted" />
+            <CircleEllipsisIcon className="text-muted-foreground" />
             Edit
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setModal("move")}>
-            <FolderClosedIcon className="text-muted" />
+            <FolderClosedIcon className="text-muted-foreground" />
             Move...
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={copyDeviceId}>
-            <CopyIcon className="text-muted" />
+            <CopyIcon className="text-muted-foreground" />
             Copy ID
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setModal("share")}>
-            <Share2Icon className="text-muted" />
+            <Share2Icon className="text-muted-foreground" />
             Share
           </DropdownMenuItem>
           <DropdownMenuSeparator />
