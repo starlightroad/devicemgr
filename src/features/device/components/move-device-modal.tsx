@@ -71,7 +71,7 @@ export default function MoveDeviceModal({ deviceId, deviceGroup, groups, onClose
             required
             disabled={isGroupsEmpty}
           >
-            <SelectTrigger className="h-10">
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Select a group" />
             </SelectTrigger>
             <SelectContent>
