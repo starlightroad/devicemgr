@@ -22,7 +22,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 const getUrlProtocolAndDomain = () => {
@@ -46,7 +45,6 @@ export default function ShareDeviceModal({ deviceId, onClose }: ShareDeviceModal
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogTrigger hidden>Share Device</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Share</DialogTitle>
