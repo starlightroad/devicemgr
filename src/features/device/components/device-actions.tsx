@@ -126,12 +126,7 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
         />
       )}
       {modal === "move" && (
-        <MoveDeviceModal
-          deviceId={device.id}
-          deviceGroup={device.group}
-          groups={groups}
-          onClose={() => setModal(null)}
-        />
+        <MoveDeviceModal deviceId={device.id} groupId={device.groupId} groups={groups} onClose={() => setModal(null)} />
       )}
       {modal === "share" && <ShareDeviceModal deviceId={device.id} onClose={() => setModal(null)} />}
       {modal === "delete" && (
