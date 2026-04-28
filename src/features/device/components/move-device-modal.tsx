@@ -45,8 +45,9 @@ export default function MoveDeviceModal({ deviceId, groupId, groups, onClose }: 
         </DialogHeader>
         <form id={FORM_ID} action={formAction} className="flex flex-col gap-4">
           <Field>
-            <FieldLabel>Groups</FieldLabel>
+            <FieldLabel htmlFor="group">Group</FieldLabel>
             <Select
+              id="group"
               name="group"
               items={groups?.map((group) => ({ label: group.name, value: group.id }))}
               defaultValue={isGroupsEmpty ? null : groupId}
