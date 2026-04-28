@@ -2,17 +2,13 @@
 
 import { toast } from "sonner";
 
-import { useActionState, useEffect } from "react";
+import { useActionState } from "react";
 
 import { ACTION_MESSAGE, FORM_ID } from "@/features/device/lib/constants";
-
-import { generateDeviceFieldIds } from "@/features/device/lib/utils";
 
 import { updateDevice } from "@/features/device/lib/actions";
 
 import type { Device, DeviceGroup, DeviceStatus, DeviceType } from "@/features/device/lib/definitions";
-
-import useFields from "@/features/device/hooks/use-fields";
 
 import useFormSuccess from "@/features/device/hooks/use-form-success";
 
@@ -20,13 +16,11 @@ import { Input } from "@/components/ui/input";
 
 import { Button } from "@/components/ui/button";
 
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-
-import FieldErrorMessage from "@/features/device/components/field-error-message";
+import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 type EditDeviceModalProps = {
   device: Device;
@@ -37,173 +31,159 @@ type EditDeviceModalProps = {
 };
 
 export default function EditDeviceModal({ device, types, statuses, groups, onClose }: EditDeviceModalProps) {
-  const isTypesEmpty = types?.length === 0;
+  const isTypesEmpty = !types || types?.length === 0;
 
-  const isStatusesEmpty = statuses?.length === 0;
+  const isStatusesEmpty = !statuses || statuses?.length === 0;
 
-  const isGroupsEmpty = groups?.length === 0;
-
-  const selectedTypeId = types?.find((type) => type.name === device.type)?.id;
-
-  const selectedStatusId = statuses?.find((status) => status.name === device.status)?.id;
-
-  const selectedGroupId = groups?.find((group) => group.name === device.group)?.id;
-
-  const { field, handleFieldChange } = useFields(generateDeviceFieldIds(device));
+  const isGroupsEmpty = !groups || groups?.length === 0;
 
   const [state, formAction, isFormLoading] = useActionState(updateDevice.bind(null, device.id), undefined);
 
-  useFormSuccess(state?.success, () => {
+  const closeModalAndShowToast = () => {
     onClose();
-    toast.success(ACTION_MESSAGE.updated);
-  });
+    toast.success(ACTION_MESSAGE.moved);
+  };
 
-  useEffect(() => {
-    if (selectedTypeId) handleFieldChange("type", selectedTypeId);
-    if (selectedStatusId) handleFieldChange("status", selectedStatusId);
-    if (selectedGroupId) handleFieldChange("group", selectedGroupId);
-  }, [handleFieldChange, selectedTypeId, selectedStatusId, selectedGroupId]);
+  useFormSuccess(state?.success, closeModalAndShowToast);
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogTrigger hidden>Edit Device</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit Device</DialogTitle>
         </DialogHeader>
+        <form id={FORM_ID} action={formAction} className="flex flex-col gap-4">
+          <FieldGroup>
+            <Field>
+              <FieldLabel htmlFor="name">Name</FieldLabel>
+              <Input
+                id="name"
+                type="text"
+                name="name"
+                placeholder="John's MacBook Pro"
+                autoComplete="off"
+                defaultValue={device.name}
+                required
+              />
+              <FieldError>{state?.serverErrors?.name}</FieldError>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="type">Type</FieldLabel>
+              <Select
+                id="type"
+                name="type"
+                items={types?.map((type) => ({ label: type.name, value: type.id }))}
+                defaultValue={isTypesEmpty ? null : device.typeId}
+                disabled={isTypesEmpty}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {types?.map((type) => (
+                      <SelectItem key={type.id} value={type.id}>
+                        {type.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <FieldError>{isTypesEmpty ? "Failed to load types." : state?.serverErrors?.type}</FieldError>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="status">Status</FieldLabel>
+              <Select
+                id="status"
+                name="status"
+                items={statuses?.map((status) => ({ label: status.name, value: status.id }))}
+                defaultValue={isStatusesEmpty ? null : device.statusId}
+                disabled={isStatusesEmpty}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {statuses?.map((status) => (
+                      <SelectItem key={status.id} value={status.id}>
+                        {status.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <FieldError>{isStatusesEmpty ? "Failed to load statuses." : state?.serverErrors?.status}</FieldError>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="group">Group</FieldLabel>
+              <Select
+                id="group"
+                name="group"
+                items={groups?.map((group) => ({ label: group.name, value: group.id }))}
+                defaultValue={isGroupsEmpty ? null : device.groupId}
+                disabled={isGroupsEmpty}
+                required
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a group" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {groups?.map((group) => (
+                      <SelectItem key={group.id} value={group.id}>
+                        {group.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <FieldError>{isGroupsEmpty ? "Failed to load groups." : state?.serverErrors?.group}</FieldError>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="serial-number">Serial Number</FieldLabel>
+              <Input
+                id="serial-number"
+                type="text"
+                name="serial-number"
+                placeholder="SN-LTP-1002"
+                autoComplete="off"
+                defaultValue={device.serialNumber}
+                required
+              />
+              <FieldError>{state?.serverErrors?.serialNumber}</FieldError>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="ip-address">IP Address</FieldLabel>
+              <Input
+                id="ip-address"
+                type="text"
+                name="ip-address"
+                placeholder="192.168.1.1"
+                defaultValue={device.ipAddress ?? ""}
+                autoComplete="off"
+              />
+              <FieldError>{state?.serverErrors?.ipAddress}</FieldError>
+            </Field>
+          </FieldGroup>
+        </form>
+        <DialogFooter>
+          <DialogClose
+            render={
+              <Button type="button" variant="outline">
+                Cancel
+              </Button>
+            }
+          />
+          <Button
+            type="submit"
+            form={FORM_ID}
+            disabled={isTypesEmpty || isStatusesEmpty || isGroupsEmpty || isFormLoading}
+          >
+            Save
+          </Button>
+        </DialogFooter>
       </DialogContent>
-      <form id={FORM_ID} action={formAction} className="flex flex-col gap-4">
-        <FieldGroup>
-          <Field>
-            <FieldLabel htmlFor={field.name.name}>Name</FieldLabel>
-            <Input
-              id={field.name.name}
-              type="text"
-              name={field.name.name}
-              placeholder="John's MacBook Pro"
-              autoComplete="off"
-              value={field.name.value}
-              required
-              className="h-10"
-              onChange={(e) => handleFieldChange("name", e.target.value)}
-            />
-            <FieldErrorMessage message={state?.serverErrors?.name} isFormLoading={isFormLoading} />
-          </Field>
-          <Select
-            items={types?.map((type) => ({ label: type.name, value: type.name }))}
-            disabled={isTypesEmpty}
-            defaultValue={field.type.value}
-          >
-            <SelectTrigger className="h-10">
-              <SelectValue placeholder="Select type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {types?.map((type) => (
-                  <SelectItem key={type.name} value={type.name}>
-                    {type.name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Select
-            items={statuses?.map((status) => ({ label: status.name, value: status.name }))}
-            disabled={isStatusesEmpty}
-            defaultValue={field.status.value}
-          >
-            <SelectTrigger className="h-10">
-              <SelectValue placeholder="Select status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {statuses?.map((status) => (
-                  <SelectItem key={status.name} value={status.name}>
-                    {status.name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Select
-            items={groups?.map((group) => ({ label: group.name, value: group.name }))}
-            disabled={isGroupsEmpty}
-            defaultValue={field.group.value}
-          >
-            <SelectTrigger className="h-10">
-              <SelectValue placeholder="Select group" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {groups?.map((group) => (
-                  <SelectItem key={group.name} value={group.name}>
-                    {group.name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Select
-            items={groups?.map((group) => ({ label: group.name, value: group.name }))}
-            disabled={isGroupsEmpty}
-            defaultValue={field.group.value}
-          >
-            <SelectTrigger className="h-10">
-              <SelectValue placeholder="Select group" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {groups?.map((group) => (
-                  <SelectItem key={group.name} value={group.name}>
-                    {group.name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Field>
-            <FieldLabel htmlFor={field.serialNumber.name}>Serial Number</FieldLabel>
-            <Input
-              id={field.serialNumber.name}
-              type="text"
-              name={field.serialNumber.name}
-              placeholder="SN-LTP-1002"
-              autoComplete="off"
-              value={field.serialNumber.value}
-              required
-              className="h-10"
-              onChange={(e) => handleFieldChange("serialNumber", e.target.value)}
-            />
-            <FieldErrorMessage message={state?.serverErrors?.serialNumber} isFormLoading={isFormLoading} />
-          </Field>
-          <Field>
-            <FieldLabel>IP Address</FieldLabel>
-            <Input
-              id={field.ipAddress.name}
-              type="text"
-              name={field.ipAddress.name}
-              placeholder="192.168.1.1"
-              autoComplete="off"
-              value={field.ipAddress.value}
-              className="h-10"
-              onChange={(e) => handleFieldChange("ipAddress", e.target.value)}
-            />
-            <FieldErrorMessage message={state?.serverErrors?.ipAddress} isFormLoading={isFormLoading} />
-          </Field>
-        </FieldGroup>
-      </form>
-      <DialogFooter>
-        <Button type="button" slot="close" variant="secondary">
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          form={FORM_ID}
-          disabled={isTypesEmpty || isStatusesEmpty || isGroupsEmpty || isFormLoading}
-        >
-          Save
-        </Button>
-      </DialogFooter>
     </Dialog>
   );
 }
