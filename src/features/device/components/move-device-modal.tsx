@@ -47,12 +47,13 @@ export default function MoveDeviceModal({ deviceId, groupId, groups, onClose }: 
           <Field>
             <FieldLabel>Groups</FieldLabel>
             <Select
+              name="group"
               items={groups?.map((group) => ({ label: group.name, value: group.id }))}
               defaultValue={isGroupsEmpty ? null : groupId}
               required
               disabled={isGroupsEmpty}
             >
-              <SelectTrigger className="w-full">
+              <SelectTrigger>
                 <SelectValue placeholder="Select a group" />
               </SelectTrigger>
               <SelectContent>
