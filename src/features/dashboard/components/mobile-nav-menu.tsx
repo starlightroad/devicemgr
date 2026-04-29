@@ -23,21 +23,28 @@ export default function MobileNavMenu() {
         const Icon = getNavIcon(navItem.label);
 
         return (
-          <DropdownMenuItem key={navItem.id} className="capitalize">
-            <Link href={navItem.href}>
-              <Icon />
-              {navItem.label}
-            </Link>
-          </DropdownMenuItem>
+          <DropdownMenuItem
+            key={navItem.id}
+            className="px-3 text-sm capitalize"
+            render={
+              <Link href={navItem.href}>
+                <Icon />
+                {navItem.label}
+              </Link>
+            }
+          />
         );
       })}
-      <DropdownMenuItem>
-        <Link href={GITHUB_REPO} target="_blank" rel="noopener noreferrer">
-          <FolderGit2Icon />
-          GitHub
-        </Link>
-      </DropdownMenuItem>
-      <DropdownMenuItem variant="destructive" onClick={async () => await signOut()}>
+      <DropdownMenuItem
+        className="px-3 text-sm"
+        render={
+          <Link href={GITHUB_REPO} target="_blank" rel="noopener noreferrer">
+            <FolderGit2Icon />
+            GitHub
+          </Link>
+        }
+      />
+      <DropdownMenuItem variant="destructive" onClick={async () => await signOut()} className="px-3 text-sm">
         <LogOutIcon />
         Sign Out
       </DropdownMenuItem>

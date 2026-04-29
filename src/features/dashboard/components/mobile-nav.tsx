@@ -14,23 +14,23 @@ export default function MobileNav() {
   return (
     <nav role="Navigation" className="md:hidden">
       <DropdownMenu>
-        <DropdownMenuTrigger
-          render={
-            <Tooltip>
-              <TooltipTrigger
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <DropdownMenuTrigger
                 render={
                   <Button type="button" variant="ghost" size="icon-sm">
                     <PanelRightIcon />
                   </Button>
                 }
               />
-              <TooltipContent>
-                <p>Navigation</p>
-              </TooltipContent>
-            </Tooltip>
-          }
-        />
-        <DropdownMenuContent className="md:hidden">
+            }
+          />
+          <TooltipContent>
+            <p>Navigation</p>
+          </TooltipContent>
+        </Tooltip>
+        <DropdownMenuContent className="w-56 md:hidden">
           <UserProfile />
           <MobileNavMenu />
         </DropdownMenuContent>
