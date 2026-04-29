@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@heroui/react";
-
 import { LogOutIcon } from "lucide-react";
 
 import useSignOut from "@/features/auth/hooks/use-sign-out";
+
+import { Button } from "@/components/ui/button";
 
 export default function SignOutButton() {
   const { signOut } = useSignOut();
@@ -13,13 +13,12 @@ export default function SignOutButton() {
     <Button
       type="button"
       variant="ghost"
-      size="sm"
-      fullWidth
-      className="justify-start"
-      onPress={async () => await signOut()}
+      size="lg"
+      className="justify-start gap-3 px-3"
+      onClick={async () => await signOut()}
     >
-      <LogOutIcon className="text-muted size-4" />
-      Sign Out
+      <LogOutIcon className="text-muted-foreground" />
+      <span className="text-sm">Sign Out</span>
     </Button>
   );
 }

@@ -1,12 +1,8 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { toast } from "sonner";
 
-import { FolderClosedIcon } from "lucide-react";
-
-import { Button, Form, Label, ListBox, Modal, Select, Surface, toast } from "@heroui/react";
-
-import { generateId } from "@/features/device/lib/utils";
+import { useActionState } from "react";
 
 import { moveDevice } from "@/features/device/lib/actions";
 
@@ -14,96 +10,79 @@ import { ACTION_MESSAGE, FORM_ID } from "@/features/device/lib/constants";
 
 import type { BaseDeviceModalProps, DeviceGroup } from "@/features/device/lib/definitions";
 
-import useFields from "@/features/device/hooks/use-fields";
-
 import useFormSuccess from "@/features/device/hooks/use-form-success";
 
-import FieldErrorMessage from "@/features/device/components/field-error-message";
+import { Button } from "@/components/ui/button";
 
-type MoveDeviceModalProps = BaseDeviceModalProps<{ deviceGroup: string; groups: DeviceGroup[] | null }>;
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
-export default function MoveDeviceModal({ deviceId, deviceGroup, groups, onClose }: MoveDeviceModalProps) {
-  const isGroupsEmpty = groups?.length === 0;
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-  const selectedGroupId = groups?.find((group) => group.name === deviceGroup)?.id;
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-  const { field, handleFieldChange } = useFields({ group: { name: "group", value: "" } });
+type MoveDeviceModalProps = BaseDeviceModalProps<{
+  groupId: string;
+  groups: DeviceGroup[] | null;
+}>;
+
+export default function MoveDeviceModal({ deviceId, groupId, groups, onClose }: MoveDeviceModalProps) {
+  const isGroupsEmpty = !groups || groups.length === 0;
 
   const [state, formAction, isFormLoading] = useActionState(moveDevice.bind(null, deviceId), undefined);
 
-  useFormSuccess(state?.success, () => {
+  const closeModalAndShowToast = () => {
     onClose();
     toast.success(ACTION_MESSAGE.moved);
-  });
+  };
 
-  useEffect(() => {
-    if (selectedGroupId) handleFieldChange("group", selectedGroupId);
-  }, [handleFieldChange, selectedGroupId]);
+  useFormSuccess(state?.success, closeModalAndShowToast);
 
   return (
-    <Modal isOpen onOpenChange={onClose}>
-      <Button className="hidden">Move Device</Button>
-      <Modal.Backdrop>
-        <Modal.Container placement="auto">
-          <Modal.Dialog className="sm:max-w-md">
-            <Modal.CloseTrigger />
-            <Modal.Header>
-              <Modal.Icon className="bg-default text-foreground">
-                <FolderClosedIcon className="size-5" />
-              </Modal.Icon>
-              <Modal.Heading>Move Device</Modal.Heading>
-            </Modal.Header>
-            <Modal.Body className="px-1 py-4">
-              <Surface variant="default">
-                <Form id={FORM_ID} action={formAction} className="flex flex-col gap-4">
-                  <Select
-                    name={field.group.name}
-                    variant="secondary"
-                    placeholder="Select group"
-                    isRequired
-                    value={field.group.value}
-                    onChange={(value) => handleFieldChange("group", String(value))}
-                    isDisabled={isGroupsEmpty}
-                    defaultValue={field.group.value}
-                  >
-                    <Label>Group</Label>
-                    <Select.Trigger className="h-10">
-                      <Select.Indicator />
-                      <Select.Value className="leading-6" />
-                    </Select.Trigger>
-                    <Select.Popover>
-                      <ListBox>
-                        {groups?.map((group) => {
-                          const id = generateId(group.id);
-
-                          return (
-                            <ListBox.Item key={id} id={id} textValue={group.name}>
-                              {group.name}
-                              <ListBox.ItemIndicator />
-                            </ListBox.Item>
-                          );
-                        })}
-                      </ListBox>
-                    </Select.Popover>
-                    <FieldErrorMessage
-                      message={isGroupsEmpty ? "No entries found." : state?.serverErrors?.group}
-                      isFormLoading={isFormLoading}
-                    />
-                  </Select>
-                </Form>
-              </Surface>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button type="button" slot="close" variant="secondary">
+    <Dialog open onOpenChange={onClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Move Device</DialogTitle>
+        </DialogHeader>
+        <form id={FORM_ID} action={formAction} className="flex flex-col gap-4">
+          <Field>
+            <FieldLabel htmlFor="group">Group</FieldLabel>
+            <Select
+              id="group"
+              name="group"
+              items={groups?.map((group) => ({ label: group.name, value: group.id }))}
+              defaultValue={isGroupsEmpty ? null : groupId}
+              required
+              disabled={isGroupsEmpty}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select a group" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {groups?.map((group) => (
+                    <SelectItem key={group.id} value={group.id}>
+                      {group.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <FieldError>{isGroupsEmpty ? "Failed to load groups." : state?.serverErrors?.group}</FieldError>
+          </Field>
+        </form>
+        <DialogFooter>
+          <DialogClose
+            render={
+              <Button type="button" variant="outline">
                 Cancel
               </Button>
-              <Button type="submit" form={FORM_ID} isPending={isFormLoading} isDisabled={isGroupsEmpty}>
-                Save
-              </Button>
-            </Modal.Footer>
-          </Modal.Dialog>
-        </Modal.Container>
-      </Modal.Backdrop>
-    </Modal>
+            }
+          />
+          <Button type="submit" form={FORM_ID} disabled={isGroupsEmpty || isFormLoading}>
+            Save
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -1,16 +1,18 @@
-import { Card, Skeleton } from "@heroui/react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function DeviceStatSkeleton() {
   return (
     <Card>
-      <Card.Header>
-        <Card.Title>
+      <CardHeader>
+        <CardTitle>
           <Skeleton className="h-6 w-24 rounded-lg" />
-        </Card.Title>
-      </Card.Header>
-      <Card.Content>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
         <Skeleton className="h-10 w-32 rounded" />
-      </Card.Content>
+      </CardContent>
     </Card>
   );
 }

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { toast } from "sonner";
 
-import { Button, Dropdown, type Key, Label, Separator, toast } from "@heroui/react";
+import { useState } from "react";
 
 import {
   CircleEllipsisIcon,
@@ -20,6 +20,8 @@ import { ACTION_MESSAGE } from "@/features/device/lib/constants";
 
 import useCopyToClipboard from "@/features/device/hooks/use-copy-to-clipboard";
 
+import { buttonVariants } from "@/components/ui/button";
+
 import EditDeviceModal from "@/features/device/components/edit-device-modal";
 
 import MoveDeviceModal from "@/features/device/components/move-device-modal";
@@ -27,6 +29,16 @@ import MoveDeviceModal from "@/features/device/components/move-device-modal";
 import ShareDeviceModal from "@/features/device/components/share-device-modal";
 
 import DeleteDeviceModal from "@/features/device/components/delete-device-modal";
+
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type DeviceActionsProps = {
   device: Device;
@@ -38,14 +50,14 @@ type DeviceActionsProps = {
 export default function DeviceActions({ device, types, statuses, groups }: DeviceActionsProps) {
   const { copy } = useCopyToClipboard();
 
-  const [modal, setModal] = useState<Key | null>(null);
+  const [modal, setModal] = useState<string | null>(null);
 
   const copyDeviceId = async () => {
     try {
       await copy(device.id);
       toast.success(ACTION_MESSAGE.copied);
     } catch {
-      toast.danger("Failed to copy device ID.");
+      toast.error("Failed to copy device ID.");
     }
   };
 
@@ -56,42 +68,52 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
 
   return (
     <>
-      <Dropdown>
-        <Button type="button" variant="outline" size="sm" isIconOnly aria-label="Actions">
-          <MoreVerticalIcon />
-        </Button>
-        <Dropdown.Popover placement="bottom right">
-          <Dropdown.Menu onAction={(key) => setModal(key)}>
-            <Dropdown.Item id="view" textValue="View" onAction={viewDeviceInNewTab}>
-              <SquareArrowUpRightIcon className="text-muted size-4" />
-              <Label>View</Label>
-            </Dropdown.Item>
-            <Dropdown.Item id="edit" textValue="Edit">
-              <CircleEllipsisIcon className="text-muted size-4" />
-              <Label>Edit</Label>
-            </Dropdown.Item>
-            <Separator />
-            <Dropdown.Item id="move" textValue="Move">
-              <FolderClosedIcon className="text-muted size-4" />
-              <Label>Move...</Label>
-            </Dropdown.Item>
-            <Separator />
-            <Dropdown.Item id="copy-id" textValue="Copy ID" onAction={copyDeviceId}>
-              <CopyIcon className="text-muted size-4" />
-              <Label>Copy ID</Label>
-            </Dropdown.Item>
-            <Dropdown.Item id="share" textValue="Share">
-              <Share2Icon className="text-muted size-4" />
-              <Label>Share</Label>
-            </Dropdown.Item>
-            <Separator />
-            <Dropdown.Item id="delete" textValue="Delete" variant="danger">
-              <Trash2Icon className="text-danger size-4" />
-              <Label>Delete</Label>
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown.Popover>
-      </Dropdown>
+      <DropdownMenu>
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <DropdownMenuTrigger
+                aria-label="Actions"
+                className={buttonVariants({ variant: "ghost", size: "icon-xs" })}
+              >
+                <MoreVerticalIcon />
+              </DropdownMenuTrigger>
+            }
+          />
+          <TooltipContent>
+            <p>Actions</p>
+          </TooltipContent>
+        </Tooltip>
+        <DropdownMenuContent className="w-40">
+          <DropdownMenuItem onClick={viewDeviceInNewTab} className="focus:[&>svg]:stroke-muted-foreground">
+            <SquareArrowUpRightIcon className="text-muted-foreground" />
+            View
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setModal("edit")} className="focus:[&>svg]:stroke-muted-foreground">
+            <CircleEllipsisIcon className="text-muted-foreground" />
+            Edit
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => setModal("move")} className="focus:[&>svg]:stroke-muted-foreground">
+            <FolderClosedIcon className="text-muted-foreground" />
+            Move...
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={copyDeviceId} className="focus:[&>svg]:stroke-muted-foreground">
+            <CopyIcon className="text-muted-foreground" />
+            Copy ID
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setModal("share")} className="focus:[&>svg]:stroke-muted-foreground">
+            <Share2Icon className="text-muted-foreground" />
+            Share
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem variant="destructive" onClick={() => setModal("delete")}>
+            <Trash2Icon className="text-danger" />
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       {modal === "edit" && (
         <EditDeviceModal
@@ -102,18 +124,10 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
           onClose={() => setModal(null)}
         />
       )}
-
       {modal === "move" && (
-        <MoveDeviceModal
-          deviceId={device.id}
-          deviceGroup={device.group}
-          groups={groups}
-          onClose={() => setModal(null)}
-        />
+        <MoveDeviceModal deviceId={device.id} groupId={device.groupId} groups={groups} onClose={() => setModal(null)} />
       )}
-
       {modal === "share" && <ShareDeviceModal deviceId={device.id} onClose={() => setModal(null)} />}
-
       {modal === "delete" && (
         <DeleteDeviceModal deviceId={device.id} deviceName={device.name} onClose={() => setModal(null)} />
       )}

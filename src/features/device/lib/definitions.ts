@@ -1,9 +1,14 @@
-import { devicesTable } from "@/db/schemas";
-
-export type Device = Pick<typeof devicesTable.$inferSelect, "id" | "name" | "serialNumber" | "ipAddress"> & {
+export type Device = {
+  id: string;
+  typeId: string;
+  statusId: string;
+  groupId: string;
+  name: string;
   type: string;
   status: string;
   group: string;
+  serialNumber: string;
+  ipAddress: string | null;
 };
 
 type DeviceIdAndName = Pick<Device, "id" | "name">;

@@ -1,3 +1,7 @@
-export const generateId = () => crypto.randomUUID().replaceAll("-", "");
+import { twMerge } from "tailwind-merge";
 
-export const sleep = (ms = 1500) => new Promise((resolve) => setTimeout(resolve, ms));
+import { clsx, type ClassValue } from "clsx";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
