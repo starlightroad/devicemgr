@@ -13,16 +13,15 @@ import type { BaseDeviceModalProps } from "@/features/device/lib/definitions";
 import useFormSuccess from "@/features/device/hooks/use-form-success";
 
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-
-import { Button } from "@/components/ui/button";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 type DeleteDeviceModalProps = BaseDeviceModalProps & { deviceName: string };
 
@@ -37,34 +36,28 @@ export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: Del
   useFormSuccess(state?.success, closeModalAndShowToast);
 
   return (
-    <Dialog open onOpenChange={onClose}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Delete device permanently?</DialogTitle>
-          <DialogDescription>
+    <AlertDialog open onOpenChange={onClose}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Delete device permanently?</AlertDialogTitle>
+          <AlertDialogDescription className="text-wrap">
             This will permanently delete <strong>{deviceName}</strong>. This action cannot be undone.
-          </DialogDescription>
-        </DialogHeader>
-        {state?.serverErrors?.message && (
-          <p aria-live="polite" className="text-danger px-1 text-xs">
-            {state.serverErrors.message}
-          </p>
-        )}
-        <DialogFooter>
-          <DialogClose
-            render={
-              <Button type="button" variant="outline">
-                Cancel
-              </Button>
-            }
-          />
+          </AlertDialogDescription>
+          {state?.serverErrors?.message && (
+            <span role="alert" className="text-destructive text-xs">
+              {state.serverErrors.message}
+            </span>
+          )}
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
           <form action={formAction}>
-            <Button type="submit" variant="destructive" disabled={isFormLoading}>
+            <AlertDialogAction type="submit" variant="destructive" disabled={isFormLoading}>
               Delete
-            </Button>
+            </AlertDialogAction>
           </form>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
