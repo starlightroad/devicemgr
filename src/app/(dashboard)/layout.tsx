@@ -31,5 +31,5 @@ function Shell({ children }: Pick<LayoutProps, "children">) {
 }
 
 function Content({ children }: Pick<LayoutProps, "children">) {
-  return <div className="px-5">{children}</div>;
+  return <div className="min-w-0 px-5">{children}</div>;
 }

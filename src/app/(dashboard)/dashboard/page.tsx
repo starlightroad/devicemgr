@@ -52,7 +52,7 @@ export default async function DashboardPage() {
             </Suspense>
           </article>
         </section>
-        <section className="grid gap-5 lg:grid-cols-2">
+        <section>
           <article>
             <Card className="h-full gap-4">
               <CardHeader>
