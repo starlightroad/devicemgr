@@ -20,7 +20,7 @@ import { ACTION_MESSAGE } from "@/features/device/lib/constants";
 
 import useCopyToClipboard from "@/features/device/hooks/use-copy-to-clipboard";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 import EditDeviceModal from "@/features/device/components/edit-device-modal";
 
@@ -73,12 +73,11 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
           <TooltipTrigger
             render={
               <DropdownMenuTrigger
-                render={
-                  <Button type="button" variant="ghost" size="icon-xs" aria-label="Actions">
-                    <MoreVerticalIcon />
-                  </Button>
-                }
-              />
+                aria-label="Actions"
+                className={buttonVariants({ variant: "ghost", size: "icon-xs" })}
+              >
+                <MoreVerticalIcon />
+              </DropdownMenuTrigger>
             }
           />
           <TooltipContent>

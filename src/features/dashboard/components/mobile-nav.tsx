@@ -1,6 +1,6 @@
 import { PanelRightIcon } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 import UserProfile from "@/features/dashboard/components/user-profile";
 
@@ -17,13 +17,9 @@ export default function MobileNav() {
         <Tooltip>
           <TooltipTrigger
             render={
-              <DropdownMenuTrigger
-                render={
-                  <Button type="button" variant="ghost" size="icon-sm">
-                    <PanelRightIcon />
-                  </Button>
-                }
-              />
+              <DropdownMenuTrigger className={buttonVariants({ variant: "ghost", size: "icon-sm" })}>
+                <PanelRightIcon />
+              </DropdownMenuTrigger>
             }
           />
           <TooltipContent>
