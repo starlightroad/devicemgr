@@ -41,7 +41,7 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
 
   const closeModalAndShowToast = () => {
     onClose();
-    toast.success(ACTION_MESSAGE.moved);
+    toast.success(ACTION_MESSAGE.updated);
   };
 
   useFormSuccess(state?.success, closeModalAndShowToast);
