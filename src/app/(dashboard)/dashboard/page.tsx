@@ -1,7 +1,5 @@
 import { Suspense } from "react";
 
-import { getDeviceCountsByType } from "@/dal/type";
-
 import { getDeviceCountsByGroup } from "@/dal/group";
 
 import MobileNav from "@/features/dashboard/components/mobile-nav";
@@ -16,8 +14,6 @@ import StorageDevices from "@/features/device/components/storage-devices";
 
 import DeviceStatSkeleton from "@/features/device/components/device-stat-skeleton";
 
-import DevicesByTypeChart from "@/features/device/components/devices-by-type-chart";
-
 import DevicesByGroupChart from "@/features/device/components/devices-by-group-chart";
 
 import DecommissionedDevices from "@/features/device/components/decommissioned-devices";
@@ -25,7 +21,7 @@ import DecommissionedDevices from "@/features/device/components/decommissioned-d
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function DashboardPage() {
-  const [groupDeviceCounts, typeDeviceCounts] = await Promise.all([getDeviceCountsByGroup(), getDeviceCountsByType()]);
+  const groupDeviceCounts = await getDeviceCountsByGroup();
 
   return (
     <>
@@ -67,20 +63,6 @@ export default async function DashboardPage() {
                   <DevicesByGroupChart chartData={groupDeviceCounts.data} />
                 ) : (
                   <p className="text-danger text-sm">{groupDeviceCounts.error}</p>
-                )}
-              </CardContent>
-            </Card>
-          </article>
-          <article>
-            <Card className="h-full gap-4">
-              <CardHeader>
-                <CardTitle className="text-base font-medium">Devices by Type</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {typeDeviceCounts.data ? (
-                  <DevicesByTypeChart chartData={typeDeviceCounts.data} />
-                ) : (
-                  <p className="text-danger text-sm">{typeDeviceCounts.error}</p>
                 )}
               </CardContent>
             </Card>
