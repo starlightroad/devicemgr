@@ -163,7 +163,8 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
                 name="serial-number"
                 placeholder="SN-LTP-1002"
                 autoComplete="off"
-                defaultValue={device.serialNumber}
+                value={field.serialNumber}
+                onChange={(e) => handleFieldChange("serialNumber", e.target.value)}
                 required
               />
               <FieldError>{state?.serverErrors?.serialNumber}</FieldError>
