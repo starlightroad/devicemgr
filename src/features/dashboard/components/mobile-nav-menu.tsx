@@ -44,7 +44,7 @@ export default function MobileNavMenu() {
           </Link>
         }
       />
-      <DropdownMenuItem variant="destructive" onClick={async () => await signOut()} className="px-3 text-sm">
+      <DropdownMenuItem onClick={async () => await signOut()} className="px-3 text-sm">
         <LogOutIcon />
         Sign Out
       </DropdownMenuItem>
