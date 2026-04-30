@@ -10,6 +10,8 @@ import { updateDevice } from "@/features/device/lib/actions";
 
 import type { Device, DeviceGroup, DeviceStatus, DeviceType } from "@/features/device/lib/definitions";
 
+import useFields from "@/features/device/hooks/use-fields";
+
 import useFormSuccess from "@/features/device/hooks/use-form-success";
 
 import { Input } from "@/components/ui/input";
@@ -37,6 +39,15 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
 
   const isGroupsEmpty = !groups || groups?.length === 0;
 
+  const { field, handleFieldChange } = useFields({
+    name: device.name,
+    typeId: device.typeId,
+    statusId: device.statusId,
+    groupId: device.groupId,
+    serialNumber: device.serialNumber,
+    ipAddress: device.ipAddress,
+  });
+
   const [state, formAction, isFormLoading] = useActionState(updateDevice.bind(null, device.id), undefined);
 
   const closeModalAndShowToast = () => {
@@ -62,7 +73,8 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
                 name="name"
                 placeholder="John's MacBook Pro"
                 autoComplete="off"
-                defaultValue={device.name}
+                value={field.name}
+                onChange={(e) => handleFieldChange("name", e.target.value)}
                 required
               />
               <FieldError>{state?.serverErrors?.name}</FieldError>
