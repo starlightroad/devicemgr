@@ -2,8 +2,6 @@ import { Suspense } from "react";
 
 import { getDeviceCountsByGroup } from "@/dal/group";
 
-import MobileNav from "@/features/dashboard/components/mobile-nav";
-
 import TotalDevices from "@/features/device/components/total-devices";
 
 import InUseDevices from "@/features/device/components/in-use-devices";
@@ -11,6 +9,8 @@ import InUseDevices from "@/features/device/components/in-use-devices";
 import RecentDevices from "@/features/device/components/recent-devices";
 
 import StorageDevices from "@/features/device/components/storage-devices";
+
+import { Header, HeaderTitle } from "@/features/dashboard/components/header";
 
 import DeviceStatSkeleton from "@/features/device/components/device-stat-skeleton";
 
@@ -25,10 +25,9 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <header className="flex items-center justify-between py-5">
-        <h1 className="font-semibold">Dashboard</h1>
-        <MobileNav />
-      </header>
+      <Header>
+        <HeaderTitle>Dashboard</HeaderTitle>
+      </Header>
       <main className="flex flex-col gap-5 pb-5">
         <section className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           <article>

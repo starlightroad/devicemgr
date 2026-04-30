@@ -1,12 +1,11 @@
-import MobileNav from "@/features/dashboard/components/mobile-nav";
+import { Header, HeaderTitle } from "@/features/dashboard/components/header";
 
 export default function DevicesPage() {
   return (
     <>
-      <header className="flex items-center justify-between py-5">
-        <h1 className="font-semibold">Devices</h1>
-        <MobileNav />
-      </header>
+      <Header>
+        <HeaderTitle>Devices</HeaderTitle>
+      </Header>
     </>
   );
 }
