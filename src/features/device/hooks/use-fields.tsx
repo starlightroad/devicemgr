@@ -1,13 +1,15 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
-export default function useFields(initialState: Record<string, { name: string; value: string }>) {
+type UseFieldsProps<T> = { [K in keyof T]: T[K] };
+
+export default function useField<T>(initialState: UseFieldsProps<T>) {
   const [field, setField] = useState(initialState);
 
-  const handleFieldChange = useCallback((name: keyof typeof field, value: string) => {
-    setField((prevState) => ({ ...prevState, [name]: { name: prevState[name].name, value } }));
-  }, []);
+  const handleFieldChange = (name: keyof typeof field, value: T[keyof T]) => {
+    setField((prevState) => ({ ...prevState, [name]: value }));
+  };
 
   return {
     field,

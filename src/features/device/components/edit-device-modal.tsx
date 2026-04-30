@@ -10,6 +10,8 @@ import { updateDevice } from "@/features/device/lib/actions";
 
 import type { Device, DeviceGroup, DeviceStatus, DeviceType } from "@/features/device/lib/definitions";
 
+import useFields from "@/features/device/hooks/use-fields";
+
 import useFormSuccess from "@/features/device/hooks/use-form-success";
 
 import { Input } from "@/components/ui/input";
@@ -37,6 +39,15 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
 
   const isGroupsEmpty = !groups || groups?.length === 0;
 
+  const { field, handleFieldChange } = useFields({
+    name: device.name,
+    typeId: device.typeId,
+    statusId: device.statusId,
+    groupId: device.groupId,
+    serialNumber: device.serialNumber,
+    ipAddress: device.ipAddress,
+  });
+
   const [state, formAction, isFormLoading] = useActionState(updateDevice.bind(null, device.id), undefined);
 
   const closeModalAndShowToast = () => {
@@ -62,7 +73,8 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
                 name="name"
                 placeholder="John's MacBook Pro"
                 autoComplete="off"
-                defaultValue={device.name}
+                value={field.name}
+                onChange={(e) => handleFieldChange("name", e.target.value)}
                 required
               />
               <FieldError>{state?.serverErrors?.name}</FieldError>
@@ -73,7 +85,8 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
                 id="type"
                 name="type"
                 items={types?.map((type) => ({ label: type.name, value: type.id }))}
-                defaultValue={isTypesEmpty ? null : device.typeId}
+                value={isTypesEmpty ? null : field.typeId}
+                onValueChange={(e) => handleFieldChange("typeId", e)}
                 disabled={isTypesEmpty}
               >
                 <SelectTrigger>
@@ -97,7 +110,8 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
                 id="status"
                 name="status"
                 items={statuses?.map((status) => ({ label: status.name, value: status.id }))}
-                defaultValue={isStatusesEmpty ? null : device.statusId}
+                value={isStatusesEmpty ? null : field.statusId}
+                onValueChange={(e) => handleFieldChange("statusId", e)}
                 disabled={isStatusesEmpty}
               >
                 <SelectTrigger>
@@ -121,7 +135,8 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
                 id="group"
                 name="group"
                 items={groups?.map((group) => ({ label: group.name, value: group.id }))}
-                defaultValue={isGroupsEmpty ? null : device.groupId}
+                value={isGroupsEmpty ? null : field.groupId}
+                onValueChange={(e) => handleFieldChange("groupId", e)}
                 disabled={isGroupsEmpty}
                 required
               >
@@ -148,7 +163,8 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
                 name="serial-number"
                 placeholder="SN-LTP-1002"
                 autoComplete="off"
-                defaultValue={device.serialNumber}
+                value={field.serialNumber}
+                onChange={(e) => handleFieldChange("serialNumber", e.target.value)}
                 required
               />
               <FieldError>{state?.serverErrors?.serialNumber}</FieldError>
@@ -160,7 +176,8 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
                 type="text"
                 name="ip-address"
                 placeholder="192.168.1.1"
-                defaultValue={device.ipAddress ?? ""}
+                value={field.ipAddress ?? ""}
+                onChange={(e) => handleFieldChange("ipAddress", e.target.value)}
                 autoComplete="off"
               />
               <FieldError>{state?.serverErrors?.ipAddress}</FieldError>
