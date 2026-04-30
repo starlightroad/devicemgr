@@ -23,13 +23,9 @@ export default function DashboardLayout({ children }: LayoutProps) {
 }
 
 function Shell({ children }: Pick<LayoutProps, "children">) {
-  return (
-    <div className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-1 md:grid-cols-[224px_1fr] xl:border-x">
-      {children}
-    </div>
-  );
+  return <div className="grid min-h-screen grid-cols-1 md:grid-cols-[224px_1fr]">{children}</div>;
 }
 
 function Content({ children }: Pick<LayoutProps, "children">) {
-  return <div className="min-w-0 px-5">{children}</div>;
+  return <div className="mx-auto w-full max-w-7xl min-w-0 px-5">{children}</div>;
 }
