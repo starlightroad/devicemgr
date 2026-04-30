@@ -135,7 +135,8 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
                 id="group"
                 name="group"
                 items={groups?.map((group) => ({ label: group.name, value: group.id }))}
-                defaultValue={isGroupsEmpty ? null : device.groupId}
+                value={isGroupsEmpty ? null : field.groupId}
+                onValueChange={(e) => handleFieldChange("groupId", e)}
                 disabled={isGroupsEmpty}
                 required
               >
