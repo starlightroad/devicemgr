@@ -24,7 +24,7 @@ export default function Sidebar() {
           href={GITHUB_REPO}
           target="_blank"
           rel="noopener noreferrer"
-          className={buttonVariants({ size: "lg", variant: "ghost", className: "justify-start gap-3 px-3" })}
+          className={buttonVariants({ size: "lg", variant: "ghost", className: "justify-start gap-2 px-3" })}
         >
           <FolderGit2Icon className="text-muted-foreground" />
           <span className="text-sm">GitHub</span>

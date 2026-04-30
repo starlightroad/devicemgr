@@ -25,7 +25,7 @@ export default function MobileNavMenu() {
         return (
           <DropdownMenuItem
             key={navItem.id}
-            className="px-3 text-sm capitalize"
+            className="cursor-pointer px-3 text-sm capitalize"
             render={
               <Link href={navItem.href}>
                 <Icon />
@@ -36,7 +36,7 @@ export default function MobileNavMenu() {
         );
       })}
       <DropdownMenuItem
-        className="px-3 text-sm"
+        className="cursor-pointer px-3 text-sm"
         render={
           <Link href={GITHUB_REPO} target="_blank" rel="noopener noreferrer">
             <FolderGit2Icon />
@@ -44,7 +44,7 @@ export default function MobileNavMenu() {
           </Link>
         }
       />
-      <DropdownMenuItem variant="destructive" onClick={async () => await signOut()} className="px-3 text-sm">
+      <DropdownMenuItem onClick={async () => await signOut()} className="px-3 text-sm">
         <LogOutIcon />
         Sign Out
       </DropdownMenuItem>
