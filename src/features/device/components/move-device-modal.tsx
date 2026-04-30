@@ -10,6 +10,8 @@ import { ACTION_MESSAGE, FORM_ID } from "@/features/device/lib/constants";
 
 import type { BaseDeviceModalProps, DeviceGroup } from "@/features/device/lib/definitions";
 
+import useFields from "@/features/device/hooks/use-fields";
+
 import useFormSuccess from "@/features/device/hooks/use-form-success";
 
 import { Button } from "@/components/ui/button";
@@ -27,6 +29,8 @@ type MoveDeviceModalProps = BaseDeviceModalProps<{
 
 export default function MoveDeviceModal({ deviceId, groupId, groups, onClose }: MoveDeviceModalProps) {
   const isGroupsEmpty = !groups || groups.length === 0;
+
+  const { field, handleFieldChange } = useFields({ groupId: groupId });
 
   const [state, formAction, isFormLoading] = useActionState(moveDevice.bind(null, deviceId), undefined);
 
@@ -50,7 +54,8 @@ export default function MoveDeviceModal({ deviceId, groupId, groups, onClose }: 
               id="group"
               name="group"
               items={groups?.map((group) => ({ label: group.name, value: group.id }))}
-              defaultValue={isGroupsEmpty ? null : groupId}
+              value={isGroupsEmpty ? null : field.groupId}
+              onValueChange={(value) => handleFieldChange("groupId", value ?? "")}
               required
               disabled={isGroupsEmpty}
             >
