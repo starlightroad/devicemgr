@@ -85,7 +85,8 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
                 id="type"
                 name="type"
                 items={types?.map((type) => ({ label: type.name, value: type.id }))}
-                defaultValue={isTypesEmpty ? null : device.typeId}
+                value={isTypesEmpty ? null : field.typeId}
+                onValueChange={(e) => handleFieldChange("typeId", e)}
                 disabled={isTypesEmpty}
               >
                 <SelectTrigger>
