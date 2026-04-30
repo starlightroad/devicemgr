@@ -2,15 +2,13 @@
 
 import { toast } from "sonner";
 
-import { useActionState } from "react";
+import { useState, useTransition } from "react";
 
 import { deleteDevice } from "@/features/device/lib/actions";
 
 import { ACTION_MESSAGE } from "@/features/device/lib/constants";
 
 import type { BaseDeviceModalProps } from "@/features/device/lib/definitions";
-
-import useFormSuccess from "@/features/device/hooks/use-form-success";
 
 import {
   AlertDialog,
@@ -26,14 +24,23 @@ import {
 type DeleteDeviceModalProps = BaseDeviceModalProps & { deviceName: string };
 
 export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: DeleteDeviceModalProps) {
-  const [state, formAction, isFormLoading] = useActionState(deleteDevice.bind(null, deviceId), undefined);
+  const [isPending, startTransition] = useTransition();
 
-  const closeModalAndShowToast = () => {
-    onClose();
-    toast.success(ACTION_MESSAGE.deleted);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const formAction = () => {
+    startTransition(async () => {
+      const { success, serverErrors } = await deleteDevice(deviceId);
+
+      if (success) {
+        toast.success(ACTION_MESSAGE.deleted);
+      }
+
+      if (serverErrors?.message) {
+        setErrorMessage(serverErrors?.message);
+      }
+    });
   };
-
-  useFormSuccess(state?.success, closeModalAndShowToast);
 
   return (
     <AlertDialog open onOpenChange={onClose}>
@@ -43,16 +50,16 @@ export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: Del
           <AlertDialogDescription className="text-wrap">
             This will permanently delete <strong>{deviceName}</strong>. This action cannot be undone.
           </AlertDialogDescription>
-          {state?.serverErrors?.message && (
+          {errorMessage && (
             <span role="alert" className="text-destructive text-xs">
-              {state.serverErrors.message}
+              {errorMessage}
             </span>
           )}
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <form action={formAction}>
-            <AlertDialogAction type="submit" variant="destructive" disabled={isFormLoading}>
+            <AlertDialogAction type="submit" variant="destructive" disabled={isPending}>
               Delete
             </AlertDialogAction>
           </form>
