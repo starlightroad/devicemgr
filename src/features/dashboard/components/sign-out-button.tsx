@@ -14,7 +14,7 @@ export default function SignOutButton() {
       type="button"
       variant="ghost"
       size="lg"
-      className="justify-start gap-3 px-3"
+      className="justify-start gap-2 px-3"
       onClick={async () => await signOut()}
     >
       <LogOutIcon className="text-muted-foreground" />
