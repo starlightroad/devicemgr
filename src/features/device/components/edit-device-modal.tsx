@@ -176,7 +176,8 @@ export default function EditDeviceModal({ device, types, statuses, groups, onClo
                 type="text"
                 name="ip-address"
                 placeholder="192.168.1.1"
-                defaultValue={device.ipAddress ?? ""}
+                value={field.ipAddress ?? ""}
+                onChange={(e) => handleFieldChange("ipAddress", e.target.value)}
                 autoComplete="off"
               />
               <FieldError>{state?.serverErrors?.ipAddress}</FieldError>
