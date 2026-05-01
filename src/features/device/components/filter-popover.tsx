@@ -31,7 +31,7 @@ export default function FilterPopover({ label, items }: FilterPopoverProps) {
     <Popover>
       <PopoverTrigger
         render={
-          <Button size="sm" variant="outline" className="border-dashed">
+          <Button variant="outline" className="border-dashed">
             {label}
             <ChevronDownIcon data-icon="inline-end" />
           </Button>
