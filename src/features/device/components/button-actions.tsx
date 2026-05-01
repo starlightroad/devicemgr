@@ -14,12 +14,12 @@ import {
 export default function ButtonActions() {
   return (
     <ButtonGroup>
-      <Button type="button" variant="outline">
+      <Button type="button">
         <PlusIcon />
         New Device
       </Button>
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="More Options" className={buttonVariants({ variant: "outline", size: "icon" })}>
+        <DropdownMenuTrigger aria-label="More Options" className={buttonVariants({ size: "icon" })}>
           <ChevronDownIcon />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-40">
