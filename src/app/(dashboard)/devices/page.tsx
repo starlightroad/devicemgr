@@ -10,6 +10,8 @@ import ButtonActions from "@/features/device/components/button-actions";
 
 import FilterPopover from "@/features/device/components/filter-popover";
 
+import DeviceSearchBar from "@/features/device/components/device-search-bar";
+
 import { Header, HeaderTitle } from "@/features/dashboard/components/header";
 
 export default function DevicesPage() {
@@ -22,7 +24,10 @@ export default function DevicesPage() {
         <div className="flex justify-end">
           <ButtonActions />
         </div>
-        <ButtonGroup>
+        <ButtonGroup className="w-full py-5">
+          <ButtonGroup>
+            <DeviceSearchBar />
+          </ButtonGroup>
           <ButtonGroup>
             <FilterPopover label="Type" items={typesJson.map(({ name }) => name)} />
           </ButtonGroup>
