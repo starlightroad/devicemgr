@@ -1,5 +1,7 @@
 "use client";
 
+import { ChevronDownIcon } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -31,6 +33,7 @@ export default function FilterPopover({ label, items }: FilterPopoverProps) {
         render={
           <Button size="sm" variant="outline" className="border-dashed">
             {label}
+            <ChevronDownIcon data-icon="inline-end" />
           </Button>
         }
       />
