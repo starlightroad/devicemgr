@@ -6,6 +6,8 @@ import statusesJson from "@/lib/data/device-statuses.json";
 
 import { ButtonGroup } from "@/components/ui/button-group";
 
+import DeviceTable from "@/features/device/components/device-table";
+
 import ButtonActions from "@/features/device/components/button-actions";
 
 import FilterPopover from "@/features/device/components/filter-popover";
@@ -44,6 +46,7 @@ export default function DevicesPage() {
         <ButtonGroup className="w-full pt-2 pb-5 sm:hidden">
           <DeviceSearchBar />
         </ButtonGroup>
+        <DeviceTable />
       </main>
     </>
   );

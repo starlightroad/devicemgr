@@ -1,3 +1,5 @@
+import { TABLE_COLUMNS } from "@/features/device/lib/constants";
+
 import type { Device } from "@/features/device/lib/definitions";
 
 export const getBadgeIconColorClassesByStatus = (status: string) => {
@@ -24,3 +26,8 @@ export const generateDeviceFieldIds = (data: Device) => ({
   status: { name: "status", value: "" },
   group: { name: "group", value: "" },
 });
+
+export const getDeviceTableColumns = () => {
+  const newColumns = TABLE_COLUMNS.slice(0, TABLE_COLUMNS.length - 1);
+  return [...newColumns, "IP Address", "Actions"] as const;
+};
