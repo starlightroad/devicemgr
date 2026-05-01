@@ -13,16 +13,13 @@ import {
 
 export default function ButtonActions() {
   return (
-    <ButtonGroup>
-      <Button type="button" variant="outline" size="sm">
+    <ButtonGroup className="grow justify-end">
+      <Button type="button" variant="outline">
         <PlusIcon />
         New Device
       </Button>
       <DropdownMenu>
-        <DropdownMenuTrigger
-          aria-label="More Options"
-          className={buttonVariants({ variant: "outline", size: "icon-sm" })}
-        >
+        <DropdownMenuTrigger aria-label="More Options" className={buttonVariants({ variant: "outline", size: "icon" })}>
           <ChevronDownIcon />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-40">

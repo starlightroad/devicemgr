@@ -21,9 +21,6 @@ export default function DevicesPage() {
         <HeaderTitle>Devices</HeaderTitle>
       </Header>
       <main>
-        <div className="flex justify-end">
-          <ButtonActions />
-        </div>
         <ButtonGroup className="w-full py-5">
           <ButtonGroup>
             <DeviceSearchBar />
@@ -37,6 +34,7 @@ export default function DevicesPage() {
           <ButtonGroup>
             <FilterPopover label="Group" items={groupsJson.map(({ name }) => name)} />
           </ButtonGroup>
+          <ButtonActions />
         </ButtonGroup>
       </main>
     </>
