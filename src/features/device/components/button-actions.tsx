@@ -13,7 +13,7 @@ import {
 
 export default function ButtonActions() {
   return (
-    <ButtonGroup className="grow justify-end">
+    <ButtonGroup>
       <Button type="button" variant="outline">
         <PlusIcon />
         New Device

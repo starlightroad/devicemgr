@@ -21,8 +21,11 @@ export default function DevicesPage() {
         <HeaderTitle>Devices</HeaderTitle>
       </Header>
       <main>
-        <ButtonGroup className="w-full py-5">
-          <ButtonGroup>
+        <div className="flex justify-end pb-5 lg:hidden">
+          <ButtonActions />
+        </div>
+        <ButtonGroup className="w-full sm:pb-5">
+          <ButtonGroup className="hidden sm:flex">
             <DeviceSearchBar />
           </ButtonGroup>
           <ButtonGroup>
@@ -34,7 +37,12 @@ export default function DevicesPage() {
           <ButtonGroup>
             <FilterPopover label="Group" items={groupsJson.map(({ name }) => name)} />
           </ButtonGroup>
-          <ButtonActions />
+          <ButtonGroup className="hidden lg:flex lg:grow lg:justify-end">
+            <ButtonActions />
+          </ButtonGroup>
+        </ButtonGroup>
+        <ButtonGroup className="w-full pt-2 pb-5 sm:hidden">
+          <DeviceSearchBar />
         </ButtonGroup>
       </main>
     </>
