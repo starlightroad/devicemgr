@@ -25,16 +25,16 @@ export default function DevicesPage() {
           <ButtonActions />
         </div>
         <ButtonGroup className="w-full sm:pb-5">
-          <ButtonGroup className="hidden sm:flex">
+          <ButtonGroup aria-label="Search Bar Group" className="hidden sm:flex">
             <DeviceSearchBar />
           </ButtonGroup>
-          <ButtonGroup>
+          <ButtonGroup aria-label="Type Group">
             <FilterPopover label="Type" items={typesJson.map(({ name }) => name)} />
           </ButtonGroup>
-          <ButtonGroup>
+          <ButtonGroup aria-label="Status Group">
             <FilterPopover label="Status" items={statusesJson.map(({ name }) => name)} />
           </ButtonGroup>
-          <ButtonGroup>
+          <ButtonGroup aria-label="Group Group">
             <FilterPopover label="Group" items={groupsJson.map(({ name }) => name)} />
           </ButtonGroup>
           <ButtonGroup className="hidden lg:flex lg:grow lg:justify-end">

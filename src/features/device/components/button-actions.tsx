@@ -13,7 +13,7 @@ import {
 
 export default function ButtonActions() {
   return (
-    <ButtonGroup>
+    <ButtonGroup aria-label="Button Actions Group">
       <Button type="button">
         <PlusIcon />
         New Device
