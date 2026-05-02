@@ -6,6 +6,8 @@ import { ChevronDownIcon } from "lucide-react";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
+import { getFilteredSearchParams } from "@/features/device/lib/utils";
+
 import { Button } from "@/components/ui/button";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -37,7 +39,9 @@ export default function FilterPopover({ label, items }: FilterPopoverProps) {
 
   const anchor = useComboboxAnchor();
 
-  const [value, setValue] = useState<string[]>(searchParams.getAll(label.toLowerCase()));
+  const [value, setValue] = useState<string[]>(
+    getFilteredSearchParams(searchParams.getAll(label.toLowerCase()), items),
+  );
 
   const updateQueryString = (values: typeof value) => {
     const params = new URLSearchParams(searchParams);
@@ -47,7 +51,7 @@ export default function FilterPopover({ label, items }: FilterPopoverProps) {
     params.delete(query);
 
     if (values.length) {
-      values.forEach((value) => params.append(query, value));
+      values.forEach((value) => params.append(query, value.toLowerCase()));
     }
 
     replace(`${pathname}?${params.toString()}`);
@@ -74,9 +78,10 @@ export default function FilterPopover({ label, items }: FilterPopoverProps) {
             <ComboboxValue>
               {(values) => (
                 <>
-                  {values.map((value: string) => (
-                    <ComboboxChip key={value}>{value}</ComboboxChip>
-                  ))}
+                  {values.map((value: string) => {
+                    const [filteredValue] = items.filter((item) => item.toLowerCase() === value.toLowerCase());
+                    return <ComboboxChip key={filteredValue}>{filteredValue}</ComboboxChip>;
+                  })}
                   <ComboboxChipsInput type="search" />
                 </>
               )}
