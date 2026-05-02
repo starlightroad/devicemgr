@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import { ChevronDownIcon } from "lucide-react";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -39,9 +37,7 @@ export default function FilterPopover({ label, items }: FilterPopoverProps) {
 
   const anchor = useComboboxAnchor();
 
-  const [value, setValue] = useState<string[]>(
-    getFilteredSearchParams(searchParams.getAll(label.toLowerCase()), items),
-  );
+  const value = getFilteredSearchParams(searchParams.getAll(label.toLowerCase()), items);
 
   const updateQueryString = (values: typeof value) => {
     const params = new URLSearchParams(searchParams);
@@ -57,11 +53,6 @@ export default function FilterPopover({ label, items }: FilterPopoverProps) {
     replace(`${pathname}?${params.toString()}`);
   };
 
-  const handleValueChange = (values: typeof value) => {
-    updateQueryString(values);
-    setValue(values);
-  };
-
   return (
     <Popover>
       <PopoverTrigger
@@ -73,7 +64,13 @@ export default function FilterPopover({ label, items }: FilterPopoverProps) {
         }
       />
       <PopoverContent align="start" className="bg-background">
-        <Combobox multiple autoHighlight items={items} value={value} onValueChange={handleValueChange}>
+        <Combobox
+          multiple
+          autoHighlight
+          items={items}
+          value={value}
+          onValueChange={(value) => updateQueryString(value)}
+        >
           <ComboboxChips ref={anchor} className="w-full max-w-xs">
             <ComboboxValue>
               {(values) => (
