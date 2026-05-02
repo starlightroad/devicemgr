@@ -43,9 +43,9 @@ export default function FilterPopover({ label, items }: FilterPopoverProps) {
 
   const iconStyles = `${popoverOpen ? "rotate-180" : "rotate-0"} transition-transform`;
 
-  const value = getFilteredSearchParams(searchParams.getAll(label.toLowerCase()), items);
+  const searchParamsValues = getFilteredSearchParams(searchParams.getAll(label.toLowerCase()), items);
 
-  const updateQueryString = (values: typeof value) => {
+  const updateQueryString = (values: typeof searchParamsValues) => {
     const params = new URLSearchParams(searchParams);
 
     const query = label.toLowerCase();
@@ -74,7 +74,7 @@ export default function FilterPopover({ label, items }: FilterPopoverProps) {
           multiple
           autoHighlight
           items={items}
-          value={value}
+          value={searchParamsValues}
           onValueChange={(value) => updateQueryString(value)}
         >
           <ComboboxChips ref={anchor} className="w-full max-w-xs">
