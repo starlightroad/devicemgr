@@ -16,6 +16,8 @@ import DeviceSearchBar from "@/features/device/components/device-search-bar";
 
 import { Header, HeaderTitle } from "@/features/dashboard/components/header";
 
+import ClearFilterButton from "@/features/device/components/clear-filter-button";
+
 export default function DevicesPage() {
   return (
     <>
@@ -38,6 +40,9 @@ export default function DevicesPage() {
           </ButtonGroup>
           <ButtonGroup aria-label="Group Group">
             <FilterPopover label="Group" items={groupsJson.map(({ name }) => name)} />
+          </ButtonGroup>
+          <ButtonGroup>
+            <ClearFilterButton />
           </ButtonGroup>
           <ButtonGroup className="hidden lg:flex lg:grow lg:justify-end">
             <ButtonActions />
