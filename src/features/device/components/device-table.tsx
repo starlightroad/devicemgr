@@ -29,7 +29,7 @@ export default async function DeviceTable({ types, statuses, groups }: DeviceTab
     filters: { type: types, status: statuses, group: groups },
   };
 
-  const { data } = await getDevices(10, options);
+  const { data } = await getDevices(options);
 
   const columns = getDeviceTableColumns();
 
