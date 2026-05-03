@@ -57,9 +57,7 @@ export const getDevicesCountByStatus = async (status: string): Promise<ActionRes
   }
 };
 
-export const getDevices = async (
-  options: Options = { pagination: { limit: MAX_ROWS } },
-): Promise<ActionResult<Device[]>> => {
+export const getDevices = async (options: Options): Promise<ActionResult<Device[]>> => {
   try {
     const session = await getSession();
 
