@@ -58,7 +58,6 @@ export const getDevicesCountByStatus = async (status: string): Promise<ActionRes
 };
 
 export const getDevices = async (
-  limit?: number,
   options: Options = { pagination: { limit: MAX_ROWS, offset: 0 } },
 ): Promise<ActionResult<Device[]>> => {
   try {
@@ -84,7 +83,7 @@ export const getDevices = async (
       .where(sql`${devicesTable.userId} = ${session.userId} ${getSqlWhereStatementByFilters(options.filters)}`)
       .orderBy(getSqlOrderByStatementBySort(options.sort))
       .offset(options.pagination?.offset ?? 0)
-      .limit(options.pagination?.limit ? options.pagination.limit : (limit ?? MAX_ROWS));
+      .limit(options.pagination?.limit ?? MAX_ROWS);
 
     return {
       data,

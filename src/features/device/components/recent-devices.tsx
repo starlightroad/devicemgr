@@ -25,7 +25,7 @@ import DeviceActions from "@/features/device/components/device-actions";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default async function RecentDevices() {
-  const { data, error } = await getDevices(5);
+  const { data, error } = await getDevices({ pagination: { limit: 5, offset: 0 } });
 
   const types = await getDeviceTypes();
 
