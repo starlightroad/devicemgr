@@ -18,7 +18,22 @@ import { Header, HeaderTitle } from "@/features/dashboard/components/header";
 
 import ClearFilterButton from "@/features/device/components/clear-filter-button";
 
-export default function DevicesPage() {
+type DevicesPageProps = {
+  searchParams: Promise<{
+    type?: string;
+    status?: string;
+    group?: string;
+    page?: string;
+  }>;
+};
+
+export default async function DevicesPage({ searchParams }: DevicesPageProps) {
+  const params = await searchParams;
+
+  const types = params.type ?? "";
+  const statuses = params.status ?? "";
+  const groups = params.group ?? "";
+
   return (
     <>
       <Header>
@@ -51,7 +66,7 @@ export default function DevicesPage() {
         <ButtonGroup className="w-full pt-2 pb-5 sm:hidden">
           <DeviceSearchBar />
         </ButtonGroup>
-        <DeviceTable />
+        <DeviceTable types={types} statuses={statuses} groups={groups} />
       </main>
     </>
   );

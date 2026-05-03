@@ -4,6 +4,8 @@ import { getDevices } from "@/dal/device";
 
 import { cn } from "@/lib/utils";
 
+import type { Options } from "@/lib/definitions";
+
 import { getDeviceTableColumns } from "@/features/device/lib/utils";
 
 import { getBadgeIconColorClassesByStatus } from "@/features/device/lib/utils";
@@ -16,8 +18,18 @@ import DeviceActions from "@/features/device/components/device-actions";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-export default async function DeviceTable() {
-  const { data } = await getDevices();
+type DeviceTableProps = {
+  types: string;
+  statuses: string;
+  groups: string;
+};
+
+export default async function DeviceTable({ types, statuses, groups }: DeviceTableProps) {
+  const options: Options = {
+    filters: { type: types, status: statuses, group: groups },
+  };
+
+  const { data } = await getDevices(10, options);
 
   const columns = getDeviceTableColumns();
 
