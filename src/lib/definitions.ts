@@ -5,7 +5,7 @@ export type ActionReturnType<T extends object> = Promise<{ success: boolean; ser
 export type Options = {
   pagination?: {
     limit: number;
-    offset: number;
+    offset?: number;
   };
   sort?: {
     column: string;
