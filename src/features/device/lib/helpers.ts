@@ -4,25 +4,25 @@ import type { Options } from "@/lib/definitions";
 
 import { deviceGroupsTable, devicesTable, deviceStatusesTable, deviceTypesTable } from "@/db/schemas";
 
+const getTableColumn = (column: string) => {
+  switch (column) {
+    case "name":
+      return devicesTable.name;
+    case "type":
+      return deviceTypesTable.name;
+    case "status":
+      return deviceStatusesTable.name;
+    case "group":
+      return deviceGroupsTable.name;
+    case "serialNumber":
+      return devicesTable.serialNumber;
+    case "ipAddress":
+      return devicesTable.ipAddress;
+  }
+};
+
 export const getSqlOrderByStatementBySort = (sort: Options["sort"]) => {
   if (!sort) return sql`${devicesTable.createdAt} ASC`;
-
-  const getTableColumn = (column: string) => {
-    switch (column) {
-      case "name":
-        return devicesTable.name;
-      case "type":
-        return deviceTypesTable.name;
-      case "status":
-        return deviceStatusesTable.name;
-      case "group":
-        return deviceGroupsTable.name;
-      case "serialNumber":
-        return devicesTable.serialNumber;
-      case "ipAddress":
-        return devicesTable.ipAddress;
-    }
-  };
 
   return sql`${getTableColumn(sort.column)} ${sort.direction === "asc" ? sql`ASC` : sql`DESC`}`;
 };
@@ -31,17 +31,6 @@ export const getSqlWhereStatementByFilters = (filters: Options["filters"]) => {
   let query = sql``;
 
   if (!filters) return query;
-
-  const getTableColumn = (key: string) => {
-    switch (key) {
-      case "type":
-        return deviceTypesTable.name;
-      case "status":
-        return deviceStatusesTable.name;
-      case "group":
-        return deviceGroupsTable.name;
-    }
-  };
 
   Object.entries(filters).forEach((filter) => {
     const [key, value] = filter;
