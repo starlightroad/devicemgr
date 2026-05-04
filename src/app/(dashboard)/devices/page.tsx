@@ -1,8 +1,8 @@
-import typesJson from "@/lib/data/device-types.json";
+import { getDeviceTypes } from "@/dal/type";
 
-import groupsJson from "@/lib/data/device-groups.json";
+import { getDeviceGroups } from "@/dal/group";
 
-import statusesJson from "@/lib/data/device-statuses.json";
+import { getDeviceStatuses } from "@/dal/status";
 
 import { ButtonGroup } from "@/components/ui/button-group";
 
@@ -34,6 +34,10 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
   const statuses = params.status ?? "";
   const groups = params.group ?? "";
 
+  const typesPromise = getDeviceTypes();
+  const statusesPromise = getDeviceStatuses();
+  const groupsPromise = getDeviceGroups();
+
   return (
     <>
       <Header>
@@ -48,13 +52,13 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
             <DeviceSearchBar />
           </ButtonGroup>
           <ButtonGroup aria-label="Type Group">
-            <FilterPopover label="Type" items={typesJson.map(({ name }) => name)} />
+            <FilterPopover label="Type" items={typesPromise} />
           </ButtonGroup>
           <ButtonGroup aria-label="Status Group">
-            <FilterPopover label="Status" items={statusesJson.map(({ name }) => name)} />
+            <FilterPopover label="Status" items={statusesPromise} />
           </ButtonGroup>
           <ButtonGroup aria-label="Group Group">
-            <FilterPopover label="Group" items={groupsJson.map(({ name }) => name)} />
+            <FilterPopover label="Group" items={groupsPromise} />
           </ButtonGroup>
           <ButtonGroup>
             <ClearFilterButton />
