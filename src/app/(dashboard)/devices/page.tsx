@@ -20,9 +20,9 @@ import ClearFilterButton from "@/features/device/components/clear-filter-button"
 
 type DevicesPageProps = {
   searchParams: Promise<{
-    type?: string;
-    status?: string;
-    group?: string;
+    type?: string | string[];
+    status?: string | string[];
+    group?: string | string[];
     page?: string;
   }>;
 };
@@ -30,9 +30,9 @@ type DevicesPageProps = {
 export default async function DevicesPage({ searchParams }: DevicesPageProps) {
   const params = await searchParams;
 
-  const types = params.type ?? "";
-  const statuses = params.status ?? "";
-  const groups = params.group ?? "";
+  const types = params.type?.toString() ?? "";
+  const statuses = params.status?.toString() ?? "";
+  const groups = params.group?.toString() ?? "";
 
   const typesPromise = getDeviceTypes();
   const statusesPromise = getDeviceStatuses();
