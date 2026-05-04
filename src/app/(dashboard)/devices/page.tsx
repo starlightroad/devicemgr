@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import { getDeviceTypes } from "@/dal/type";
 
 import { getDeviceGroups } from "@/dal/group";
@@ -17,6 +19,8 @@ import DeviceSearchBar from "@/features/device/components/device-search-bar";
 import { Header, HeaderTitle } from "@/features/dashboard/components/header";
 
 import ClearFilterButton from "@/features/device/components/clear-filter-button";
+
+import FilterButtonSkeleton from "@/features/device/components/filter-button-skeleton";
 
 type DevicesPageProps = {
   searchParams: Promise<{
@@ -52,13 +56,19 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
             <DeviceSearchBar />
           </ButtonGroup>
           <ButtonGroup aria-label="Type Group">
-            <FilterPopover label="Type" items={typesPromise} />
+            <Suspense fallback={<FilterButtonSkeleton />}>
+              <FilterPopover label="Type" items={typesPromise} />
+            </Suspense>
           </ButtonGroup>
           <ButtonGroup aria-label="Status Group">
-            <FilterPopover label="Status" items={statusesPromise} />
+            <Suspense fallback={<FilterButtonSkeleton />}>
+              <FilterPopover label="Status" items={statusesPromise} />
+            </Suspense>
           </ButtonGroup>
           <ButtonGroup aria-label="Group Group">
-            <FilterPopover label="Group" items={groupsPromise} />
+            <Suspense fallback={<FilterButtonSkeleton />}>
+              <FilterPopover label="Group" items={groupsPromise} />
+            </Suspense>
           </ButtonGroup>
           <ButtonGroup>
             <ClearFilterButton />
