@@ -18,6 +18,12 @@ import DeviceActions from "@/features/device/components/device-actions";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
+import {
+  NoResultsFoundRow,
+  NoResultsFoundDescription,
+  NoResultsFoundIcon,
+} from "@/features/device/components/no-results-found-row";
+
 type DeviceTableProps = {
   types: string;
   statuses: string;
@@ -29,7 +35,7 @@ export default async function DeviceTable({ types, statuses, groups }: DeviceTab
     filters: { type: types, status: statuses, group: groups },
   };
 
-  const { data } = await getDevices(options);
+  const { data, error } = await getDevices(options);
 
   const columns = getDeviceTableColumns();
 
@@ -50,6 +56,12 @@ export default async function DeviceTable({ types, statuses, groups }: DeviceTab
           </TableRow>
         </TableHeader>
         <TableBody>
+          {(error || !data?.length) && (
+            <NoResultsFoundRow columns={columns.length}>
+              <NoResultsFoundIcon />
+              <NoResultsFoundDescription>No devices to display.</NoResultsFoundDescription>
+            </NoResultsFoundRow>
+          )}
           {data?.map((device) => {
             return (
               <TableRow key={device.id} className="[&>td]:px-4">
