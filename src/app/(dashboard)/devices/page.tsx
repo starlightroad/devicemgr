@@ -20,6 +20,8 @@ import { Header, HeaderTitle } from "@/features/dashboard/components/header";
 
 import ClearFilterButton from "@/features/device/components/clear-filter-button";
 
+import DeviceTableSkeleton from "@/features/device/components/device-table-skeleton";
+
 import FilterButtonSkeleton from "@/features/device/components/filter-button-skeleton";
 
 type DevicesPageProps = {
@@ -80,7 +82,9 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
         <ButtonGroup className="w-full pt-2 pb-5 sm:hidden">
           <DeviceSearchBar />
         </ButtonGroup>
-        <DeviceTable types={types} statuses={statuses} groups={groups} />
+        <Suspense fallback={<DeviceTableSkeleton />}>
+          <DeviceTable types={types} statuses={statuses} groups={groups} />
+        </Suspense>
       </main>
     </>
   );
