@@ -1,6 +1,6 @@
 import "server-only";
 
-import { count, desc, eq, ilike } from "drizzle-orm";
+import { count, eq, ilike, sql } from "drizzle-orm";
 
 import { db } from "@/db/client";
 
@@ -8,9 +8,11 @@ import { getSession } from "@/dal/session";
 
 import { MAX_ROWS } from "@/lib/constants";
 
-import type { ActionResult } from "@/lib/definitions";
+import type { ActionResult, Options } from "@/lib/definitions";
 
 import type { Device } from "@/features/device/lib/definitions";
+
+import { getSqlOrderByStatementBySort, getSqlWhereStatementByFilters } from "@/features/device/lib/helpers";
 
 import { deviceGroupsTable, devicesTable, deviceStatusesTable, deviceTypesTable, usersTable } from "@/db/schemas";
 
@@ -55,7 +57,7 @@ export const getDevicesCountByStatus = async (status: string): Promise<ActionRes
   }
 };
 
-export const getDevices = async (limit?: number): Promise<ActionResult<Device[]>> => {
+export const getDevices = async (options: Options): Promise<ActionResult<Device[]>> => {
   try {
     const session = await getSession();
 
@@ -76,9 +78,10 @@ export const getDevices = async (limit?: number): Promise<ActionResult<Device[]>
       .innerJoin(deviceTypesTable, eq(devicesTable.typeId, deviceTypesTable.id))
       .innerJoin(deviceStatusesTable, eq(devicesTable.statusId, deviceStatusesTable.id))
       .innerJoin(deviceGroupsTable, eq(devicesTable.groupId, deviceGroupsTable.id))
-      .where(eq(devicesTable.userId, session.userId))
-      .orderBy(desc(devicesTable.createdAt))
-      .limit(limit ?? MAX_ROWS);
+      .where(sql`${devicesTable.userId} = ${session.userId} ${getSqlWhereStatementByFilters(options.filters)}`)
+      .orderBy(getSqlOrderByStatementBySort(options.sort))
+      .offset(options.pagination?.offset ?? 0)
+      .limit(options.pagination?.limit ?? MAX_ROWS);
 
     return {
       data,

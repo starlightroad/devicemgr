@@ -4,6 +4,8 @@ import { getDevices } from "@/dal/device";
 
 import { cn } from "@/lib/utils";
 
+import type { Options } from "@/lib/definitions";
+
 import { getDeviceTableColumns } from "@/features/device/lib/utils";
 
 import { getBadgeIconColorClassesByStatus } from "@/features/device/lib/utils";
@@ -16,8 +18,25 @@ import DeviceActions from "@/features/device/components/device-actions";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-export default async function DeviceTable() {
-  const { data } = await getDevices();
+import {
+  NoResultsFoundRow,
+  NoResultsFoundDescription,
+  NoResultsFoundIcon,
+} from "@/features/device/components/no-results-found-row";
+
+type DeviceTableProps = {
+  query: string;
+  types: string;
+  statuses: string;
+  groups: string;
+};
+
+export default async function DeviceTable({ query, types, statuses, groups }: DeviceTableProps) {
+  const options: Options = {
+    filters: { query, type: types, status: statuses, group: groups },
+  };
+
+  const { data, error } = await getDevices(options);
 
   const columns = getDeviceTableColumns();
 
@@ -38,6 +57,12 @@ export default async function DeviceTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
+          {(error || !data?.length) && (
+            <NoResultsFoundRow columns={columns.length}>
+              <NoResultsFoundIcon />
+              <NoResultsFoundDescription>No devices to display.</NoResultsFoundDescription>
+            </NoResultsFoundRow>
+          )}
           {data?.map((device) => {
             return (
               <TableRow key={device.id} className="[&>td]:px-4">

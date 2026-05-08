@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 
 import { ChevronDownIcon } from "lucide-react";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+import type { ActionResult } from "@/lib/definitions";
 
 import { getFilteredSearchParams } from "@/features/device/lib/utils";
 
@@ -27,10 +29,14 @@ import {
 
 type FilterPopoverProps = {
   label: string;
-  items: string[];
+  items: Promise<ActionResult<{ id: string; name: string }[]>>;
 };
 
 export default function FilterPopover({ label, items }: FilterPopoverProps) {
+  const { data } = use(items);
+
+  const newItems = data?.map(({ name }) => name) ?? [];
+
   const pathname = usePathname();
 
   const { replace } = useRouter();
@@ -43,7 +49,7 @@ export default function FilterPopover({ label, items }: FilterPopoverProps) {
 
   const iconStyles = `${popoverOpen ? "rotate-180" : "rotate-0"} transition-transform`;
 
-  const searchParamsValues = getFilteredSearchParams(searchParams.getAll(label.toLowerCase()), items);
+  const searchParamsValues = getFilteredSearchParams(searchParams.getAll(label.toLowerCase()), newItems);
 
   const updateQueryString = (values: typeof searchParamsValues) => {
     const params = new URLSearchParams(searchParams);
@@ -73,7 +79,7 @@ export default function FilterPopover({ label, items }: FilterPopoverProps) {
         <Combobox
           multiple
           autoHighlight
-          items={items}
+          items={newItems}
           value={searchParamsValues}
           onValueChange={(value) => updateQueryString(value)}
         >
@@ -81,10 +87,9 @@ export default function FilterPopover({ label, items }: FilterPopoverProps) {
             <ComboboxValue>
               {(values) => (
                 <>
-                  {values.map((value: string) => {
-                    const [filteredValue] = items.filter((item) => item.toLowerCase() === value.toLowerCase());
-                    return <ComboboxChip key={filteredValue}>{filteredValue}</ComboboxChip>;
-                  })}
+                  {values.map((value: string) => (
+                    <ComboboxChip key={value}>{value}</ComboboxChip>
+                  ))}
                   <ComboboxChipsInput type="search" />
                 </>
               )}
