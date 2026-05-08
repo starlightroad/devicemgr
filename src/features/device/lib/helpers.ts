@@ -51,7 +51,10 @@ export const getSqlWhereStatementByFilters = (filters: Options["filters"]) => {
 
   if (filters.query) {
     const partialQuery = sql.join([`%${filters.query}%`]);
-    query = sql.join([query, sql`AND ${devicesTable.name} ILIKE ${partialQuery}`]);
+    query = sql.join([
+      query,
+      sql`AND (${devicesTable.name} ILIKE ${partialQuery} OR ${deviceTypesTable.name} ILIKE ${partialQuery})`,
+    ]);
   }
 
   return query;
