@@ -53,7 +53,7 @@ export const getSqlWhereStatementByFilters = (filters: Options["filters"]) => {
     const partialQuery = sql.join([`%${filters.query}%`]);
     query = sql.join([
       query,
-      sql`AND (${devicesTable.name} ILIKE ${partialQuery} OR ${deviceTypesTable.name} ILIKE ${partialQuery} OR ${deviceStatusesTable.name} ILIKE ${partialQuery} OR ${deviceGroupsTable.name} ILIKE ${partialQuery} OR ${devicesTable.serialNumber} ILIKE ${partialQuery})`,
+      sql`AND (${devicesTable.name} ILIKE ${partialQuery} OR ${deviceTypesTable.name} ILIKE ${partialQuery} OR ${deviceStatusesTable.name} ILIKE ${partialQuery} OR ${deviceGroupsTable.name} ILIKE ${partialQuery} OR ${devicesTable.serialNumber} ILIKE ${partialQuery} OR ${devicesTable.ipAddress} ILIKE ${partialQuery})`,
     ]);
   }
 
