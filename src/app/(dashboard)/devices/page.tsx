@@ -32,12 +32,14 @@ type DevicesPageProps = {
     status?: string | string[];
     group?: string | string[];
     page?: string;
+    q?: string;
   }>;
 };
 
 export default async function DevicesPage({ searchParams }: DevicesPageProps) {
   const params = await searchParams;
 
+  const query = params.q ?? "";
   const types = params.type?.toString() ?? "";
   const statuses = params.status?.toString() ?? "";
   const groups = params.group?.toString() ?? "";
@@ -87,7 +89,7 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
           </ButtonGroup>
         </SearchProvider>
         <Suspense fallback={<DeviceTableSkeleton />}>
-          <DeviceTable types={types} statuses={statuses} groups={groups} />
+          <DeviceTable query={query} types={types} statuses={statuses} groups={groups} />
         </Suspense>
       </main>
     </>

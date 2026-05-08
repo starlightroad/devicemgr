@@ -35,6 +35,10 @@ export const getSqlWhereStatementByFilters = (filters: Options["filters"]) => {
   Object.entries(filters).forEach((filter) => {
     const [key, value] = filter;
 
+    if (key === "query") {
+      return;
+    }
+
     const patterns = value.split(",").map((value) => `%${value}%`);
 
     const partialQuery = sql.join(
@@ -44,6 +48,11 @@ export const getSqlWhereStatementByFilters = (filters: Options["filters"]) => {
 
     query = sql.join([query, sql`AND ${getTableColumn(key)} ILIKE ANY (ARRAY[${partialQuery}])`]);
   });
+
+  if (filters.query) {
+    const partialQuery = sql.join([`%${filters.query}%`]);
+    query = sql.join([query, sql`AND ${devicesTable.name} ILIKE ${partialQuery}`]);
+  }
 
   return query;
 };

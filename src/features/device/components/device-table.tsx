@@ -25,14 +25,15 @@ import {
 } from "@/features/device/components/no-results-found-row";
 
 type DeviceTableProps = {
+  query: string;
   types: string;
   statuses: string;
   groups: string;
 };
 
-export default async function DeviceTable({ types, statuses, groups }: DeviceTableProps) {
+export default async function DeviceTable({ query, types, statuses, groups }: DeviceTableProps) {
   const options: Options = {
-    filters: { type: types, status: statuses, group: groups },
+    filters: { query, type: types, status: statuses, group: groups },
   };
 
   const { data, error } = await getDevices(options);
