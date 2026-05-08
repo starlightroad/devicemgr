@@ -8,6 +8,8 @@ import { getDeviceStatuses } from "@/dal/status";
 
 import { ButtonGroup } from "@/components/ui/button-group";
 
+import SearchProvider from "@/features/device/providers/search-provider";
+
 import DeviceTable from "@/features/device/components/device-table";
 
 import ButtonActions from "@/features/device/components/button-actions";
@@ -50,38 +52,40 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
         <HeaderTitle>Devices</HeaderTitle>
       </Header>
       <main>
-        <div className="flex justify-end pb-5 lg:hidden">
-          <ButtonActions />
-        </div>
-        <ButtonGroup className="w-full sm:pb-5">
-          <ButtonGroup aria-label="Search Bar Group" className="hidden sm:flex">
+        <SearchProvider>
+          <div className="flex justify-end pb-5 lg:hidden">
+            <ButtonActions />
+          </div>
+          <ButtonGroup className="w-full sm:pb-5">
+            <ButtonGroup aria-label="Search Bar Group" className="hidden sm:flex">
+              <DeviceSearchBar />
+            </ButtonGroup>
+            <ButtonGroup aria-label="Type Group">
+              <Suspense fallback={<FilterButtonSkeleton />}>
+                <FilterPopover label="Type" items={typesPromise} />
+              </Suspense>
+            </ButtonGroup>
+            <ButtonGroup aria-label="Status Group">
+              <Suspense fallback={<FilterButtonSkeleton />}>
+                <FilterPopover label="Status" items={statusesPromise} />
+              </Suspense>
+            </ButtonGroup>
+            <ButtonGroup aria-label="Group Group">
+              <Suspense fallback={<FilterButtonSkeleton />}>
+                <FilterPopover label="Group" items={groupsPromise} />
+              </Suspense>
+            </ButtonGroup>
+            <ButtonGroup>
+              <ClearFilterButton />
+            </ButtonGroup>
+            <ButtonGroup className="hidden lg:flex lg:grow lg:justify-end">
+              <ButtonActions />
+            </ButtonGroup>
+          </ButtonGroup>
+          <ButtonGroup className="w-full pt-2 pb-5 sm:hidden">
             <DeviceSearchBar />
           </ButtonGroup>
-          <ButtonGroup aria-label="Type Group">
-            <Suspense fallback={<FilterButtonSkeleton />}>
-              <FilterPopover label="Type" items={typesPromise} />
-            </Suspense>
-          </ButtonGroup>
-          <ButtonGroup aria-label="Status Group">
-            <Suspense fallback={<FilterButtonSkeleton />}>
-              <FilterPopover label="Status" items={statusesPromise} />
-            </Suspense>
-          </ButtonGroup>
-          <ButtonGroup aria-label="Group Group">
-            <Suspense fallback={<FilterButtonSkeleton />}>
-              <FilterPopover label="Group" items={groupsPromise} />
-            </Suspense>
-          </ButtonGroup>
-          <ButtonGroup>
-            <ClearFilterButton />
-          </ButtonGroup>
-          <ButtonGroup className="hidden lg:flex lg:grow lg:justify-end">
-            <ButtonActions />
-          </ButtonGroup>
-        </ButtonGroup>
-        <ButtonGroup className="w-full pt-2 pb-5 sm:hidden">
-          <DeviceSearchBar />
-        </ButtonGroup>
+        </SearchProvider>
         <Suspense fallback={<DeviceTableSkeleton />}>
           <DeviceTable types={types} statuses={statuses} groups={groups} />
         </Suspense>
