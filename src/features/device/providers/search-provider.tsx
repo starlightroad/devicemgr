@@ -27,7 +27,7 @@ export default function SearchProvider({ children }: { children: React.ReactNode
   const handleSearch = useDebouncedCallback((value: string) => {
     const params = new URLSearchParams(searchParams);
 
-    if (value) params.set("q", value.trim().toLowerCase());
+    if (value.trim()) params.set("q", value.trim().toLowerCase());
     else params.delete("q");
 
     replace(`${pathname}?${params.toString()}`);
