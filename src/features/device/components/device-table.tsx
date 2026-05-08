@@ -16,7 +16,9 @@ import { buttonVariants } from "@/components/ui/button";
 
 import DeviceActions from "@/features/device/components/device-actions";
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import DeviceTableColumns from "@/features/device/components/device-table-columns";
+
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 
 import {
   NoResultsFoundRow,
@@ -45,15 +47,7 @@ export default async function DeviceTable({ query, types, statuses, groups }: De
       <Table>
         <TableHeader>
           <TableRow>
-            {columns.map((tableColumn) => {
-              const isActionsColumn = tableColumn.toLowerCase() === "actions";
-
-              return (
-                <TableHead key={tableColumn} className={cn("px-4", isActionsColumn ? "text-right" : "")}>
-                  <span className={isActionsColumn ? "sr-only" : ""}>{tableColumn}</span>
-                </TableHead>
-              );
-            })}
+            <DeviceTableColumns columns={columns} />
           </TableRow>
         </TableHeader>
         <TableBody>
