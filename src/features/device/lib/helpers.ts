@@ -36,6 +36,19 @@ export const getSqlWhereStatementByFilters = (filters: Options["filters"]) => {
     const [key, value] = filter;
 
     if (key === "query") {
+      const partialQuery = sql.join([`%${filters.query}%`]);
+      const deviceNameQuery = sql`${getTableColumn("name")} ILIKE ${partialQuery}`;
+      const deviceTypeQuery = sql`${getTableColumn("type")} ILIKE ${partialQuery}`;
+      const deviceStatusQuery = sql`${getTableColumn("status")} ILIKE ${partialQuery}`;
+      const deviceGroupQuery = sql`${getTableColumn("group")} ILIKE ${partialQuery}`;
+      const deviceSerialNumberQuery = sql`${getTableColumn("serialNumber")} ILIKE ${partialQuery}`;
+      const deviceIpAddressQuery = sql`${getTableColumn("ipAddress")} ILIKE ${partialQuery}`;
+
+      query = sql.join([
+        query,
+        sql`AND (${deviceNameQuery} OR ${deviceTypeQuery} OR ${deviceStatusQuery} OR ${deviceGroupQuery} OR ${deviceSerialNumberQuery} OR ${deviceIpAddressQuery})`,
+      ]);
+
       return;
     }
 
@@ -48,14 +61,6 @@ export const getSqlWhereStatementByFilters = (filters: Options["filters"]) => {
 
     query = sql.join([query, sql`AND ${getTableColumn(key)} ILIKE ANY (ARRAY[${partialQuery}])`]);
   });
-
-  if (filters.query) {
-    const partialQuery = sql.join([`%${filters.query}%`]);
-    query = sql.join([
-      query,
-      sql`AND (${devicesTable.name} ILIKE ${partialQuery} OR ${deviceTypesTable.name} ILIKE ${partialQuery} OR ${deviceStatusesTable.name} ILIKE ${partialQuery} OR ${deviceGroupsTable.name} ILIKE ${partialQuery} OR ${devicesTable.serialNumber} ILIKE ${partialQuery} OR ${devicesTable.ipAddress} ILIKE ${partialQuery})`,
-    ]);
-  }
 
   return query;
 };
