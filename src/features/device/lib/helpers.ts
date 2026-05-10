@@ -30,7 +30,11 @@ export const getSqlOrderByStatementBySort = (sort: Options["sort"]) => {
 
   const columnName = camelCase(sort.column);
 
-  return sql`${getTableColumn(columnName)} ${sortDirection === "asc" ? sql`ASC` : sql`DESC`}`;
+  const isIpAddress = columnName === "ipAddress";
+
+  const tableColumn = getTableColumn(columnName);
+
+  return sql`${isIpAddress ? sql`${tableColumn}::inet` : tableColumn} ${sortDirection === "asc" ? sql`ASC` : sql`DESC`}`;
 };
 
 export const getSqlWhereStatementByFilters = (filters: Options["filters"]) => {
