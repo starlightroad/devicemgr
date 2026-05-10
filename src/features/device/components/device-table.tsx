@@ -8,6 +8,8 @@ import type { Options } from "@/lib/definitions";
 
 import { getDeviceTableColumns } from "@/features/device/lib/utils";
 
+import type { SortDirection } from "@/features/device/lib/definitions";
+
 import { getBadgeIconColorClassesByStatus } from "@/features/device/lib/utils";
 
 import { Badge } from "@/components/ui/badge";
@@ -31,10 +33,16 @@ type DeviceTableProps = {
   types: string;
   statuses: string;
   groups: string;
+  sortBy: string;
+  sortDirection: string;
 };
 
-export default async function DeviceTable({ query, types, statuses, groups }: DeviceTableProps) {
+export default async function DeviceTable({ query, types, statuses, groups, sortBy, sortDirection }: DeviceTableProps) {
   const options: Options = {
+    sort: {
+      column: sortBy,
+      direction: sortDirection as SortDirection,
+    },
     filters: { query, type: types, status: statuses, group: groups },
   };
 
