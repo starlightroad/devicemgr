@@ -23,3 +23,5 @@ export type BaseDeviceModalProps<T = object> = {
   deviceId: string;
   onClose: () => void;
 } & T;
+
+export type SortDirection = "asc" | "desc";
