@@ -22,9 +22,11 @@ const getTableColumn = (column: string) => {
 };
 
 export const getSqlOrderByStatementBySort = (sort: Options["sort"]) => {
-  if (!sort) return sql`${devicesTable.createdAt} ASC`;
+  if (!sort?.column) return sql`${devicesTable.createdAt} ASC`;
 
-  return sql`${getTableColumn(sort.column)} ${sort.direction === "asc" ? sql`ASC` : sql`DESC`}`;
+  const sortDirection = sort.direction || "asc";
+
+  return sql`${getTableColumn(sort.column)} ${sortDirection === "asc" ? sql`ASC` : sql`DESC`}`;
 };
 
 export const getSqlWhereStatementByFilters = (filters: Options["filters"]) => {
