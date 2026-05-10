@@ -9,3 +9,7 @@ export const ACTION_MESSAGE = {
   deleted: "The device was successfully deleted.",
   copied: "The device ID was successfully copied to the clipboard.",
 };
+
+export const SORT_BY_PARAM_ID = "sortBy";
+
+export const SORT_DIRECTION_PARAM_ID = "sortDirection";

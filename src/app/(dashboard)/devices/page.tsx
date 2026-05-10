@@ -33,6 +33,8 @@ type DevicesPageProps = {
     group?: string | string[];
     page?: string;
     q?: string;
+    sortBy?: string;
+    sortDirection?: string;
   }>;
 };
 
@@ -43,6 +45,8 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
   const types = params.type?.toString() ?? "";
   const statuses = params.status?.toString() ?? "";
   const groups = params.group?.toString() ?? "";
+  const sortBy = params.sortBy ?? "";
+  const sortDirection = params.sortDirection ?? "";
 
   const typesPromise = getDeviceTypes();
   const statusesPromise = getDeviceStatuses();
@@ -89,7 +93,14 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
           </ButtonGroup>
         </SearchProvider>
         <Suspense fallback={<DeviceTableSkeleton />}>
-          <DeviceTable query={query} types={types} statuses={statuses} groups={groups} />
+          <DeviceTable
+            query={query}
+            types={types}
+            statuses={statuses}
+            groups={groups}
+            sortBy={sortBy}
+            sortDirection={sortDirection}
+          />
         </Suspense>
       </main>
     </>

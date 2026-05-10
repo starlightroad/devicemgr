@@ -1,5 +1,7 @@
 import { sql } from "drizzle-orm";
 
+import { camelCase } from "@/lib/utils";
+
 import type { Options } from "@/lib/definitions";
 
 import { deviceGroupsTable, devicesTable, deviceStatusesTable, deviceTypesTable } from "@/db/schemas";
@@ -22,9 +24,17 @@ const getTableColumn = (column: string) => {
 };
 
 export const getSqlOrderByStatementBySort = (sort: Options["sort"]) => {
-  if (!sort) return sql`${devicesTable.createdAt} ASC`;
+  if (!sort?.column) return sql`${devicesTable.createdAt} ASC`;
 
-  return sql`${getTableColumn(sort.column)} ${sort.direction === "asc" ? sql`ASC` : sql`DESC`}`;
+  const sortDirection = sort.direction || "asc";
+
+  const columnName = camelCase(sort.column);
+
+  const isIpAddress = columnName === "ipAddress";
+
+  const tableColumn = getTableColumn(columnName);
+
+  return sql`${isIpAddress ? sql`${tableColumn}::inet` : tableColumn} ${sortDirection === "asc" ? sql`ASC` : sql`DESC`}`;
 };
 
 export const getSqlWhereStatementByFilters = (filters: Options["filters"]) => {
