@@ -109,7 +109,7 @@ export const getDevicesPages = async (options: Pick<Options, "pagination" | "fil
       .innerJoin(deviceGroupsTable, eq(devicesTable.groupId, deviceGroupsTable.id))
       .where(sql`${devicesTable.userId} = ${session.userId} ${getSqlWhereStatementByFilters(filters)}`);
 
-    const totalPages = Math.ceil(data[0].count / Number(pagination?.limit) || MAX_ROWS);
+    const totalPages = Math.ceil(data[0].count / (Number(pagination?.limit) || MAX_ROWS));
 
     return {
       data: totalPages,
