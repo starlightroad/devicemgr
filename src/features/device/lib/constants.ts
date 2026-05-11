@@ -13,3 +13,5 @@ export const ACTION_MESSAGE = {
 export const SORT_BY_PARAM_ID = "sortBy";
 
 export const SORT_DIRECTION_PARAM_ID = "sortDirection";
+
+export const PAGE_PARAM_ID = "page";
