@@ -2,11 +2,13 @@
 
 import { use } from "react";
 
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from "lucide-react";
 
 import type { ActionResult } from "@/lib/definitions";
 
-import { PAGE_SIZES } from "@/features/device/lib/constants";
+import { PAGE_SIZE_PARAM_ID, PAGE_SIZES } from "@/features/device/lib/constants";
 
 import usePagination from "@/features/device/hooks/use-pagination";
 
@@ -23,6 +25,12 @@ type PaginationProps = {
 };
 
 export default function Pagination({ totalPagesPromise }: PaginationProps) {
+  const { push } = useRouter();
+
+  const pathname = usePathname();
+
+  const searchParams = useSearchParams();
+
   const { data, error } = use(totalPagesPromise);
 
   const totalPages = data ?? 0;
@@ -33,11 +41,28 @@ export default function Pagination({ totalPagesPromise }: PaginationProps) {
     return null;
   }
 
+  const defaultPageSize = PAGE_SIZES[0];
+
+  // Set the page size to 10 if the pageSize param value is not listed in the array
+  const pageSize = Number(searchParams.get(PAGE_SIZE_PARAM_ID)) || defaultPageSize;
+
+  const handlePageSizeChange = (pageSize: number) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (pageSize === defaultPageSize) {
+      params.delete(PAGE_SIZE_PARAM_ID);
+    } else {
+      params.set(PAGE_SIZE_PARAM_ID, pageSize.toString());
+    }
+
+    push(`${pathname}?${params.toString()}`);
+  };
+
   return (
     <div className="flex items-center justify-between gap-6 border-x border-transparent p-4">
       <p className="text-sm">{`Page ${page} of ${totalPages}`}</p>
       <div className="flex items-center gap-6">
-        <RowsPerPage />
+        <RowsPerPage pageSize={pageSize} onPageSizeChange={handlePageSizeChange} />
         <ButtonGroup>
           <ButtonGroup className="hidden sm:flex">
             <Button type="button" variant="outline" size="icon" disabled={page === 1} onClick={goToFirstPage}>
@@ -65,11 +90,16 @@ export default function Pagination({ totalPagesPromise }: PaginationProps) {
   );
 }
 
-function RowsPerPage() {
+type RowsPerPageProps = {
+  pageSize: number;
+  onPageSizeChange: (pageSize: number) => void;
+};
+
+function RowsPerPage({ pageSize, onPageSizeChange }: RowsPerPageProps) {
   return (
     <Field orientation="horizontal" className="hidden w-auto sm:flex">
       <FieldLabel htmlFor="rows-per-page">Rows per page</FieldLabel>
-      <Select defaultValue={PAGE_SIZES[0]}>
+      <Select defaultValue={pageSize} onValueChange={(e) => onPageSizeChange(e ?? pageSize)}>
         <SelectTrigger id="rows-per-page" className="w-16">
           <SelectValue />
         </SelectTrigger>

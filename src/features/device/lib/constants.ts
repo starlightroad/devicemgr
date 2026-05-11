@@ -17,3 +17,5 @@ export const SORT_DIRECTION_PARAM_ID = "sortDirection";
 export const PAGE_PARAM_ID = "page";
 
 export const PAGE_SIZES: readonly number[] = [10, 25, 50, 100];
+
+export const PAGE_SIZE_PARAM_ID = "pageSize";

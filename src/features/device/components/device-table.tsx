@@ -41,14 +41,21 @@ type DeviceTableProps = {
   groups: string;
   sortBy: string;
   sortDirection: string;
+  pageSize: number;
 };
 
-export default async function DeviceTable({ query, types, statuses, groups, sortBy, sortDirection }: DeviceTableProps) {
+export default async function DeviceTable({
+  query,
+  types,
+  statuses,
+  groups,
+  sortBy,
+  sortDirection,
+  pageSize,
+}: DeviceTableProps) {
   const options: Options = {
-    sort: {
-      column: sortBy,
-      direction: sortDirection as SortDirection,
-    },
+    pagination: { limit: pageSize },
+    sort: { column: sortBy, direction: sortDirection as SortDirection },
     filters: { query, type: types, status: statuses, group: groups },
   };
 
@@ -56,7 +63,7 @@ export default async function DeviceTable({ query, types, statuses, groups, sort
 
   const columns = getDeviceTableColumns();
 
-  const totalPagesPromise = getDevicesPages(options.filters);
+  const totalPagesPromise = getDevicesPages({ pagination: options.pagination, filters: options.filters });
 
   return (
     <div>

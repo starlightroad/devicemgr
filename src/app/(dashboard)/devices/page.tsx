@@ -32,6 +32,7 @@ type DevicesPageProps = {
     status?: string | string[];
     group?: string | string[];
     page?: string;
+    pageSize?: string;
     q?: string;
     sortBy?: string;
     sortDirection?: string;
@@ -47,6 +48,7 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
   const groups = params.group?.toString() ?? "";
   const sortBy = params.sortBy ?? "";
   const sortDirection = params.sortDirection ?? "";
+  const pageSize = Number(params.pageSize);
 
   const typesPromise = getDeviceTypes();
   const statusesPromise = getDeviceStatuses();
@@ -100,6 +102,7 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
             groups={groups}
             sortBy={sortBy}
             sortDirection={sortDirection}
+            pageSize={pageSize}
           />
         </Suspense>
       </main>

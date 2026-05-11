@@ -95,7 +95,9 @@ export const getDevices = async (options: Options): Promise<ActionResult<Device[
   }
 };
 
-export const getDevicesPages = async (filters: Options["filters"]) => {
+export const getDevicesPages = async (options: Pick<Options, "pagination" | "filters">) => {
+  const { pagination, filters } = options;
+
   try {
     const session = await getSession();
 
@@ -107,7 +109,7 @@ export const getDevicesPages = async (filters: Options["filters"]) => {
       .innerJoin(deviceGroupsTable, eq(devicesTable.groupId, deviceGroupsTable.id))
       .where(sql`${devicesTable.userId} = ${session.userId} ${getSqlWhereStatementByFilters(filters)}`);
 
-    const totalPages = Math.ceil(data[0].count / MAX_ROWS);
+    const totalPages = Math.ceil(data[0].count / Number(pagination?.limit) || MAX_ROWS);
 
     return {
       data: totalPages,
