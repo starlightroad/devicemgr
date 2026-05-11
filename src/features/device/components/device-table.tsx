@@ -24,6 +24,8 @@ import DeviceActions from "@/features/device/components/device-actions";
 
 import DeviceTableColumns from "@/features/device/components/device-table-columns";
 
+import PaginationSkeleton from "@/features/device/components/pagination-skeleton";
+
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 
 import {
@@ -104,7 +106,7 @@ export default async function DeviceTable({ query, types, statuses, groups, sort
           </TableBody>
         </Table>
       </div>
-      <Suspense fallback={<p className="text-sm">Loading pagination...</p>}>
+      <Suspense fallback={<PaginationSkeleton />}>
         <Pagination totalPagesPromise={totalPagesPromise} />
       </Suspense>
     </div>
