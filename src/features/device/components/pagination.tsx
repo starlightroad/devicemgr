@@ -39,7 +39,7 @@ export default function Pagination({ totalPagesPromise }: PaginationProps) {
       <div className="flex items-center gap-6">
         <RowsPerPage />
         <ButtonGroup>
-          <ButtonGroup>
+          <ButtonGroup className="hidden sm:flex">
             <Button type="button" variant="outline" size="icon" disabled={page === 1} onClick={goToFirstPage}>
               <ChevronsLeftIcon />
             </Button>
@@ -54,7 +54,7 @@ export default function Pagination({ totalPagesPromise }: PaginationProps) {
               <ChevronRightIcon />
             </Button>
           </ButtonGroup>
-          <ButtonGroup>
+          <ButtonGroup className="hidden sm:flex">
             <Button type="button" variant="outline" size="icon" disabled={page === totalPages} onClick={goToLastPage}>
               <ChevronsRightIcon />
             </Button>
@@ -67,7 +67,7 @@ export default function Pagination({ totalPagesPromise }: PaginationProps) {
 
 function RowsPerPage() {
   return (
-    <Field orientation="horizontal" className="w-auto">
+    <Field orientation="horizontal" className="hidden w-auto sm:flex">
       <FieldLabel htmlFor="rows-per-page">Rows per page</FieldLabel>
       <Select defaultValue={PAGE_SIZES[0]}>
         <SelectTrigger id="rows-per-page" className="w-16">
