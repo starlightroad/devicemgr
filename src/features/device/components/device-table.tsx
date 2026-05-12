@@ -115,9 +115,11 @@ export default async function DeviceTable({
           </TableBody>
         </Table>
       </div>
-      <Suspense fallback={<PaginationSkeleton />}>
-        <Pagination totalPagesPromise={totalPagesPromise} />
-      </Suspense>
+      {data?.length ? (
+        <Suspense fallback={<PaginationSkeleton />}>
+          <Pagination totalPagesPromise={totalPagesPromise} />
+        </Suspense>
+      ) : null}
     </div>
   );
 }
