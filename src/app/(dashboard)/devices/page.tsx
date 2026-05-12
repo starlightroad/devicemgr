@@ -6,6 +6,10 @@ import { getDeviceGroups } from "@/dal/group";
 
 import { getDeviceStatuses } from "@/dal/status";
 
+import { validatePageSize } from "@/features/device/lib/utils";
+
+import { DEFAULT_PAGE } from "@/features/device/lib/constants";
+
 import { ButtonGroup } from "@/components/ui/button-group";
 
 import SearchProvider from "@/features/device/providers/search-provider";
@@ -32,6 +36,7 @@ type DevicesPageProps = {
     status?: string | string[];
     group?: string | string[];
     page?: string;
+    pageSize?: string;
     q?: string;
     sortBy?: string;
     sortDirection?: string;
@@ -47,6 +52,8 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
   const groups = params.group?.toString() ?? "";
   const sortBy = params.sortBy ?? "";
   const sortDirection = params.sortDirection ?? "";
+  const page = Number(params.page) ?? DEFAULT_PAGE;
+  const pageSize = validatePageSize(Number(params.pageSize));
 
   const typesPromise = getDeviceTypes();
   const statusesPromise = getDeviceStatuses();
@@ -100,6 +107,8 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
             groups={groups}
             sortBy={sortBy}
             sortDirection={sortDirection}
+            page={page}
+            pageSize={pageSize}
           />
         </Suspense>
       </main>

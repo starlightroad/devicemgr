@@ -13,3 +13,13 @@ export const ACTION_MESSAGE = {
 export const SORT_BY_PARAM_ID = "sortBy";
 
 export const SORT_DIRECTION_PARAM_ID = "sortDirection";
+
+export const PAGE_PARAM_ID = "page";
+
+export const PAGE_SIZES: readonly number[] = [10, 25, 50, 100];
+
+export const PAGE_SIZE_PARAM_ID = "pageSize";
+
+export const DEFAULT_PAGE = 1;
+
+export const DEFAULT_PAGE_SIZE = PAGE_SIZES[0];
