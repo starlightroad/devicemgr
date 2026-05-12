@@ -69,7 +69,14 @@ export default function Pagination({ totalPagesPromise }: PaginationProps) {
             <Tooltip>
               <TooltipTrigger
                 render={
-                  <Button type="button" variant="outline" size="icon" disabled={page === 1} onClick={goToFirstPage}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    aria-label="First page"
+                    disabled={page === 1}
+                    onClick={goToFirstPage}
+                  >
                     <ChevronsLeftIcon />
                   </Button>
                 }
@@ -83,7 +90,14 @@ export default function Pagination({ totalPagesPromise }: PaginationProps) {
             <Tooltip>
               <TooltipTrigger
                 render={
-                  <Button type="button" variant="outline" size="icon" disabled={page === 1} onClick={goToPreviousPage}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    aria-label="Previous page"
+                    disabled={page === 1}
+                    onClick={goToPreviousPage}
+                  >
                     <ChevronLeftIcon />
                   </Button>
                 }
@@ -101,6 +115,7 @@ export default function Pagination({ totalPagesPromise }: PaginationProps) {
                     type="button"
                     variant="outline"
                     size="icon"
+                    aria-label="Next page"
                     disabled={page === totalPages}
                     onClick={goToNextPage}
                   >
@@ -121,6 +136,7 @@ export default function Pagination({ totalPagesPromise }: PaginationProps) {
                     type="button"
                     variant="outline"
                     size="icon"
+                    aria-label="Last page"
                     disabled={page === totalPages}
                     onClick={goToLastPage}
                   >
