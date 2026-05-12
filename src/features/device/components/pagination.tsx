@@ -98,7 +98,7 @@ function RowsPerPage({ pageSize, onPageSizeChange }: RowsPerPageProps) {
   return (
     <Field orientation="horizontal" className="hidden w-auto sm:flex">
       <FieldLabel htmlFor="rows-per-page">Rows per page</FieldLabel>
-      <Select defaultValue={pageSize} onValueChange={(e) => onPageSizeChange(e ?? pageSize)}>
+      <Select value={pageSize} onValueChange={(e) => onPageSizeChange(e ?? pageSize)}>
         <SelectTrigger id="rows-per-page" className="w-16">
           <SelectValue />
         </SelectTrigger>
