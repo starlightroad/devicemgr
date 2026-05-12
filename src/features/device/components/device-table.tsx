@@ -41,6 +41,7 @@ type DeviceTableProps = {
   groups: string;
   sortBy: string;
   sortDirection: string;
+  page: number;
   pageSize: number;
 };
 
@@ -51,10 +52,11 @@ export default async function DeviceTable({
   groups,
   sortBy,
   sortDirection,
+  page,
   pageSize,
 }: DeviceTableProps) {
   const options: Options = {
-    pagination: { limit: pageSize },
+    pagination: { limit: pageSize, offset: (page - 1) * pageSize },
     sort: { column: sortBy, direction: sortDirection as SortDirection },
     filters: { query, type: types, status: statuses, group: groups },
   };
