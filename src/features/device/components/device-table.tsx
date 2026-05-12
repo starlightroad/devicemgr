@@ -4,6 +4,8 @@ import { Suspense } from "react";
 
 import { getDeviceTypes } from "@/dal/type";
 
+import { getDeviceStatuses } from "@/dal/status";
+
 import { getDevices, getDevicesPages } from "@/dal/device";
 
 import { cn } from "@/lib/utils";
@@ -63,7 +65,11 @@ export default async function DeviceTable({
     filters: { query, type: types, status: statuses, group: groups },
   };
 
-  const [devices, deviceTypes] = await Promise.all([getDevices(options), getDeviceTypes()]);
+  const [devices, deviceTypes, deviceStatuses] = await Promise.all([
+    getDevices(options),
+    getDeviceTypes(),
+    getDeviceStatuses(),
+  ]);
 
   const { data, error } = devices;
 
@@ -111,7 +117,12 @@ export default async function DeviceTable({
                   <TableCell>{device.serialNumber}</TableCell>
                   <TableCell>{device.ipAddress ?? "-"}</TableCell>
                   <TableCell align="right">
-                    <DeviceActions device={device} types={deviceTypes.data} statuses={[]} groups={[]} />
+                    <DeviceActions
+                      device={device}
+                      types={deviceTypes.data}
+                      statuses={deviceStatuses.data}
+                      groups={[]}
+                    />
                   </TableCell>
                 </TableRow>
               );
