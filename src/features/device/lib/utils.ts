@@ -1,4 +1,4 @@
-import { TABLE_COLUMNS } from "@/features/device/lib/constants";
+import { PAGE_SIZES, TABLE_COLUMNS } from "@/features/device/lib/constants";
 
 import type { Device } from "@/features/device/lib/definitions";
 
@@ -41,4 +41,12 @@ export const getFilteredSearchParams = (searchParams: string[], values: string[]
   });
 
   return validatedSearchParams;
+};
+
+export const validatePageSize = (pageSize: number) => {
+  if (PAGE_SIZES.includes(pageSize)) {
+    return pageSize;
+  }
+
+  return PAGE_SIZES[0];
 };

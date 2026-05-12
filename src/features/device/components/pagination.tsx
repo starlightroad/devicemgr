@@ -8,6 +8,8 @@ import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon 
 
 import type { ActionResult } from "@/lib/definitions";
 
+import { validatePageSize } from "@/features/device/lib/utils";
+
 import { PAGE_SIZE_PARAM_ID, PAGE_SIZES } from "@/features/device/lib/constants";
 
 import usePagination from "@/features/device/hooks/use-pagination";
@@ -43,8 +45,7 @@ export default function Pagination({ totalPagesPromise }: PaginationProps) {
 
   const defaultPageSize = PAGE_SIZES[0];
 
-  // Set the page size to 10 if the pageSize param value is not listed in the array
-  const pageSize = Number(searchParams.get(PAGE_SIZE_PARAM_ID)) || defaultPageSize;
+  const pageSize = validatePageSize(Number(searchParams.get(PAGE_SIZE_PARAM_ID)));
 
   const handlePageSizeChange = (pageSize: number) => {
     const params = new URLSearchParams(searchParams);

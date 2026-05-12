@@ -6,6 +6,8 @@ import { getDeviceGroups } from "@/dal/group";
 
 import { getDeviceStatuses } from "@/dal/status";
 
+import { validatePageSize } from "@/features/device/lib/utils";
+
 import { DEFAULT_PAGE } from "@/features/device/lib/constants";
 
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -51,7 +53,7 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
   const sortBy = params.sortBy ?? "";
   const sortDirection = params.sortDirection ?? "";
   const page = Number(params.page) ?? DEFAULT_PAGE;
-  const pageSize = Number(params.pageSize);
+  const pageSize = validatePageSize(Number(params.pageSize));
 
   const typesPromise = getDeviceTypes();
   const statusesPromise = getDeviceStatuses();
