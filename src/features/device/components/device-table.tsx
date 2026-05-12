@@ -2,6 +2,12 @@ import Link from "next/link";
 
 import { Suspense } from "react";
 
+import { getDeviceTypes } from "@/dal/type";
+
+import { getDeviceGroups } from "@/dal/group";
+
+import { getDeviceStatuses } from "@/dal/status";
+
 import { getDevices, getDevicesPages } from "@/dal/device";
 
 import { cn } from "@/lib/utils";
@@ -61,7 +67,14 @@ export default async function DeviceTable({
     filters: { query, type: types, status: statuses, group: groups },
   };
 
-  const { data, error } = await getDevices(options);
+  const [devices, deviceTypes, deviceStatuses, deviceGroups] = await Promise.all([
+    getDevices(options),
+    getDeviceTypes(),
+    getDeviceStatuses(),
+    getDeviceGroups(),
+  ]);
+
+  const { data, error } = devices;
 
   const columns = getDeviceTableColumns();
 
@@ -107,7 +120,12 @@ export default async function DeviceTable({
                   <TableCell>{device.serialNumber}</TableCell>
                   <TableCell>{device.ipAddress ?? "-"}</TableCell>
                   <TableCell align="right">
-                    <DeviceActions device={device} types={[]} statuses={[]} groups={[]} />
+                    <DeviceActions
+                      device={device}
+                      types={deviceTypes.data}
+                      statuses={deviceStatuses.data}
+                      groups={deviceGroups.data}
+                    />
                   </TableCell>
                 </TableRow>
               );
