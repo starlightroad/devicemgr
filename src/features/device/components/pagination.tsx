@@ -20,6 +20,8 @@ import { Field, FieldLabel } from "@/components/ui/field";
 
 import { ButtonGroup } from "@/components/ui/button-group";
 
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type PaginationProps = {
@@ -64,24 +66,72 @@ export default function Pagination({ totalPagesPromise }: PaginationProps) {
         <RowsPerPage pageSize={pageSize} onPageSizeChange={handlePageSizeChange} />
         <ButtonGroup>
           <ButtonGroup className="hidden sm:flex">
-            <Button type="button" variant="outline" size="icon" disabled={page === 1} onClick={goToFirstPage}>
-              <ChevronsLeftIcon />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Button type="button" variant="outline" size="icon" disabled={page === 1} onClick={goToFirstPage}>
+                    <ChevronsLeftIcon />
+                  </Button>
+                }
+              />
+              <TooltipContent>
+                <p>First page</p>
+              </TooltipContent>
+            </Tooltip>
           </ButtonGroup>
           <ButtonGroup>
-            <Button type="button" variant="outline" size="icon" disabled={page === 1} onClick={goToPreviousPage}>
-              <ChevronLeftIcon />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Button type="button" variant="outline" size="icon" disabled={page === 1} onClick={goToPreviousPage}>
+                    <ChevronLeftIcon />
+                  </Button>
+                }
+              />
+              <TooltipContent>
+                <p>Previous page</p>
+              </TooltipContent>
+            </Tooltip>
           </ButtonGroup>
           <ButtonGroup>
-            <Button type="button" variant="outline" size="icon" disabled={page === totalPages} onClick={goToNextPage}>
-              <ChevronRightIcon />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    disabled={page === totalPages}
+                    onClick={goToNextPage}
+                  >
+                    <ChevronRightIcon />
+                  </Button>
+                }
+              />
+              <TooltipContent>
+                <p>Next page</p>
+              </TooltipContent>
+            </Tooltip>
           </ButtonGroup>
           <ButtonGroup className="hidden sm:flex">
-            <Button type="button" variant="outline" size="icon" disabled={page === totalPages} onClick={goToLastPage}>
-              <ChevronsRightIcon />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    disabled={page === totalPages}
+                    onClick={goToLastPage}
+                  >
+                    <ChevronsRightIcon />
+                  </Button>
+                }
+              />
+              <TooltipContent>
+                <p>Last page</p>
+              </TooltipContent>
+            </Tooltip>
           </ButtonGroup>
         </ButtonGroup>
       </div>
