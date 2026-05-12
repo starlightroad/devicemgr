@@ -1,4 +1,4 @@
-import { PAGE_SIZES, TABLE_COLUMNS } from "@/features/device/lib/constants";
+import { DEFAULT_PAGE_SIZE, PAGE_SIZES, TABLE_COLUMNS } from "@/features/device/lib/constants";
 
 import type { Device } from "@/features/device/lib/definitions";
 
@@ -48,5 +48,5 @@ export const validatePageSize = (pageSize: number) => {
     return pageSize;
   }
 
-  return PAGE_SIZES[0];
+  return DEFAULT_PAGE_SIZE;
 };
