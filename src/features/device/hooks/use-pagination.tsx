@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { PAGE_PARAM_ID } from "@/features/device/lib/constants";
+import { DEFAULT_PAGE, PAGE_PARAM_ID } from "@/features/device/lib/constants";
 
 type UsePaginationProps = {
   totalPages: number;
@@ -15,12 +15,12 @@ export default function usePagination({ totalPages }: UsePaginationProps) {
 
   const searchParams = useSearchParams();
 
-  const currentPage = Number(searchParams.get(PAGE_PARAM_ID)) || 1;
+  const currentPage = Number(searchParams.get(PAGE_PARAM_ID)) || DEFAULT_PAGE;
 
   const updatePage = (page: number) => {
     const params = new URLSearchParams(searchParams);
 
-    if (page === 1) {
+    if (page === DEFAULT_PAGE) {
       params.delete(PAGE_PARAM_ID);
     } else {
       params.set(PAGE_PARAM_ID, page.toString());
@@ -31,7 +31,7 @@ export default function usePagination({ totalPages }: UsePaginationProps) {
 
   return {
     page: currentPage,
-    goToFirstPage: () => updatePage(1),
+    goToFirstPage: () => updatePage(DEFAULT_PAGE),
     goToPreviousPage: () => updatePage(currentPage - 1),
     goToNextPage: () => updatePage(currentPage + 1),
     goToLastPage: () => updatePage(totalPages),
