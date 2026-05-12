@@ -10,7 +10,7 @@ import type { ActionResult } from "@/lib/definitions";
 
 import { validatePageSize } from "@/features/device/lib/utils";
 
-import { DEFAULT_PAGE_SIZE, PAGE_SIZE_PARAM_ID, PAGE_SIZES } from "@/features/device/lib/constants";
+import { DEFAULT_PAGE_SIZE, PAGE_PARAM_ID, PAGE_SIZE_PARAM_ID, PAGE_SIZES } from "@/features/device/lib/constants";
 
 import usePagination from "@/features/device/hooks/use-pagination";
 
@@ -55,6 +55,8 @@ export default function Pagination({ totalPagesPromise }: PaginationProps) {
     } else {
       params.set(PAGE_SIZE_PARAM_ID, pageSize.toString());
     }
+
+    params.delete(PAGE_PARAM_ID);
 
     push(`${pathname}?${params.toString()}`);
   };
