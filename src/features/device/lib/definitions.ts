@@ -25,3 +25,8 @@ export type BaseDeviceModalProps<T = object> = {
 } & T;
 
 export type SortDirection = "asc" | "desc";
+
+export type SelectFieldItem = {
+  label: string;
+  value: string;
+};

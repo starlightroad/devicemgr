@@ -4,6 +4,8 @@ import { camelCase } from "@/lib/utils";
 
 import type { Options } from "@/lib/definitions";
 
+import type { DeviceType } from "@/features/device/lib/definitions";
+
 import { deviceGroupsTable, devicesTable, deviceStatusesTable, deviceTypesTable } from "@/db/schemas";
 
 const getTableColumn = (column: string) => {
@@ -73,4 +75,10 @@ export const getSqlWhereStatementByFilters = (filters: Options["filters"]) => {
   });
 
   return query;
+};
+
+export const createSelectFieldItems = (items: DeviceType[] | null) => {
+  if (items) {
+    return items.map((item) => ({ label: item.name, value: item.id }));
+  }
 };
