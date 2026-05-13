@@ -6,6 +6,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const generateId = () => crypto.randomUUID().replaceAll("-", "");
+
 export const camelCase = (value: string) => {
   return value
     .split(" ")

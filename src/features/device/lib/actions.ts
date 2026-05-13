@@ -12,11 +12,15 @@ import { getSession } from "@/dal/session";
 
 import { devicesTable } from "@/db/schemas";
 
+import { generateId } from "@/lib/utils";
+
 import type { ActionReturnType } from "@/lib/definitions";
 
 import type { Device } from "@/features/device/lib/definitions";
 
-import { DeleteDeviceSchema, EditDeviceSchema, MoveDeviceSchema } from "@/features/device/lib/schemas";
+import { DASHBOARD_PATH, DEVICES_PATH } from "@/features/dashboard/lib/constants";
+
+import { DeleteDeviceSchema, EditDeviceSchema, MoveDeviceSchema, NewDeviceSchema } from "@/features/device/lib/schemas";
 
 type EditDeviceAction = ActionReturnType<Partial<Omit<Device, "id">> & { ipAddress?: string }>;
 
@@ -159,5 +163,63 @@ export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
   return {
     success: true,
     serverErrors: null,
+  };
+};
+
+export const createDevice = async (_prevState: unknown, formData: FormData) => {
+  const { userId } = await getSession();
+
+  const parsedFields = NewDeviceSchema.safeParse({
+    name: formData.get("name")?.toString().trim(),
+    typeId: formData.get("type-id")?.toString().trim(),
+    statusId: formData.get("status-id")?.toString().trim(),
+    groupId: formData.get("group-id")?.toString().trim(),
+    serialNumber: formData.get("serial-number")?.toString().trim(),
+    ipAddress: formData.get("ip-address")?.toString().trim(),
+  });
+
+  try {
+    if (!parsedFields.success) {
+      const { fieldErrors } = z.flattenError(parsedFields.error);
+
+      return {
+        success: false,
+        serverErrors: {
+          name: fieldErrors.name?.toString(),
+          typeId: fieldErrors.typeId?.toString(),
+          statusId: fieldErrors.statusId?.toString(),
+          groupId: fieldErrors.groupId?.toString(),
+          serialNumber: fieldErrors.serialNumber?.toString(),
+          ipAddress: fieldErrors.ipAddress?.toString(),
+        },
+      };
+    }
+
+    await db.transaction(async (tx) => {
+      await tx.insert(devicesTable).values({
+        id: generateId(),
+        name: parsedFields.data.name,
+        userId,
+        typeId: parsedFields.data.typeId,
+        statusId: parsedFields.data.statusId,
+        groupId: parsedFields.data.groupId,
+        serialNumber: parsedFields.data.serialNumber,
+        ipAddress: parsedFields.data.ipAddress,
+      });
+    });
+  } catch {
+    return {
+      success: false,
+      serverErrors: {
+        ipAddress: "A server error has occurred.",
+      },
+    };
+  }
+
+  revalidatePath(DASHBOARD_PATH);
+  revalidatePath(DEVICES_PATH);
+
+  return {
+    success: true,
   };
 };

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
-import { DASHBOARD_DESC, DASHBOARD_TITLE } from "@/features/dashboard/lib/constants";
+import { APP_NAME } from "@/lib/constants";
+
+import { DASHBOARD_DESCRIPTION, DASHBOARD_TITLE } from "@/features/dashboard/lib/constants";
 
 import Sidebar from "@/features/dashboard/components/sidebar";
 
@@ -9,8 +11,11 @@ type LayoutProps = {
 };
 
 export const metadata: Metadata = {
-  title: DASHBOARD_TITLE,
-  description: DASHBOARD_DESC,
+  title: {
+    template: `%s | ${APP_NAME}`,
+    default: DASHBOARD_TITLE,
+  },
+  description: DASHBOARD_DESCRIPTION,
 };
 
 export default function DashboardLayout({ children }: LayoutProps) {

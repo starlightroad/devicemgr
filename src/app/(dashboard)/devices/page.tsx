@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 
+import type { Metadata } from "next";
+
 import { getDeviceTypes } from "@/dal/type";
 
 import { getDeviceGroups } from "@/dal/group";
@@ -8,7 +10,7 @@ import { getDeviceStatuses } from "@/dal/status";
 
 import { validatePageSize } from "@/features/device/lib/utils";
 
-import { DEFAULT_PAGE } from "@/features/device/lib/constants";
+import { DEFAULT_PAGE, DEVICES_DESCRIPTION, DEVICES_TITLE } from "@/features/device/lib/constants";
 
 import { ButtonGroup } from "@/components/ui/button-group";
 
@@ -41,6 +43,11 @@ type DevicesPageProps = {
     sortBy?: string;
     sortDirection?: string;
   }>;
+};
+
+export const metadata: Metadata = {
+  title: DEVICES_TITLE,
+  description: DEVICES_DESCRIPTION,
 };
 
 export default async function DevicesPage({ searchParams }: DevicesPageProps) {

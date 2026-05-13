@@ -1,0 +1,283 @@
+"use client";
+
+import Link from "next/link";
+
+import { toast } from "sonner";
+
+import { useActionState } from "react";
+
+import { useRouter } from "next/navigation";
+
+import { createDevice } from "@/features/device/lib/actions";
+
+import { DEVICES_PATH } from "@/features/dashboard/lib/constants";
+
+import { ACTION_MESSAGE, FORM_FIELD, FORM_ID } from "@/features/device/lib/constants";
+
+import type { SelectFieldItem } from "@/features/device/lib/definitions";
+
+import useFields from "@/features/device/hooks/use-fields";
+
+import useFormSuccess from "@/features/device/hooks/use-form-success";
+
+import { Input } from "@/components/ui/input";
+
+import { Button, buttonVariants } from "@/components/ui/button";
+
+import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
+
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+type NewDeviceFormProps = {
+  types?: SelectFieldItem[];
+  statuses?: SelectFieldItem[];
+  groups?: SelectFieldItem[];
+};
+
+export default function NewDeviceCard({ types, statuses, groups }: NewDeviceFormProps) {
+  const { field, handleFieldChange } = useFields({
+    name: "",
+    typeId: "",
+    statusId: "",
+    groupId: "",
+    serialNumber: "",
+    ipAddress: "",
+  });
+
+  const { push } = useRouter();
+
+  const [state, formAction, isFormPending] = useActionState(createDevice, null);
+
+  const isButtonDisabled = !types?.length || !statuses?.length || !groups?.length || isFormPending;
+
+  useFormSuccess(state?.success, () => {
+    push(DEVICES_PATH);
+    toast.success(ACTION_MESSAGE.created);
+  });
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Device Information</CardTitle>
+        <CardDescription>Fill out the following fields to create a new device.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form id={FORM_ID} action={formAction}>
+          <FieldGroup>
+            <NameField
+              value={field.name}
+              error={state?.serverErrors?.name}
+              onFieldChange={(value) => handleFieldChange("name", value)}
+            />
+            <TypeField
+              items={types}
+              value={field.typeId}
+              error={state?.serverErrors?.typeId}
+              onFieldChange={(value) => handleFieldChange("typeId", value)}
+            />
+            <StatusField
+              items={statuses}
+              value={field.statusId}
+              error={state?.serverErrors?.statusId}
+              onFieldChange={(value) => handleFieldChange("statusId", value)}
+            />
+            <GroupField
+              items={groups}
+              value={field.groupId}
+              error={state?.serverErrors?.groupId}
+              onFieldChange={(value) => handleFieldChange("groupId", value)}
+            />
+            <SerialNumberField
+              value={field.serialNumber}
+              error={state?.serverErrors?.serialNumber}
+              onFieldChange={(value) => handleFieldChange("serialNumber", value)}
+            />
+            <IpAddressField
+              value={field.ipAddress}
+              error={state?.serverErrors?.ipAddress}
+              onFieldChange={(value) => handleFieldChange("ipAddress", value)}
+            />
+          </FieldGroup>
+        </form>
+      </CardContent>
+      <CardFooter className="justify-end gap-2">
+        <Link
+          href={DEVICES_PATH}
+          aria-disabled={isFormPending}
+          tabIndex={isFormPending ? -1 : undefined}
+          className={buttonVariants({ variant: "outline", className: isFormPending ? "pointer-events-none" : "" })}
+        >
+          Cancel
+        </Link>
+        <Button form={FORM_ID} type="submit" disabled={isButtonDisabled}>
+          Create Device
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+}
+
+type FieldProps = {
+  value: string;
+  error?: string;
+  items?: SelectFieldItem[];
+  onFieldChange: (value: string) => void;
+};
+
+function NameField({ value, error, onFieldChange }: FieldProps) {
+  return (
+    <Field>
+      <FieldLabel htmlFor={FORM_FIELD.NAME.id}>
+        Name <span className="text-destructive">*</span>
+      </FieldLabel>
+      <Input
+        id={FORM_FIELD.NAME.id}
+        type="text"
+        name={FORM_FIELD.NAME.id}
+        placeholder={FORM_FIELD.NAME.placeholder}
+        autoComplete="off"
+        value={value}
+        onChange={(e) => onFieldChange(e.target.value)}
+        required
+      />
+      <FieldError>{error}</FieldError>
+    </Field>
+  );
+}
+
+function TypeField({ items, value, error, onFieldChange }: FieldProps) {
+  return (
+    <Field>
+      <FieldLabel htmlFor={FORM_FIELD.TYPE.id}>
+        Type <span className="text-destructive">*</span>
+      </FieldLabel>
+      <Select
+        id={FORM_FIELD.TYPE.id}
+        name={FORM_FIELD.TYPE.id}
+        items={items}
+        value={value}
+        onValueChange={(value) => onFieldChange(value ?? "")}
+        disabled={!items?.length}
+      >
+        <SelectTrigger>
+          <SelectValue placeholder={FORM_FIELD.TYPE.placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {items?.map((item) => (
+              <SelectItem key={item.value} value={item.value}>
+                {item.label}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <FieldError>{error}</FieldError>
+    </Field>
+  );
+}
+
+function StatusField({ items, value, error, onFieldChange }: FieldProps) {
+  return (
+    <Field>
+      <FieldLabel htmlFor={FORM_FIELD.STATUS.id}>
+        Status <span className="text-destructive">*</span>
+      </FieldLabel>
+      <Select
+        id={FORM_FIELD.STATUS.id}
+        name={FORM_FIELD.STATUS.id}
+        items={items}
+        value={value}
+        onValueChange={(value) => onFieldChange(value ?? "")}
+        disabled={!items?.length}
+      >
+        <SelectTrigger>
+          <SelectValue placeholder={FORM_FIELD.STATUS.placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {items?.map((item) => (
+              <SelectItem key={item.value} value={item.value}>
+                {item.label}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <FieldError>{error}</FieldError>
+    </Field>
+  );
+}
+
+function GroupField({ items, value, error, onFieldChange }: FieldProps) {
+  return (
+    <Field>
+      <FieldLabel htmlFor={FORM_FIELD.GROUP.id}>
+        Group <span className="text-destructive">*</span>
+      </FieldLabel>
+      <Select
+        id={FORM_FIELD.GROUP.id}
+        name={FORM_FIELD.GROUP.id}
+        items={items}
+        value={value}
+        onValueChange={(value) => onFieldChange(value ?? "")}
+        disabled={!items?.length}
+      >
+        <SelectTrigger>
+          <SelectValue placeholder={FORM_FIELD.GROUP.placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {items?.map((item) => (
+              <SelectItem key={item.value} value={item.value}>
+                {item.label}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <FieldError>{error}</FieldError>
+    </Field>
+  );
+}
+
+function SerialNumberField({ value, error, onFieldChange }: FieldProps) {
+  return (
+    <Field>
+      <FieldLabel htmlFor={FORM_FIELD.SERIAL_NUMBER.id}>
+        Serial Number <span className="text-destructive">*</span>
+      </FieldLabel>
+      <Input
+        id={FORM_FIELD.SERIAL_NUMBER.id}
+        type="text"
+        name={FORM_FIELD.SERIAL_NUMBER.id}
+        placeholder={FORM_FIELD.SERIAL_NUMBER.placeholder}
+        autoComplete="off"
+        value={value}
+        onChange={(e) => onFieldChange(e.target.value)}
+        required
+      />
+      <FieldError>{error}</FieldError>
+    </Field>
+  );
+}
+
+function IpAddressField({ value, error, onFieldChange }: FieldProps) {
+  return (
+    <Field>
+      <FieldLabel htmlFor={FORM_FIELD.IP_ADDRESS.id}>IP Address</FieldLabel>
+      <Input
+        id={FORM_FIELD.IP_ADDRESS.id}
+        type="text"
+        name={FORM_FIELD.IP_ADDRESS.id}
+        placeholder={FORM_FIELD.IP_ADDRESS.placeholder}
+        autoComplete="off"
+        value={value}
+        onChange={(e) => onFieldChange(e.target.value)}
+      />
+      <FieldError>{error}</FieldError>
+    </Field>
+  );
+}
