@@ -1,8 +1,12 @@
 "use client";
 
+import Link from "next/link";
+
 import { useActionState } from "react";
 
 import { createDevice } from "@/features/device/lib/actions";
+
+import { DEVICES_PATH } from "@/features/dashboard/lib/constants";
 
 import { FORM_FIELD, FORM_ID } from "@/features/device/lib/constants";
 
@@ -12,7 +16,11 @@ import useFields from "@/features/device/hooks/use-fields";
 
 import { Input } from "@/components/ui/input";
 
+import { Button, buttonVariants } from "@/components/ui/button";
+
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
+
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -22,7 +30,7 @@ type NewDeviceFormProps = {
   groups?: SelectFieldItem[];
 };
 
-export default function NewDeviceForm({ types, statuses, groups }: NewDeviceFormProps) {
+export default function NewDeviceCard({ types, statuses, groups }: NewDeviceFormProps) {
   const { field, handleFieldChange } = useFields({
     name: "",
     typeId: "",
@@ -32,46 +40,67 @@ export default function NewDeviceForm({ types, statuses, groups }: NewDeviceForm
     ipAddress: "",
   });
 
-  const [state, formAction] = useActionState(createDevice, null);
+  const [state, formAction, isFormPending] = useActionState(createDevice, null);
 
   return (
-    <form id={FORM_ID} action={formAction}>
-      <FieldGroup>
-        <NameField
-          value={field.name}
-          error={state?.serverErrors?.name}
-          onFieldChange={(value) => handleFieldChange("name", value)}
-        />
-        <TypeField
-          items={types}
-          value={field.typeId}
-          error={state?.serverErrors?.typeId}
-          onFieldChange={(value) => handleFieldChange("typeId", value)}
-        />
-        <StatusField
-          items={statuses}
-          value={field.statusId}
-          error={state?.serverErrors?.statusId}
-          onFieldChange={(value) => handleFieldChange("statusId", value)}
-        />
-        <GroupField
-          items={groups}
-          value={field.groupId}
-          error={state?.serverErrors?.groupId}
-          onFieldChange={(value) => handleFieldChange("groupId", value)}
-        />
-        <SerialNumberField
-          value={field.serialNumber}
-          error={state?.serverErrors?.serialNumber}
-          onFieldChange={(value) => handleFieldChange("serialNumber", value)}
-        />
-        <IpAddressField
-          value={field.ipAddress}
-          error={state?.serverErrors?.ipAddress}
-          onFieldChange={(value) => handleFieldChange("ipAddress", value)}
-        />
-      </FieldGroup>
-    </form>
+    <Card>
+      <CardHeader>
+        <CardTitle>Device Information</CardTitle>
+        <CardDescription>Fill out the following fields to create a new device.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form id={FORM_ID} action={formAction}>
+          <FieldGroup>
+            <NameField
+              value={field.name}
+              error={state?.serverErrors?.name}
+              onFieldChange={(value) => handleFieldChange("name", value)}
+            />
+            <TypeField
+              items={types}
+              value={field.typeId}
+              error={state?.serverErrors?.typeId}
+              onFieldChange={(value) => handleFieldChange("typeId", value)}
+            />
+            <StatusField
+              items={statuses}
+              value={field.statusId}
+              error={state?.serverErrors?.statusId}
+              onFieldChange={(value) => handleFieldChange("statusId", value)}
+            />
+            <GroupField
+              items={groups}
+              value={field.groupId}
+              error={state?.serverErrors?.groupId}
+              onFieldChange={(value) => handleFieldChange("groupId", value)}
+            />
+            <SerialNumberField
+              value={field.serialNumber}
+              error={state?.serverErrors?.serialNumber}
+              onFieldChange={(value) => handleFieldChange("serialNumber", value)}
+            />
+            <IpAddressField
+              value={field.ipAddress}
+              error={state?.serverErrors?.ipAddress}
+              onFieldChange={(value) => handleFieldChange("ipAddress", value)}
+            />
+          </FieldGroup>
+        </form>
+      </CardContent>
+      <CardFooter className="justify-end gap-2">
+        <Link
+          href={DEVICES_PATH}
+          aria-disabled={isFormPending}
+          tabIndex={isFormPending ? -1 : undefined}
+          className={buttonVariants({ variant: "outline", className: isFormPending ? "pointer-events-none" : "" })}
+        >
+          Cancel
+        </Link>
+        <Button form={FORM_ID} type="submit" disabled={isFormPending}>
+          Create Device
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }
 
