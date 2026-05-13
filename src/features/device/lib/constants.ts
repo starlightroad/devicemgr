@@ -36,3 +36,7 @@ export const DEFAULT_PAGE_SIZE = PAGE_SIZES[0];
 export const DEVICES_TITLE = "Devices";
 
 export const DEVICES_DESCRIPTION = "View, filter, and manage your devices.";
+
+export const NEW_DEVICE_TITLE = "Add New Device";
+
+export const NEW_DEVICE_DESCRIPTION = "Add a new device to your account.";
