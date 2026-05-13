@@ -12,7 +12,7 @@ export const FORM_FIELD = {
 };
 
 export const ACTION_MESSAGE = {
-  created: null,
+  created: "The device was successfully created.",
   updated: "The device was successfully updated.",
   moved: "The device was successfully moved.",
   deleted: "The device was successfully deleted.",

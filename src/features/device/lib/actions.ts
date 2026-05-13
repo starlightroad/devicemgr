@@ -4,8 +4,6 @@ import { z } from "zod";
 
 import { and, eq, sql } from "drizzle-orm";
 
-import { redirect } from "next/navigation";
-
 import { revalidatePath } from "next/cache";
 
 import { db } from "@/db/client";
@@ -220,5 +218,8 @@ export const createDevice = async (_prevState: unknown, formData: FormData) => {
 
   revalidatePath(DASHBOARD_PATH);
   revalidatePath(DEVICES_PATH);
-  redirect(DEVICES_PATH);
+
+  return {
+    success: true,
+  };
 };

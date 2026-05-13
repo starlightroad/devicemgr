@@ -2,17 +2,23 @@
 
 import Link from "next/link";
 
+import { toast } from "sonner";
+
 import { useActionState } from "react";
+
+import { useRouter } from "next/navigation";
 
 import { createDevice } from "@/features/device/lib/actions";
 
 import { DEVICES_PATH } from "@/features/dashboard/lib/constants";
 
-import { FORM_FIELD, FORM_ID } from "@/features/device/lib/constants";
+import { ACTION_MESSAGE, FORM_FIELD, FORM_ID } from "@/features/device/lib/constants";
 
 import type { SelectFieldItem } from "@/features/device/lib/definitions";
 
 import useFields from "@/features/device/hooks/use-fields";
+
+import useFormSuccess from "@/features/device/hooks/use-form-success";
 
 import { Input } from "@/components/ui/input";
 
@@ -40,7 +46,14 @@ export default function NewDeviceCard({ types, statuses, groups }: NewDeviceForm
     ipAddress: "",
   });
 
+  const { push } = useRouter();
+
   const [state, formAction, isFormPending] = useActionState(createDevice, null);
+
+  useFormSuccess(state?.success, () => {
+    push(DEVICES_PATH);
+    toast.success(ACTION_MESSAGE.created);
+  });
 
   return (
     <Card>
