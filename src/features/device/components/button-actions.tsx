@@ -1,8 +1,12 @@
-import { ButtonGroup } from "@/components/ui/button-group";
+import Link from "next/link";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { DownloadCloudIcon, ImportIcon, MoreHorizontalIcon, PlusIcon } from "lucide-react";
 
-import { ChevronDownIcon, DownloadCloudIcon, ImportIcon, PlusIcon } from "lucide-react";
+import { NEW_DEVICE_PATH } from "@/features/dashboard/lib/constants";
+
+import { buttonVariants } from "@/components/ui/button";
+
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 import {
   DropdownMenu,
@@ -13,15 +17,24 @@ import {
 
 export default function ButtonActions() {
   return (
-    <ButtonGroup aria-label="Button Actions Group">
-      <Button type="button">
-        <PlusIcon />
-        New Device
-      </Button>
+    <div className="flex items-center gap-1">
+      <NewDeviceLink />
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="More Options" className={buttonVariants({ size: "icon" })}>
-          <ChevronDownIcon />
-        </DropdownMenuTrigger>
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <DropdownMenuTrigger
+                aria-label="More Options"
+                className={buttonVariants({ variant: "outline", size: "icon" })}
+              >
+                <MoreHorizontalIcon />
+              </DropdownMenuTrigger>
+            }
+          />
+          <TooltipContent>
+            <p>More options</p>
+          </TooltipContent>
+        </Tooltip>
         <DropdownMenuContent align="end" className="w-40">
           <DropdownMenuItem>
             <DownloadCloudIcon />
@@ -33,6 +46,15 @@ export default function ButtonActions() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </ButtonGroup>
+    </div>
+  );
+}
+
+function NewDeviceLink() {
+  return (
+    <Link href={NEW_DEVICE_PATH} className={buttonVariants()}>
+      <PlusIcon />
+      New Device
+    </Link>
   );
 }
