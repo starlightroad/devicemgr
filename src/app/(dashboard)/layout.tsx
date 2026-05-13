@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { APP_NAME } from "@/lib/constants";
 
-import { DASHBOARD_DESC, DASHBOARD_TITLE } from "@/features/dashboard/lib/constants";
+import { DASHBOARD_DESCRIPTION, DASHBOARD_TITLE } from "@/features/dashboard/lib/constants";
 
 import Sidebar from "@/features/dashboard/components/sidebar";
 
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: `%s | ${APP_NAME}`,
     default: DASHBOARD_TITLE,
   },
-  description: DASHBOARD_DESC,
+  description: DASHBOARD_DESCRIPTION,
 };
 
 export default function DashboardLayout({ children }: LayoutProps) {
