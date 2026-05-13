@@ -50,6 +50,8 @@ export default function NewDeviceCard({ types, statuses, groups }: NewDeviceForm
 
   const [state, formAction, isFormPending] = useActionState(createDevice, null);
 
+  const isButtonDisabled = !types?.length || !statuses?.length || !groups?.length || isFormPending;
+
   useFormSuccess(state?.success, () => {
     push(DEVICES_PATH);
     toast.success(ACTION_MESSAGE.created);
@@ -109,7 +111,7 @@ export default function NewDeviceCard({ types, statuses, groups }: NewDeviceForm
         >
           Cancel
         </Link>
-        <Button form={FORM_ID} type="submit" disabled={isFormPending}>
+        <Button form={FORM_ID} type="submit" disabled={isButtonDisabled}>
           Create Device
         </Button>
       </CardFooter>
