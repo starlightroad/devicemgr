@@ -14,3 +14,5 @@ export const MoveDeviceSchema = EditDeviceSchema.pick({
 });
 
 export const DeleteDeviceSchema = z.string();
+
+export const NewDeviceSchema = EditDeviceSchema;

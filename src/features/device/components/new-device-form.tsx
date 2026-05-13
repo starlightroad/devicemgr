@@ -1,5 +1,9 @@
 "use client";
 
+import { useActionState } from "react";
+
+import { createDevice } from "@/features/device/lib/actions";
+
 import { FORM_FIELD, FORM_ID } from "@/features/device/lib/constants";
 
 import type { SelectFieldItem } from "@/features/device/lib/definitions";
@@ -28,26 +32,44 @@ export default function NewDeviceForm({ types, statuses, groups }: NewDeviceForm
     ipAddress: "",
   });
 
+  const [state, formAction] = useActionState(createDevice, null);
+
   return (
-    <form id={FORM_ID} onSubmit={(e) => e.preventDefault()}>
+    <form id={FORM_ID} action={formAction}>
       <FieldGroup>
-        <NameField value={field.name} onFieldChange={(value) => handleFieldChange("name", value)} />
-        <TypeField items={types} value={field.typeId} onFieldChange={(value) => handleFieldChange("typeId", value)} />
+        <NameField
+          value={field.name}
+          error={state?.serverErrors?.name}
+          onFieldChange={(value) => handleFieldChange("name", value)}
+        />
+        <TypeField
+          items={types}
+          value={field.typeId}
+          error={state?.serverErrors?.typeId}
+          onFieldChange={(value) => handleFieldChange("typeId", value)}
+        />
         <StatusField
           items={statuses}
           value={field.statusId}
+          error={state?.serverErrors?.statusId}
           onFieldChange={(value) => handleFieldChange("statusId", value)}
         />
         <GroupField
           items={groups}
           value={field.groupId}
+          error={state?.serverErrors?.groupId}
           onFieldChange={(value) => handleFieldChange("groupId", value)}
         />
         <SerialNumberField
           value={field.serialNumber}
+          error={state?.serverErrors?.serialNumber}
           onFieldChange={(value) => handleFieldChange("serialNumber", value)}
         />
-        <IpAddressField value={field.ipAddress} onFieldChange={(value) => handleFieldChange("ipAddress", value)} />
+        <IpAddressField
+          value={field.ipAddress}
+          error={state?.serverErrors?.ipAddress}
+          onFieldChange={(value) => handleFieldChange("ipAddress", value)}
+        />
       </FieldGroup>
     </form>
   );
