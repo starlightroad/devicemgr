@@ -32,3 +32,7 @@ export const PAGE_SIZE_PARAM_ID = "pageSize";
 export const DEFAULT_PAGE = 1;
 
 export const DEFAULT_PAGE_SIZE = PAGE_SIZES[0];
+
+export const DEVICES_TITLE = "Devices";
+
+export const DEVICES_DESCRIPTION = "View, filter, and manage your devices.";
