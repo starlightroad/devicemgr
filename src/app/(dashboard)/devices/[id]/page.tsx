@@ -1,8 +1,10 @@
 import Link from "next/link";
 
+import { notFound } from "next/navigation";
+
 import { ChevronRightIcon, MonitorSmartphoneIcon, MoreHorizontalIcon } from "lucide-react";
 
-import devicesJson from "@/lib/data/devices.json";
+import { getDeviceById } from "@/dal/device";
 
 import { getBadgeIconColorClassesByStatus } from "@/features/device/lib/utils";
 
@@ -16,14 +18,24 @@ import { Header, HeaderTitle } from "@/features/dashboard/components/header";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default async function DevicePage() {
-  const device = devicesJson[0];
+type DevicePageProps = {
+  params: Promise<{ id: string }>;
+};
+
+export default async function DevicePage({ params }: DevicePageProps) {
+  const { id } = await params;
+
+  const { data, error } = await getDeviceById(id);
+
+  if (!data || error) {
+    notFound();
+  }
 
   const deviceInfoItems = [
-    { label: "Type", value: device.device_type },
-    { label: "Group", value: device.device_group },
-    { label: "Serial Number", value: device.serial_number },
-    { label: "IP Address", value: device.ip_address },
+    { label: "Type", value: data.type },
+    { label: "Group", value: data.group },
+    { label: "Serial Number", value: data.serialNumber },
+    { label: "IP Address", value: data.ipAddress },
   ];
 
   return (
@@ -44,7 +56,7 @@ export default async function DevicePage() {
                 <ChevronRightIcon className="text-muted-foreground size-3.5" />
               </li>
               <li className="max-w-60">
-                <span className="truncate">{device.name}</span>
+                <span className="truncate">{data.name}</span>
               </li>
             </ol>
           </nav>
@@ -66,12 +78,10 @@ export default async function DevicePage() {
             </div>
             <div className="flex w-full flex-col gap-2">
               <CardHeader>
-                <CardTitle>{device.name}</CardTitle>
+                <CardTitle>{data.name}</CardTitle>
               </CardHeader>
               <CardContent>
-                <Badge className={getBadgeIconColorClassesByStatus(device.device_status.toLowerCase())}>
-                  {device.device_status}
-                </Badge>
+                <Badge className={getBadgeIconColorClassesByStatus(data.status.toLowerCase())}>{data.status}</Badge>
               </CardContent>
             </div>
           </Card>
