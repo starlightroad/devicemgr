@@ -76,6 +76,7 @@ export const updateDevice = async (deviceId: string, _prevState: unknown, formDa
   }
 
   revalidatePath("/dashboard");
+  revalidatePath(DEVICES_PATH);
 
   return {
     success: true,
