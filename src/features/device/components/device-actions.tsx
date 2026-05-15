@@ -14,6 +14,8 @@ import {
   Trash2Icon,
 } from "lucide-react";
 
+import { DEVICES_PATH } from "@/features/dashboard/lib/constants";
+
 import type { Device, DeviceGroup, DeviceStatus, DeviceType } from "@/features/device/lib/definitions";
 
 import { ACTION_MESSAGE } from "@/features/device/lib/constants";
@@ -62,8 +64,8 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
   };
 
   const viewDeviceInNewTab = () => {
-    // Will need to change the URL in the future.
-    window.open("#", "_blank");
+    const deviceUrl = `${DEVICES_PATH}/${device.id}`;
+    window.open(deviceUrl, "_blank");
   };
 
   return (
