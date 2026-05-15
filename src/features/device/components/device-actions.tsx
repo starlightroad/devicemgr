@@ -14,11 +14,11 @@ import {
   Trash2Icon,
 } from "lucide-react";
 
-import { DEVICES_PATH } from "@/features/dashboard/lib/constants";
-
 import type { Device, DeviceGroup, DeviceStatus, DeviceType } from "@/features/device/lib/definitions";
 
 import { ACTION_MESSAGE } from "@/features/device/lib/constants";
+
+import { createDeviceUrlById } from "@/features/device/lib/utils";
 
 import useCopyToClipboard from "@/features/device/hooks/use-copy-to-clipboard";
 
@@ -64,7 +64,7 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
   };
 
   const viewDeviceInNewTab = () => {
-    const deviceUrl = `${DEVICES_PATH}/${device.id}`;
+    const deviceUrl = createDeviceUrlById(device.id);
     window.open(deviceUrl, "_blank");
   };
 

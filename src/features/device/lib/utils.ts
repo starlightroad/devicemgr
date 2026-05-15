@@ -1,3 +1,5 @@
+import { DEVICES_PATH } from "@/features/dashboard/lib/constants";
+
 import { DEFAULT_PAGE_SIZE, PAGE_SIZES, TABLE_COLUMNS } from "@/features/device/lib/constants";
 
 export const getBadgeIconColorClassesByStatus = (status: string) => {
@@ -38,3 +40,5 @@ export const validatePageSize = (pageSize: number) => {
 
   return DEFAULT_PAGE_SIZE;
 };
+
+export const createDeviceUrlById = (deviceId: string) => `${DEVICES_PATH}/${deviceId}`;
