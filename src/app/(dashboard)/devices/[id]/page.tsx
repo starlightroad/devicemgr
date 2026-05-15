@@ -6,6 +6,8 @@ import { ChevronRightIcon, MonitorSmartphoneIcon, MoreHorizontalIcon } from "luc
 
 import { getDeviceById } from "@/dal/device";
 
+import { NOT_FOUND_DESCRIPTION, NOT_FOUND_TITLE } from "@/lib/constants";
+
 import { getBadgeIconColorClassesByStatus } from "@/features/device/lib/utils";
 
 import { Badge } from "@/components/ui/badge";
@@ -20,6 +22,24 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type DevicePageProps = {
   params: Promise<{ id: string }>;
+};
+
+export const generateMetadata = async ({ params }: DevicePageProps) => {
+  const { id } = await params;
+
+  const { data, error } = await getDeviceById(id);
+
+  if (!data || error) {
+    return {
+      title: NOT_FOUND_TITLE,
+      description: NOT_FOUND_DESCRIPTION,
+    };
+  }
+
+  return {
+    title: data.name,
+    description: `View and manage device information for ${data.name}.`,
+  };
 };
 
 export default async function DevicePage({ params }: DevicePageProps) {
