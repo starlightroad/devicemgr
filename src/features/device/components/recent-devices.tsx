@@ -20,7 +20,7 @@ import { Badge } from "@/components/ui/badge";
 
 import { buttonVariants } from "@/components/ui/button";
 
-import DeviceActions from "@/features/device/components/device-actions";
+import DeviceActionsCellButton from "@/features/device/components/device-actions-cell-button";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
@@ -102,7 +102,12 @@ export default async function RecentDevices() {
                     <TableCell>{device.group}</TableCell>
                     <TableCell>{device.serialNumber}</TableCell>
                     <TableCell align="right">
-                      <DeviceActions device={device} types={types.data} statuses={statuses.data} groups={groups.data} />
+                      <DeviceActionsCellButton
+                        device={device}
+                        types={types.data}
+                        statuses={statuses.data}
+                        groups={groups.data}
+                      />
                     </TableCell>
                   </TableRow>
                 );

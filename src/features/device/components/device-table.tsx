@@ -26,13 +26,13 @@ import { buttonVariants } from "@/components/ui/button";
 
 import Pagination from "@/features/device/components/pagination";
 
-import DeviceActions from "@/features/device/components/device-actions";
-
 import DeviceTableColumns from "@/features/device/components/device-table-columns";
 
 import PaginationSkeleton from "@/features/device/components/pagination-skeleton";
 
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
+
+import DeviceActionsCellButton from "@/features/device/components/device-actions-cell-button";
 
 import {
   NoResultsFoundRow,
@@ -125,7 +125,7 @@ export default async function DeviceTable({
                   <TableCell>{device.serialNumber}</TableCell>
                   <TableCell>{device.ipAddress || "-"}</TableCell>
                   <TableCell align="right">
-                    <DeviceActions
+                    <DeviceActionsCellButton
                       device={device}
                       types={deviceTypes.data}
                       statuses={deviceStatuses.data}

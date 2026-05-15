@@ -1,9 +1,5 @@
 "use client";
 
-import { toast } from "sonner";
-
-import { useState } from "react";
-
 import {
   CircleEllipsisIcon,
   CopyIcon,
@@ -16,11 +12,11 @@ import {
 
 import type { Device, DeviceGroup, DeviceStatus, DeviceType } from "@/features/device/lib/definitions";
 
-import { ACTION_MESSAGE } from "@/features/device/lib/constants";
-
 import { createDeviceUrlById } from "@/features/device/lib/utils";
 
-import useCopyToClipboard from "@/features/device/hooks/use-copy-to-clipboard";
+import useModal from "@/features/device/hooks/use-modal";
+
+import useCopyDeviceId from "@/features/device/hooks/use-copy-device-id";
 
 import { buttonVariants } from "@/components/ui/button";
 
@@ -49,21 +45,18 @@ type DeviceActionsProps = {
   groups: DeviceGroup[] | null;
 };
 
-export default function DeviceActions({ device, types, statuses, groups }: DeviceActionsProps) {
-  const { copy } = useCopyToClipboard();
+export default function DeviceActionsCellButton({ device, types, statuses, groups }: DeviceActionsProps) {
+  const { handleCopy } = useCopyDeviceId();
 
-  const [modal, setModal] = useState<string | null>(null);
+  const { modal, setModal, closeModal } = useModal();
 
-  const copyDeviceId = async () => {
-    try {
-      await copy(device.id);
-      toast.success(ACTION_MESSAGE.copied);
-    } catch {
-      toast.error("Failed to copy device ID.");
-    }
-  };
+  const deviceId = device.id;
 
-  const viewDeviceInNewTab = () => {
+  const deviceName = device.name;
+
+  const groupId = device.groupId;
+
+  const handleViewDeviceInNewTab = () => {
     const deviceUrl = createDeviceUrlById(device.id);
     window.open(deviceUrl, "_blank");
   };
@@ -87,7 +80,7 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
           </TooltipContent>
         </Tooltip>
         <DropdownMenuContent className="w-40">
-          <DropdownMenuItem onClick={viewDeviceInNewTab} className="focus:[&>svg]:stroke-muted-foreground">
+          <DropdownMenuItem onClick={handleViewDeviceInNewTab} className="focus:[&>svg]:stroke-muted-foreground">
             <SquareArrowUpRightIcon className="text-muted-foreground" />
             View
           </DropdownMenuItem>
@@ -101,7 +94,7 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
             Move...
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={copyDeviceId} className="focus:[&>svg]:stroke-muted-foreground">
+          <DropdownMenuItem onClick={() => handleCopy(deviceId)} className="focus:[&>svg]:stroke-muted-foreground">
             <CopyIcon className="text-muted-foreground" />
             Copy ID
           </DropdownMenuItem>
@@ -116,23 +109,14 @@ export default function DeviceActions({ device, types, statuses, groups }: Devic
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-
       {modal === "edit" && (
-        <EditDeviceModal
-          device={device}
-          types={types}
-          statuses={statuses}
-          groups={groups}
-          onClose={() => setModal(null)}
-        />
+        <EditDeviceModal device={device} types={types} statuses={statuses} groups={groups} onClose={closeModal} />
       )}
       {modal === "move" && (
-        <MoveDeviceModal deviceId={device.id} groupId={device.groupId} groups={groups} onClose={() => setModal(null)} />
+        <MoveDeviceModal deviceId={deviceId} groupId={groupId} groups={groups} onClose={closeModal} />
       )}
-      {modal === "share" && <ShareDeviceModal deviceId={device.id} onClose={() => setModal(null)} />}
-      {modal === "delete" && (
-        <DeleteDeviceModal deviceId={device.id} deviceName={device.name} onClose={() => setModal(null)} />
-      )}
+      {modal === "share" && <ShareDeviceModal deviceId={deviceId} onClose={closeModal} />}
+      {modal === "delete" && <DeleteDeviceModal deviceId={deviceId} deviceName={deviceName} onClose={closeModal} />}
     </>
   );
 }
