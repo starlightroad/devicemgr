@@ -14,6 +14,8 @@ import { cn } from "@/lib/utils";
 
 import type { Options } from "@/lib/definitions";
 
+import { DEVICES_PATH } from "@/features/dashboard/lib/constants";
+
 import { getDeviceTableColumns } from "@/features/device/lib/utils";
 
 import type { SortDirection } from "@/features/device/lib/definitions";
@@ -97,10 +99,15 @@ export default async function DeviceTable({
               </NoResultsFoundRow>
             )}
             {data?.map((device) => {
+              const deviceUrl = `${DEVICES_PATH}/${device.id}`;
+
               return (
                 <TableRow key={device.id} className="[&>td]:px-4">
                   <TableCell>
-                    <Link href="#" className={cn(buttonVariants({ variant: "link", size: "sm" }), "px-0 underline")}>
+                    <Link
+                      href={deviceUrl}
+                      className={cn(buttonVariants({ variant: "link", size: "sm" }), "px-0 underline")}
+                    >
                       {device.name}
                     </Link>
                   </TableCell>
