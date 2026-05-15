@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { notFound } from "next/navigation";
 
-import { ChevronRightIcon, MonitorSmartphoneIcon, MoreHorizontalIcon } from "lucide-react";
+import { ChevronRightIcon, MonitorSmartphoneIcon } from "lucide-react";
 
 import { getDeviceTypes } from "@/dal/type";
 
@@ -18,9 +18,9 @@ import { NOT_FOUND_DESCRIPTION, NOT_FOUND_TITLE } from "@/lib/constants";
 
 import { getBadgeIconColorClassesByStatus } from "@/features/device/lib/utils";
 
-import { Badge } from "@/components/ui/badge";
+import { ModalProvider } from "@/features/device/providers/modal-provider";
 
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 import { ButtonGroup } from "@/components/ui/button-group";
 
@@ -29,6 +29,8 @@ import { Header, HeaderTitle } from "@/features/dashboard/components/header";
 import EditDeviceButton from "@/features/device/components/edit-device-button";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+import DeviceActionsButton from "@/features/device/components/device-actions-button";
 
 type DevicePageProps = {
   params: Promise<{ id: string }>;
@@ -94,9 +96,9 @@ export default async function DevicePage({ params }: DevicePageProps) {
           </nav>
           <ButtonGroup>
             <EditDeviceButton device={data} types={types.data} statuses={statuses.data} groups={groups.data} />
-            <Button type="button" variant="outline" size="icon">
-              <MoreHorizontalIcon />
-            </Button>
+            <ModalProvider>
+              <DeviceActionsButton device={data} types={types.data} statuses={statuses.data} groups={groups.data} />
+            </ModalProvider>
           </ButtonGroup>
         </div>
         <article>
