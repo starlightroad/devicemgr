@@ -6,6 +6,8 @@ import { ChevronRightIcon, MonitorSmartphoneIcon, MoreHorizontalIcon } from "luc
 
 import { getDeviceById } from "@/dal/device";
 
+import { DEVICES_PATH } from "@/features/dashboard/lib/constants";
+
 import { NOT_FOUND_DESCRIPTION, NOT_FOUND_TITLE } from "@/lib/constants";
 
 import { getBadgeIconColorClassesByStatus } from "@/features/device/lib/utils";
@@ -68,7 +70,7 @@ export default async function DevicePage({ params }: DevicePageProps) {
           <nav>
             <ol className="flex items-center gap-2 text-sm">
               <li>
-                <Link href="/devices" className="text-muted-foreground">
+                <Link href={DEVICES_PATH} className="text-muted-foreground">
                   Devices
                 </Link>
               </li>
