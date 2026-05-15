@@ -14,7 +14,7 @@ import { getDeviceStatuses } from "@/dal/status";
 
 import { TABLE_COLUMNS } from "@/features/device/lib/constants";
 
-import { getBadgeIconColorClassesByStatus } from "@/features/device/lib/utils";
+import { createDeviceUrlById, getBadgeIconColorClassesByStatus } from "@/features/device/lib/utils";
 
 import { Badge } from "@/components/ui/badge";
 
@@ -80,7 +80,10 @@ export default async function RecentDevices() {
                 return (
                   <TableRow key={device.id} className="[&>td]:px-4">
                     <TableCell>
-                      <Link href="#" className={cn(buttonVariants({ variant: "link", size: "sm" }), "px-0 underline")}>
+                      <Link
+                        href={createDeviceUrlById(device.id)}
+                        className={cn(buttonVariants({ variant: "link", size: "sm" }), "px-0 underline")}
+                      >
                         {device.name}
                       </Link>
                     </TableCell>
