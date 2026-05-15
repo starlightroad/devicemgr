@@ -4,7 +4,13 @@ import { notFound } from "next/navigation";
 
 import { ChevronRightIcon, MonitorSmartphoneIcon, MoreHorizontalIcon } from "lucide-react";
 
+import { getDeviceTypes } from "@/dal/type";
+
 import { getDeviceById } from "@/dal/device";
+
+import { getDeviceGroups } from "@/dal/group";
+
+import { getDeviceStatuses } from "@/dal/status";
 
 import { DEVICES_PATH } from "@/features/dashboard/lib/constants";
 
@@ -19,6 +25,8 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 
 import { Header, HeaderTitle } from "@/features/dashboard/components/header";
+
+import EditDeviceButton from "@/features/device/components/edit-device-button";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -53,6 +61,8 @@ export default async function DevicePage({ params }: DevicePageProps) {
     notFound();
   }
 
+  const [types, statuses, groups] = await Promise.all([getDeviceTypes(), getDeviceStatuses(), getDeviceGroups()]);
+
   const deviceInfoItems = [
     { label: "Type", value: data.type },
     { label: "Group", value: data.group },
@@ -83,9 +93,7 @@ export default async function DevicePage({ params }: DevicePageProps) {
             </ol>
           </nav>
           <ButtonGroup>
-            <Button type="button" variant="outline">
-              Edit Device
-            </Button>
+            <EditDeviceButton device={data} types={types.data} statuses={statuses.data} groups={groups.data} />
             <Button type="button" variant="outline" size="icon">
               <MoreHorizontalIcon />
             </Button>

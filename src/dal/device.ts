@@ -130,6 +130,9 @@ export const getDeviceById = async (deviceId: string) => {
     const data = await db
       .select({
         id: devicesTable.id,
+        typeId: devicesTable.typeId,
+        statusId: devicesTable.statusId,
+        groupId: devicesTable.groupId,
         type: deviceTypesTable.name,
         status: deviceStatusesTable.name,
         group: deviceGroupsTable.name,
