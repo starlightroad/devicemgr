@@ -160,6 +160,7 @@ export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
   }
 
   revalidatePath(DASHBOARD_PATH);
+  revalidatePath(DEVICES_PATH);
 
   return {
     success: true,
