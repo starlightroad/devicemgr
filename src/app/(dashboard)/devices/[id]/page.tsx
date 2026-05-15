@@ -55,7 +55,7 @@ export default async function DevicePage({ params }: DevicePageProps) {
     { label: "Type", value: data.type },
     { label: "Group", value: data.group },
     { label: "Serial Number", value: data.serialNumber },
-    { label: "IP Address", value: data.ipAddress },
+    { label: "IP Address", value: data.ipAddress || "Not Assigned" },
   ];
 
   return (

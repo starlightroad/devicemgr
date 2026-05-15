@@ -118,7 +118,7 @@ export default async function DeviceTable({
                   </TableCell>
                   <TableCell>{device.group}</TableCell>
                   <TableCell>{device.serialNumber}</TableCell>
-                  <TableCell>{device.ipAddress ?? "-"}</TableCell>
+                  <TableCell>{device.ipAddress || "-"}</TableCell>
                   <TableCell align="right">
                     <DeviceActions
                       device={device}
