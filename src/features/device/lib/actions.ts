@@ -75,7 +75,7 @@ export const updateDevice = async (deviceId: string, _prevState: unknown, formDa
     };
   }
 
-  revalidatePath("/dashboard");
+  revalidatePath(DASHBOARD_PATH);
   revalidatePath(DEVICES_PATH);
 
   return {
@@ -122,7 +122,7 @@ export const moveDevice = async (deviceId: string, _prevState: unknown, formData
     };
   }
 
-  revalidatePath("/dashboard");
+  revalidatePath(DASHBOARD_PATH);
 
   return {
     success: true,
@@ -159,7 +159,7 @@ export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
     };
   }
 
-  revalidatePath("/dashboard");
+  revalidatePath(DASHBOARD_PATH);
 
   return {
     success: true,
