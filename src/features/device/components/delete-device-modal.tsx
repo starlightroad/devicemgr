@@ -33,7 +33,11 @@ export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: Del
       const { success, serverErrors } = await deleteDevice(deviceId);
 
       if (success) {
-        toast.success(ACTION_MESSAGE.deleted);
+        onClose();
+
+        setTimeout(() => {
+          toast.success(ACTION_MESSAGE.deleted);
+        }, 100);
       }
 
       if (serverErrors?.message) {
