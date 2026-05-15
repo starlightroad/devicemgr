@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-
 import type { Device, DeviceItem } from "@/features/device/lib/definitions";
+
+import useModal from "@/features/device/hooks/use-modal";
 
 import { Button } from "@/components/ui/button";
 
@@ -16,17 +16,15 @@ type EditDeviceButtonProps = {
 };
 
 export default function EditDeviceButton({ device, types, statuses, groups }: EditDeviceButtonProps) {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const handleCloseModal = () => setModalOpen(false);
+  const { modal, setModal, closeModal } = useModal();
 
   return (
     <>
-      <Button type="button" variant="outline" onClick={() => setModalOpen(true)}>
+      <Button type="button" variant="outline" onClick={() => setModal("edit")}>
         Edit Device
       </Button>
-      {modalOpen && (
-        <EditDeviceModal device={device} types={types} statuses={statuses} groups={groups} onClose={handleCloseModal} />
+      {modal === "edit" && (
+        <EditDeviceModal device={device} types={types} statuses={statuses} groups={groups} onClose={closeModal} />
       )}
     </>
   );

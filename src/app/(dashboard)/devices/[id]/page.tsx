@@ -95,8 +95,8 @@ export default async function DevicePage({ params }: DevicePageProps) {
             </ol>
           </nav>
           <ButtonGroup>
-            <EditDeviceButton device={data} types={types.data} statuses={statuses.data} groups={groups.data} />
             <ModalProvider>
+              <EditDeviceButton device={data} types={types.data} statuses={statuses.data} groups={groups.data} />
               <DeviceActionsButton device={data} types={types.data} statuses={statuses.data} groups={groups.data} />
             </ModalProvider>
           </ButtonGroup>
