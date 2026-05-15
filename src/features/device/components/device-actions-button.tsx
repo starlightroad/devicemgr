@@ -1,12 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 import { CopyIcon, FolderClosedIcon, MoreHorizontalIcon, Share2Icon, Trash2Icon } from "lucide-react";
 
 import useModal from "@/features/device/hooks/use-modal";
-
-import { DEVICES_PATH } from "@/features/dashboard/lib/constants";
 
 import type { Device, DeviceItem } from "@/features/device/lib/definitions";
 
@@ -38,8 +34,6 @@ type DeviceActionsButtonProps = {
 };
 
 export default function DeviceActionsButton({ device, groups }: DeviceActionsButtonProps) {
-  const { replace } = useRouter();
-
   const { modal, setModal, closeModal } = useModal();
 
   const { handleCopy } = useCopyDeviceId();
@@ -49,10 +43,6 @@ export default function DeviceActionsButton({ device, groups }: DeviceActionsBut
   const deviceName = device.name;
 
   const groupId = device.groupId;
-
-  const handleRouteChange = () => {
-    replace(DEVICES_PATH);
-  };
 
   return (
     <>
@@ -98,9 +88,7 @@ export default function DeviceActionsButton({ device, groups }: DeviceActionsBut
         <MoveDeviceModal deviceId={deviceId} groupId={groupId} groups={groups} onClose={closeModal} />
       )}
       {modal === "share" && <ShareDeviceModal deviceId={deviceId} onClose={closeModal} />}
-      {modal === "delete" && (
-        <DeleteDeviceModal deviceId={deviceId} deviceName={deviceName} onClose={handleRouteChange} />
-      )}
+      {modal === "delete" && <DeleteDeviceModal deviceId={deviceId} deviceName={deviceName} onClose={closeModal} />}
     </>
   );
 }
