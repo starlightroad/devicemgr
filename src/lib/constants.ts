@@ -9,3 +9,9 @@ export const TOOLTIP_OFFSET = 12;
 export const MAX_ROWS = 10;
 
 export const CHART_CONTAINER_HEIGHT = 256;
+
+export const HOME_PATH = "/";
+
+export const NOT_FOUND_TITLE = "Resource Not Found";
+
+export const NOT_FOUND_DESCRIPTION = "The resource you are looking for was not found.";

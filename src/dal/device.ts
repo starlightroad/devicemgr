@@ -1,6 +1,6 @@
 import "server-only";
 
-import { count, eq, ilike, sql } from "drizzle-orm";
+import { and, count, eq, ilike, sql } from "drizzle-orm";
 
 import { db } from "@/db/client";
 
@@ -119,6 +119,43 @@ export const getDevicesPages = async (options: Pick<Options, "pagination" | "fil
     return {
       data: null,
       error: "Failed to load data.",
+    };
+  }
+};
+
+export const getDeviceById = async (deviceId: string) => {
+  try {
+    const session = await getSession();
+
+    const data = await db
+      .select({
+        id: devicesTable.id,
+        typeId: devicesTable.typeId,
+        statusId: devicesTable.statusId,
+        groupId: devicesTable.groupId,
+        type: deviceTypesTable.name,
+        status: deviceStatusesTable.name,
+        group: deviceGroupsTable.name,
+        name: devicesTable.name,
+        serialNumber: devicesTable.serialNumber,
+        ipAddress: devicesTable.ipAddress,
+      })
+      .from(devicesTable)
+      .innerJoin(deviceTypesTable, eq(devicesTable.typeId, deviceTypesTable.id))
+      .innerJoin(deviceStatusesTable, eq(devicesTable.statusId, deviceStatusesTable.id))
+      .innerJoin(deviceGroupsTable, eq(devicesTable.groupId, deviceGroupsTable.id))
+      .where(and(eq(devicesTable.userId, session.userId), eq(devicesTable.id, deviceId.toLowerCase())));
+
+    if (!data.length) throw new Error();
+
+    return {
+      data: data[0],
+      error: null,
+    };
+  } catch {
+    return {
+      data: null,
+      error: "Failed to get device.",
     };
   }
 };

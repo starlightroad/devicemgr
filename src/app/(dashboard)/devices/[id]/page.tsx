@@ -1,0 +1,140 @@
+import Link from "next/link";
+
+import { notFound } from "next/navigation";
+
+import { ChevronRightIcon, MonitorSmartphoneIcon } from "lucide-react";
+
+import { getDeviceTypes } from "@/dal/type";
+
+import { getDeviceById } from "@/dal/device";
+
+import { getDeviceGroups } from "@/dal/group";
+
+import { getDeviceStatuses } from "@/dal/status";
+
+import { DEVICES_PATH } from "@/features/dashboard/lib/constants";
+
+import { NOT_FOUND_DESCRIPTION, NOT_FOUND_TITLE } from "@/lib/constants";
+
+import { getBadgeIconColorClassesByStatus } from "@/features/device/lib/utils";
+
+import { ModalProvider } from "@/features/device/providers/modal-provider";
+
+import { Badge } from "@/components/ui/badge";
+
+import { ButtonGroup } from "@/components/ui/button-group";
+
+import { Header, HeaderTitle } from "@/features/dashboard/components/header";
+
+import EditDeviceButton from "@/features/device/components/edit-device-button";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+import DeviceActionsButton from "@/features/device/components/device-actions-button";
+
+type DevicePageProps = {
+  params: Promise<{ id: string }>;
+};
+
+export const generateMetadata = async ({ params }: DevicePageProps) => {
+  const { id } = await params;
+
+  const { data, error } = await getDeviceById(id);
+
+  if (!data || error) {
+    return {
+      title: NOT_FOUND_TITLE,
+      description: NOT_FOUND_DESCRIPTION,
+    };
+  }
+
+  return {
+    title: data.name,
+    description: `View and manage device information for ${data.name}.`,
+  };
+};
+
+export default async function DevicePage({ params }: DevicePageProps) {
+  const { id } = await params;
+
+  const { data, error } = await getDeviceById(id);
+
+  if (!data || error) {
+    notFound();
+  }
+
+  const [types, statuses, groups] = await Promise.all([getDeviceTypes(), getDeviceStatuses(), getDeviceGroups()]);
+
+  const deviceInfoItems = [
+    { label: "Type", value: data.type },
+    { label: "Group", value: data.group },
+    { label: "Serial Number", value: data.serialNumber },
+    { label: "IP Address", value: data.ipAddress || "Not Assigned" },
+  ];
+
+  return (
+    <div className="mx-auto md:max-w-xl">
+      <Header>
+        <HeaderTitle>Device Details</HeaderTitle>
+      </Header>
+      <main className="flex flex-col gap-5 pb-5">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+          <nav>
+            <ol className="flex items-center gap-2 text-sm">
+              <li>
+                <Link href={DEVICES_PATH} className="text-muted-foreground">
+                  Devices
+                </Link>
+              </li>
+              <li>
+                <ChevronRightIcon className="text-muted-foreground size-3.5" />
+              </li>
+              <li className="max-w-60">
+                <span className="truncate">{data.name}</span>
+              </li>
+            </ol>
+          </nav>
+          <ButtonGroup>
+            <ModalProvider>
+              <EditDeviceButton device={data} types={types.data} statuses={statuses.data} groups={groups.data} />
+              <DeviceActionsButton device={data} types={types.data} statuses={statuses.data} groups={groups.data} />
+            </ModalProvider>
+          </ButtonGroup>
+        </div>
+        <article>
+          <Card className="flex-row items-center gap-0">
+            <div className="pl-3">
+              <div className="bg-accent flex h-12 w-12 items-center justify-center">
+                <MonitorSmartphoneIcon />
+              </div>
+            </div>
+            <div className="flex w-full flex-col gap-2">
+              <CardHeader>
+                <CardTitle>{data.name}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Badge className={getBadgeIconColorClassesByStatus(data.status.toLowerCase())}>{data.status}</Badge>
+              </CardContent>
+            </div>
+          </Card>
+        </article>
+        <article>
+          <Card>
+            <CardHeader>
+              <CardTitle>System Information</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="flex flex-col gap-2 text-sm">
+                {deviceInfoItems.map((deviceInfoItem) => (
+                  <li key={deviceInfoItem.value}>
+                    <strong className="font-medium">{deviceInfoItem.label}</strong>: {deviceInfoItem.value}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </article>
+      </main>
+    </div>
+  );
+}

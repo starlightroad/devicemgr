@@ -13,6 +13,8 @@ export type Device = {
 
 type DeviceIdAndName = Pick<Device, "id" | "name">;
 
+export type DeviceItem = { id: string; name: string };
+
 export type DeviceType = DeviceIdAndName;
 
 export type DeviceStatus = DeviceIdAndName;

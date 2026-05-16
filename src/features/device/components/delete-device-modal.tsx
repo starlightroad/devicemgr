@@ -4,9 +4,13 @@ import { toast } from "sonner";
 
 import { useState, useTransition } from "react";
 
+import { usePathname, useRouter } from "next/navigation";
+
 import { deleteDevice } from "@/features/device/lib/actions";
 
 import { ACTION_MESSAGE } from "@/features/device/lib/constants";
+
+import { DEVICES_PATH } from "@/features/dashboard/lib/constants";
 
 import type { BaseDeviceModalProps } from "@/features/device/lib/definitions";
 
@@ -24,6 +28,10 @@ import {
 type DeleteDeviceModalProps = BaseDeviceModalProps & { deviceName: string };
 
 export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: DeleteDeviceModalProps) {
+  const pathname = usePathname();
+
+  const { replace } = useRouter();
+
   const [isPending, startTransition] = useTransition();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -33,7 +41,14 @@ export default function DeleteDeviceModal({ deviceId, deviceName, onClose }: Del
       const { success, serverErrors } = await deleteDevice(deviceId);
 
       if (success) {
-        toast.success(ACTION_MESSAGE.deleted);
+        const isDevicePath = pathname === `${DEVICES_PATH}/${deviceId}`;
+
+        if (isDevicePath) replace(DEVICES_PATH);
+        else onClose();
+
+        setTimeout(() => {
+          toast.success(ACTION_MESSAGE.deleted);
+        }, 100);
       }
 
       if (serverErrors?.message) {

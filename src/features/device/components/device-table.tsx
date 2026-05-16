@@ -14,11 +14,13 @@ import { cn } from "@/lib/utils";
 
 import type { Options } from "@/lib/definitions";
 
-import { getDeviceTableColumns } from "@/features/device/lib/utils";
+import { createDeviceUrlById, getDeviceTableColumns } from "@/features/device/lib/utils";
 
 import type { SortDirection } from "@/features/device/lib/definitions";
 
 import { getBadgeIconColorClassesByStatus } from "@/features/device/lib/utils";
+
+import { ModalProvider } from "@/features/device/providers/modal-provider";
 
 import { Badge } from "@/components/ui/badge";
 
@@ -26,13 +28,13 @@ import { buttonVariants } from "@/components/ui/button";
 
 import Pagination from "@/features/device/components/pagination";
 
-import DeviceActions from "@/features/device/components/device-actions";
-
 import DeviceTableColumns from "@/features/device/components/device-table-columns";
 
 import PaginationSkeleton from "@/features/device/components/pagination-skeleton";
 
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
+
+import DeviceActionsCellButton from "@/features/device/components/device-actions-cell-button";
 
 import {
   NoResultsFoundRow,
@@ -83,55 +85,62 @@ export default async function DeviceTable({
   return (
     <div>
       <div className="overflow-hidden border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <DeviceTableColumns columns={columns} />
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {(error || !data?.length) && (
-              <NoResultsFoundRow columns={columns.length}>
-                <NoResultsFoundIcon />
-                <NoResultsFoundDescription>No devices to display.</NoResultsFoundDescription>
-              </NoResultsFoundRow>
-            )}
-            {data?.map((device) => {
-              return (
-                <TableRow key={device.id} className="[&>td]:px-4">
-                  <TableCell>
-                    <Link href="#" className={cn(buttonVariants({ variant: "link", size: "sm" }), "px-0 underline")}>
-                      {device.name}
-                    </Link>
-                  </TableCell>
-                  <TableCell>{device.type}</TableCell>
-                  <TableCell>
-                    <Badge variant="outline">
-                      <span
-                        className={cn(
-                          "size-1.5 rounded-full",
-                          getBadgeIconColorClassesByStatus(device.status.toLowerCase()),
-                        )}
+        <ModalProvider>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <DeviceTableColumns columns={columns} />
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {(error || !data?.length) && (
+                <NoResultsFoundRow columns={columns.length}>
+                  <NoResultsFoundIcon />
+                  <NoResultsFoundDescription>No devices to display.</NoResultsFoundDescription>
+                </NoResultsFoundRow>
+              )}
+              {data?.map((device) => {
+                const deviceUrl = createDeviceUrlById(device.id);
+
+                return (
+                  <TableRow key={device.id} className="[&>td]:px-4">
+                    <TableCell>
+                      <Link
+                        href={deviceUrl}
+                        className={cn(buttonVariants({ variant: "link", size: "sm" }), "px-0 underline")}
+                      >
+                        {device.name}
+                      </Link>
+                    </TableCell>
+                    <TableCell>{device.type}</TableCell>
+                    <TableCell>
+                      <Badge variant="outline">
+                        <span
+                          className={cn(
+                            "size-1.5 rounded-full",
+                            getBadgeIconColorClassesByStatus(device.status.toLowerCase()),
+                          )}
+                        />
+                        {device.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>{device.group}</TableCell>
+                    <TableCell>{device.serialNumber}</TableCell>
+                    <TableCell>{device.ipAddress || "-"}</TableCell>
+                    <TableCell align="right">
+                      <DeviceActionsCellButton
+                        device={device}
+                        types={deviceTypes.data}
+                        statuses={deviceStatuses.data}
+                        groups={deviceGroups.data}
                       />
-                      {device.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>{device.group}</TableCell>
-                  <TableCell>{device.serialNumber}</TableCell>
-                  <TableCell>{device.ipAddress ?? "-"}</TableCell>
-                  <TableCell align="right">
-                    <DeviceActions
-                      device={device}
-                      types={deviceTypes.data}
-                      statuses={deviceStatuses.data}
-                      groups={deviceGroups.data}
-                    />
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </ModalProvider>
       </div>
       {data?.length ? (
         <Suspense fallback={<PaginationSkeleton />}>
