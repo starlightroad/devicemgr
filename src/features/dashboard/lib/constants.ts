@@ -2,7 +2,7 @@ export const DASHBOARD_PATH = "/dashboard";
 
 export const DEVICES_PATH = "/devices";
 
-export const PROFILE_PATH = `${DASHBOARD_PATH}/profile`;
+export const PROFILE_PATH = "/profile";
 
 export const NEW_DEVICE_PATH = `${DEVICES_PATH}/new`;
 
