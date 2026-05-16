@@ -10,7 +10,7 @@ export async function proxy(request: NextRequest) {
   const sessionCookie = getSessionCookie(request);
 
   const isAuthPage = request.nextUrl.pathname === "/login";
-  const isProtectedPage = protectedPages.includes(request.nextUrl.pathname);
+  const isProtectedPage = protectedPages.some((protectedPage) => request.nextUrl.pathname.startsWith(protectedPage));
 
   if (sessionCookie && isAuthPage) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
