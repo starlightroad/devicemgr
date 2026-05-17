@@ -2,9 +2,9 @@ import { getSessionCookie } from "better-auth/cookies";
 
 import { type NextRequest, NextResponse } from "next/server";
 
-import { DASHBOARD_PATH, DEVICES_PATH } from "@/features/dashboard/lib/constants";
+import { DASHBOARD_PATH, DEVICES_PATH, PROFILE_PATH } from "@/features/dashboard/lib/constants";
 
-const protectedPages = [DASHBOARD_PATH, DEVICES_PATH];
+const protectedPages = [DASHBOARD_PATH, DEVICES_PATH, PROFILE_PATH];
 
 export async function proxy(request: NextRequest) {
   const sessionCookie = getSessionCookie(request);
@@ -24,5 +24,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/devices/:path*", "/login"],
+  matcher: ["/dashboard/:path*", "/devices/:path*", "/profile", "/login"],
 };
