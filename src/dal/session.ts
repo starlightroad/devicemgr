@@ -29,3 +29,15 @@ export const getSessionFromHomePage = async () => {
     userId: data?.session.userId,
   };
 };
+
+export const getSessionDate = async () => {
+  const data = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!data?.session.userId) {
+    redirect("/login");
+  }
+
+  return data.session.updatedAt;
+};

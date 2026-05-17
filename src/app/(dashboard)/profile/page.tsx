@@ -22,6 +22,8 @@ import ThemeChoiceCard from "@/features/profile/components/theme-choice-card";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import SessionDescription from "@/features/profile/components/session-description";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const metadata: Metadata = {
@@ -116,9 +118,7 @@ export default async function ProfilePage() {
                   <section className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
                     <div>
                       <h3 className="font-medium">Session</h3>
-                      <p className="text-muted-foreground">
-                        Active since <strong className="font-medium">April 20, 2026 7:11 PM</strong>.
-                      </p>
+                      <SessionDescription />
                     </div>
                     <SignOutButton />
                   </section>
