@@ -16,6 +16,8 @@ import { Header, HeaderTitle } from "@/features/dashboard/components/header";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+import ThemeChoiceCard from "@/features/profile/components/theme-choice-card";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -94,14 +96,9 @@ export default async function ProfilePage() {
                   <CardDescription>Manage your account preferences.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <section className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-                    <div>
-                      <h3 className="font-medium">Theme</h3>
-                      <p className="text-muted-foreground">System</p>
-                    </div>
-                    <Button type="button" variant="outline">
-                      Change Theme
-                    </Button>
+                  <section>
+                    <h3 className="mb-1.5 font-medium">Theme</h3>
+                    <ThemeChoiceCard />
                   </section>
                   <Separator />
                   <section className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
