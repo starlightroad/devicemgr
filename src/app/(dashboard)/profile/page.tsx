@@ -1,4 +1,8 @@
+import type { Metadata } from "next";
+
 import { getUserNameAndEmail } from "@/dal/user";
+
+import { PROFILE_TITLE } from "@/features/profile/lib/constants";
 
 import { getUserInitials } from "@/features/dashboard/lib/utils";
 
@@ -15,6 +19,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
+export const metadata: Metadata = {
+  title: PROFILE_TITLE,
+};
 
 export default async function ProfilePage() {
   const user = await getUserNameAndEmail();
