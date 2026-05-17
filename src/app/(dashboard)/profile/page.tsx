@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 
 import { Separator } from "@/components/ui/separator";
 
+import SignOutButton from "@/features/profile/components/sign-out-button";
+
 import { Header, HeaderTitle } from "@/features/dashboard/components/header";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -118,9 +120,7 @@ export default async function ProfilePage() {
                         Active since <strong className="font-medium">April 20, 2026 7:11 PM</strong>.
                       </p>
                     </div>
-                    <Button type="button" variant="outline">
-                      Sign Out
-                    </Button>
+                    <SignOutButton />
                   </section>
                 </CardContent>
               </Card>
