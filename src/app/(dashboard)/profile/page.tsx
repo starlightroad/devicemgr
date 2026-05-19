@@ -4,21 +4,17 @@ import { getUserNameAndEmail } from "@/dal/user";
 
 import { PROFILE_TITLE } from "@/features/profile/lib/constants";
 
-import { getUserInitials } from "@/features/dashboard/lib/utils";
-
-import { AVATAR_FALLBACK_DELAY } from "@/features/dashboard/lib/constants";
-
 import { Button } from "@/components/ui/button";
 
 import { Separator } from "@/components/ui/separator";
+
+import UserCard from "@/features/profile/components/user-card";
 
 import AccountCard from "@/features/profile/components/account-card";
 
 import DangerZoneCard from "@/features/profile/components/danger-zone-card";
 
 import { Header, HeaderTitle } from "@/features/dashboard/components/header";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -38,20 +34,7 @@ export default async function ProfilePage() {
       </Header>
       <main>
         <article className="mb-5">
-          <Card>
-            <CardContent>
-              <div className="flex items-center gap-2">
-                <Avatar size="lg">
-                  <AvatarImage alt={user.name} src="/avatar.png" />
-                  <AvatarFallback delay={AVATAR_FALLBACK_DELAY}>{getUserInitials(user.name)}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <h2 className="font-medium">{user.name}</h2>
-                  <p className="text-muted-foreground">Joined October 2025</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <UserCard />
         </article>
         <Tabs defaultValue="personal" className="gap-5">
           <TabsList className="w-full">
