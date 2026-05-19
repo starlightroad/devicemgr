@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import type { Metadata } from "next";
 
 import { getUserNameAndEmail } from "@/dal/user";
@@ -15,6 +17,8 @@ import AccountCard from "@/features/profile/components/account-card";
 import DangerZoneCard from "@/features/profile/components/danger-zone-card";
 
 import { Header, HeaderTitle } from "@/features/dashboard/components/header";
+
+import UserCardSkeleton from "@/features/profile/components/user-card-skeleton";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -34,7 +38,9 @@ export default async function ProfilePage() {
       </Header>
       <main>
         <article className="mb-5">
-          <UserCard />
+          <Suspense fallback={<UserCardSkeleton />}>
+            <UserCard />
+          </Suspense>
         </article>
         <Tabs defaultValue="personal" className="gap-5">
           <TabsList className="w-full">
