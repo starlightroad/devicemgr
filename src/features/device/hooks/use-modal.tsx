@@ -1,9 +1,19 @@
 "use client";
 
-import { useContext } from "react";
+import { useState } from "react";
 
-import { ModalContext } from "@/features/device/providers/modal-provider";
+type ModalType = "edit" | "share" | "move" | "delete";
 
 export default function useModal() {
-  return useContext(ModalContext);
+  const [modal, setModal] = useState<ModalType | null>(null);
+
+  const handleSetModal = (modal: ModalType) => setModal(modal);
+
+  const handleCloseModal = () => setModal(null);
+
+  return {
+    modal,
+    setModal: handleSetModal,
+    closeModal: handleCloseModal,
+  };
 }
