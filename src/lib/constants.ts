@@ -15,3 +15,18 @@ export const HOME_PATH = "/";
 export const NOT_FOUND_TITLE = "Resource Not Found";
 
 export const NOT_FOUND_DESCRIPTION = "The resource you are looking for was not found.";
+
+export const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
