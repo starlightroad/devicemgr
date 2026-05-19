@@ -12,11 +12,13 @@ import { Button } from "@/components/ui/button";
 
 import { Separator } from "@/components/ui/separator";
 
+import AccountCard from "@/features/profile/components/account-card";
+
+import DangerZoneCard from "@/features/profile/components/danger-zone-card";
+
 import { Header, HeaderTitle } from "@/features/dashboard/components/header";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-import ThemeChoiceCard from "@/features/profile/components/theme-choice-card";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -90,59 +92,10 @@ export default async function ProfilePage() {
           </TabsContent>
           <TabsContent value="account" className="space-y-4">
             <article>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Account Settings</CardTitle>
-                  <CardDescription>Manage your account preferences.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <section>
-                    <h3 className="mb-1.5 font-medium">Theme</h3>
-                    <ThemeChoiceCard />
-                  </section>
-                  <Separator />
-                  <section className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-                    <div>
-                      <h3 className="font-medium">Data</h3>
-                      <p className="text-muted-foreground">Download a copy of your devices.</p>
-                    </div>
-                    <Button type="button" variant="outline">
-                      Download
-                    </Button>
-                  </section>
-                  <Separator />
-                  <section className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-                    <div>
-                      <h3 className="font-medium">Session</h3>
-                      <p className="text-muted-foreground">
-                        Active since <strong className="font-medium">April 20, 2026 7:11 PM</strong>.
-                      </p>
-                    </div>
-                    <Button type="button" variant="outline">
-                      Sign Out
-                    </Button>
-                  </section>
-                </CardContent>
-              </Card>
+              <AccountCard />
             </article>
             <article>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-destructive">Danger Zone</CardTitle>
-                  <CardDescription>Destructive actions that are irreversible.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <section className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-                    <div>
-                      <h3 className="font-medium">Delete Account</h3>
-                      <p className="text-muted-foreground">Permanently delete you account and all associated data.</p>
-                    </div>
-                    <Button type="button" variant="destructive">
-                      Delete Account
-                    </Button>
-                  </section>
-                </CardContent>
-              </Card>
+              <DangerZoneCard />
             </article>
           </TabsContent>
           <TabsContent value="security">

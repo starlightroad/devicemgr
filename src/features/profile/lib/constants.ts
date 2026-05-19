@@ -1,5 +1,10 @@
 export const PROFILE_TITLE = "Profile";
 
+export const ACTION_MESSAGE = {
+  failed: "We're unable to delete your account at this time.",
+  denied: "You do not have permission to perform this action.",
+};
+
 export const themeItems = [
   {
     id: "system-theme",

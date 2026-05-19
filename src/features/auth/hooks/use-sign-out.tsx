@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 
 import { client } from "@/features/auth/lib/client";
 
+import { SIGN_OUT_ERROR_MESSAGE } from "@/features/auth/lib/constants";
+
 export default function useSignOut() {
   const router = useRouter();
 
@@ -19,7 +21,9 @@ export default function useSignOut() {
     } catch (error) {
       console.error(error);
 
-      // Inform the user of the error
+      return {
+        error: SIGN_OUT_ERROR_MESSAGE,
+      };
     }
   };
 
