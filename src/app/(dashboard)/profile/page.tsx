@@ -2,17 +2,15 @@ import { Suspense } from "react";
 
 import type { Metadata } from "next";
 
-import { getUserNameAndEmail } from "@/dal/user";
-
 import { PROFILE_TITLE } from "@/features/profile/lib/constants";
 
 import { Button } from "@/components/ui/button";
 
-import { Separator } from "@/components/ui/separator";
-
 import UserCard from "@/features/profile/components/user-card";
 
 import AccountCard from "@/features/profile/components/account-card";
+
+import PersonalCard from "@/features/profile/components/personal-card";
 
 import DangerZoneCard from "@/features/profile/components/danger-zone-card";
 
@@ -28,9 +26,7 @@ export const metadata: Metadata = {
   title: PROFILE_TITLE,
 };
 
-export default async function ProfilePage() {
-  const user = await getUserNameAndEmail();
-
+export default function ProfilePage() {
   return (
     <div className="mx-auto pb-5 md:max-w-xl">
       <Header>
@@ -50,33 +46,7 @@ export default async function ProfilePage() {
           </TabsList>
           <TabsContent value="personal">
             <article>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Personal Information</CardTitle>
-                  <CardDescription>Update your personal information.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <section className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-                    <div>
-                      <h3 className="font-medium">Name</h3>
-                      <p className="text-muted-foreground">{user.name}</p>
-                    </div>
-                    <Button type="button" variant="outline">
-                      Update Name
-                    </Button>
-                  </section>
-                  <Separator />
-                  <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-                    <div>
-                      <h3 className="font-medium">Email</h3>
-                      <p className="text-muted-foreground">{user.email}</p>
-                    </div>
-                    <Button type="button" variant="outline">
-                      Change Email
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+              <PersonalCard />
             </article>
           </TabsContent>
           <TabsContent value="account" className="space-y-4">
