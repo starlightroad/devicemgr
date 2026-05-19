@@ -8,7 +8,7 @@ import { usersTable } from "@/db/schemas";
 
 import { getSession } from "@/dal/session";
 
-const getUser = async () => {
+export const getUser = async () => {
   try {
     const session = await getSession();
 

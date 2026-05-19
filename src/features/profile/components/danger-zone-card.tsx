@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import DeleteAccountForm from "@/features/profile/components/delete-account-form";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -15,9 +15,7 @@ export default function DangerZoneCard() {
             <h3 className="font-medium">Delete Account</h3>
             <p className="text-muted-foreground">Permanently delete you account and all associated data.</p>
           </div>
-          <Button type="button" variant="destructive" disabled>
-            Delete Account
-          </Button>
+          <DeleteAccountForm />
         </section>
       </CardContent>
     </Card>
