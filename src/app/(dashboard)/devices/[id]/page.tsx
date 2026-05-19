@@ -18,8 +18,6 @@ import { NOT_FOUND_DESCRIPTION, NOT_FOUND_TITLE } from "@/lib/constants";
 
 import { getBadgeIconColorClassesByStatus } from "@/features/device/lib/utils";
 
-import { ModalProvider } from "@/features/device/providers/modal-provider";
-
 import { Badge } from "@/components/ui/badge";
 
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -95,10 +93,8 @@ export default async function DevicePage({ params }: DevicePageProps) {
             </ol>
           </nav>
           <ButtonGroup>
-            <ModalProvider>
-              <EditDeviceButton device={data} types={types.data} statuses={statuses.data} groups={groups.data} />
-              <DeviceActionsButton device={data} types={types.data} statuses={statuses.data} groups={groups.data} />
-            </ModalProvider>
+            <EditDeviceButton device={data} types={types.data} statuses={statuses.data} groups={groups.data} />
+            <DeviceActionsButton device={data} types={types.data} statuses={statuses.data} groups={groups.data} />
           </ButtonGroup>
         </div>
         <article>
