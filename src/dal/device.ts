@@ -159,3 +159,40 @@ export const getDeviceById = async (deviceId: string) => {
     };
   }
 };
+
+export const getAllDevices = async () => {
+  try {
+    const session = await getSession();
+
+    const data = await db
+      .select({
+        id: devicesTable.id,
+        typeId: devicesTable.typeId,
+        statusId: devicesTable.statusId,
+        groupId: devicesTable.groupId,
+        type: deviceTypesTable.name,
+        status: deviceStatusesTable.name,
+        group: deviceGroupsTable.name,
+        name: devicesTable.name,
+        serialNumber: devicesTable.serialNumber,
+        ipAddress: devicesTable.ipAddress,
+        createdAt: devicesTable.createdAt,
+        updatedAt: devicesTable.updatedAt,
+      })
+      .from(devicesTable)
+      .innerJoin(deviceTypesTable, eq(devicesTable.typeId, deviceTypesTable.id))
+      .innerJoin(deviceStatusesTable, eq(devicesTable.statusId, deviceStatusesTable.id))
+      .innerJoin(deviceGroupsTable, eq(devicesTable.groupId, deviceGroupsTable.id))
+      .where(eq(devicesTable.userId, session.userId));
+
+    return {
+      data,
+      error: null,
+    };
+  } catch {
+    return {
+      data: null,
+      error: "Failed to load data.",
+    };
+  }
+};
