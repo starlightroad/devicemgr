@@ -31,7 +31,7 @@ export default async function PersonalCard() {
             <h3 className="font-medium">Email</h3>
             <p className="text-muted-foreground">{user.email}</p>
           </div>
-          <Button type="button" variant="outline">
+          <Button type="button" variant="outline" disabled>
             Change Email
           </Button>
         </div>
