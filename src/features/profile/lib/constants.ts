@@ -12,6 +12,8 @@ export const ACTION_MESSAGE = {
   denied: "You do not have permission to perform this action.",
 };
 
+export const NAME_FORM_ID = "name-form";
+
 export const themeItems = [
   {
     id: "system-theme",

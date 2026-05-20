@@ -1,10 +1,14 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { toast } from "sonner";
+
+import { useState, useTransition } from "react";
 
 import { isMatch } from "@/lib/utils";
 
-import { FORM_FIELD } from "@/features/profile/lib/constants";
+import { updateName } from "@/features/profile/lib/actions";
+
+import { FORM_FIELD, NAME_FORM_ID } from "@/features/profile/lib/constants";
 
 import { Input } from "@/components/ui/input";
 
@@ -31,19 +35,37 @@ export default function UpdateNameForm({ userName }: UpdateNameFormProps) {
 
   const [updatedName, setUpdatedName] = useState(userName);
 
-  const [state, formAction, isPending] = useActionState(() => ({ serverError: null }), undefined);
+  const [isPending, startTransition] = useTransition();
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const isSubmitButtonDisabled = isPending || isMatch(userName, updatedName);
 
   const handleOpenChange = (open: boolean) => {
-    if (!open) setTimeout(() => setUpdatedName(userName), 100);
+    if (!open) {
+      setTimeout(() => {
+        setUpdatedName(userName);
+        setErrorMessage(null);
+      }, 100);
+    }
 
     setModalOpen(open);
   };
 
-  const isSubmitButtonDisabled = isPending || isMatch(userName, updatedName);
+  const handleSubmit = () => {
+    startTransition(async () => {
+      const { serverError } = await updateName();
+
+      if (serverError) {
+        toast.error(serverError);
+        setErrorMessage(serverError);
+      }
+    });
+  };
 
   return (
     <Dialog open={modalOpen} onOpenChange={handleOpenChange}>
-      <form action={formAction}>
+      <form id={NAME_FORM_ID} action={handleSubmit}>
         <DialogTrigger render={<Button type="button" variant="outline" />}>Update Name</DialogTrigger>
         <DialogContent>
           <DialogHeader>
@@ -62,12 +84,12 @@ export default function UpdateNameForm({ userName }: UpdateNameFormProps) {
                 value={updatedName}
                 onChange={(e) => setUpdatedName(e.target.value)}
               />
-              <FieldError>{state?.serverError}</FieldError>
+              <FieldError>{errorMessage}</FieldError>
             </Field>
           </FieldGroup>
           <DialogFooter>
             <DialogClose render={<Button type="button" variant="secondary" disabled={isPending} />}>Cancel</DialogClose>
-            <Button type="submit" disabled={isSubmitButtonDisabled}>
+            <Button form={NAME_FORM_ID} type="submit" disabled={isSubmitButtonDisabled}>
               Save
             </Button>
           </DialogFooter>
