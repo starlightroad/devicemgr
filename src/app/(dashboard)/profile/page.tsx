@@ -20,6 +20,8 @@ import UserCardSkeleton from "@/features/profile/components/user-card-skeleton";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import PersonalCardSkeleton from "@/features/profile/components/personal-card-skeleton";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const metadata: Metadata = {
@@ -46,7 +48,9 @@ export default function ProfilePage() {
           </TabsList>
           <TabsContent value="personal">
             <article>
-              <PersonalCard />
+              <Suspense fallback={<PersonalCardSkeleton />}>
+                <PersonalCard />
+              </Suspense>
             </article>
           </TabsContent>
           <TabsContent value="account" className="space-y-4">
