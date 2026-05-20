@@ -14,3 +14,5 @@ export const camelCase = (value: string) => {
     .map((word, idx) => (Boolean(idx) ? `${word[0].toUpperCase()}${word.slice(1)}` : word))
     .join("");
 };
+
+export const isMatch = (value1: string, value2: string) => value1.trim().toLowerCase() === value2.trim().toLowerCase();

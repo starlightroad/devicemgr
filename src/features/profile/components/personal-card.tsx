@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 
 import { Separator } from "@/components/ui/separator";
 
+import UpdateNameForm from "@/features/profile/components/update-name-form";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function PersonalCard() {
@@ -21,9 +23,7 @@ export default async function PersonalCard() {
             <h3 className="font-medium">Name</h3>
             <p className="text-muted-foreground">{user.name}</p>
           </div>
-          <Button type="button" variant="outline">
-            Update Name
-          </Button>
+          <UpdateNameForm userName={user.name} />
         </section>
         <Separator />
         <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
