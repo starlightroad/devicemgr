@@ -23,3 +23,25 @@ export const deleteAccount = async () => {
     };
   }
 };
+
+export const updateName = async () => {
+  try {
+    const currentUser = await getUser();
+
+    if (!canDeleteAccount(currentUser)) {
+      return {
+        serverError: ACTION_MESSAGE.denied,
+      };
+    }
+
+    // Perform the action to update the user's name
+  } catch {
+    return {
+      serverError: ACTION_MESSAGE.failed,
+    };
+  }
+
+  return {
+    serverError: null,
+  };
+};
