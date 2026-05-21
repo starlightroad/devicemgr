@@ -25,7 +25,7 @@ export default async function SecurityCard() {
               Last changed <strong className="font-medium">{passwordLastChanged}</strong>.
             </p>
           </div>
-          <Button type="button" variant="outline">
+          <Button type="button" variant="outline" disabled>
             Change Password
           </Button>
         </section>
