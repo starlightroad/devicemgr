@@ -1,8 +1,16 @@
+import { getAccountUpdatedDate } from "@/dal/account";
+
+import { formatRelativeTime } from "@/lib/utils";
+
 import { Button } from "@/components/ui/button";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function SecurityCard() {
+export default async function SecurityCard() {
+  const passwordLastChangedDate = await getAccountUpdatedDate();
+
+  const passwordLastChanged = formatRelativeTime(passwordLastChangedDate);
+
   return (
     <Card>
       <CardHeader>
@@ -13,7 +21,7 @@ export default function SecurityCard() {
         <section className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
           <div>
             <h3 className="font-medium">Password</h3>
-            <p className="text-muted-foreground">Last changed 1 month ago.</p>
+            <p className="text-muted-foreground">Last changed {passwordLastChanged}.</p>
           </div>
           <Button type="button" variant="outline">
             Change Password
