@@ -21,7 +21,9 @@ export default async function SecurityCard() {
         <section className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
           <div>
             <h3 className="font-medium">Password</h3>
-            <p className="text-muted-foreground">Last changed {passwordLastChanged}.</p>
+            <p className="text-muted-foreground">
+              Last changed <strong className="font-medium">{passwordLastChanged}</strong>.
+            </p>
           </div>
           <Button type="button" variant="outline">
             Change Password
