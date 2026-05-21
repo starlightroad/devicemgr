@@ -30,3 +30,12 @@ export const MONTHS = [
   "November",
   "December",
 ];
+
+export const SECONDS = {
+  MINUTE: 60,
+  HOUR: 3600,
+  DAY: 86400,
+  WEEK: 604800,
+  MONTH: 2592000,
+  YEAR: 31536000,
+};

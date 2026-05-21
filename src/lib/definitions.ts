@@ -15,3 +15,8 @@ export type Options = {
   };
   filters?: Record<string, string>;
 };
+
+export type TimeInterval = {
+  label: Intl.RelativeTimeFormatUnit;
+  seconds: number;
+};
