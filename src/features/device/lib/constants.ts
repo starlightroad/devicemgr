@@ -40,3 +40,5 @@ export const DEVICES_DESCRIPTION = "View, filter, and manage your devices.";
 export const NEW_DEVICE_TITLE = "Add New Device";
 
 export const NEW_DEVICE_DESCRIPTION = "Add a new device to your account.";
+
+export const DOWNLOAD_CSV_URL = "/api/devices/export";

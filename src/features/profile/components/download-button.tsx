@@ -1,16 +1,20 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
+import { DOWNLOAD_CSV_URL } from "@/features/device/lib/constants";
+
 import { Button } from "@/components/ui/button";
 
-import useCsvDownload from "@/features/device/hooks/use-csv-download";
+export default function DownloadButton() {
+  const { push } = useRouter();
 
-type DownloadData = Record<string, string>;
-
-export default function DownloadButton({ data }: { data: DownloadData[] }) {
-  const { download } = useCsvDownload(data);
+  const handleDownload = async () => {
+    push(DOWNLOAD_CSV_URL);
+  };
 
   return (
-    <Button type="button" variant="outline" aria-label="Download data as CSV" onClick={download}>
+    <Button type="button" variant="outline" aria-label="Download data as CSV" onClick={handleDownload}>
       Download
     </Button>
   );

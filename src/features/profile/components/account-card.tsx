@@ -2,11 +2,11 @@ import { Separator } from "@/components/ui/separator";
 
 import SignOutButton from "@/features/profile/components/sign-out-button";
 
+import DownloadButton from "@/features/profile/components/download-button";
+
 import ThemeChoiceCard from "@/features/profile/components/theme-choice-card";
 
 import SessionDescription from "@/features/profile/components/session-description";
-
-import AccountDataDownload from "@/features/profile/components/account-data-download";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -28,7 +28,7 @@ export default function AccountCard() {
             <h3 className="font-medium">Data</h3>
             <p className="text-muted-foreground">Download a copy of your devices.</p>
           </div>
-          <AccountDataDownload />
+          <DownloadButton />
         </section>
         <Separator />
         <section className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">

@@ -11,11 +11,6 @@ export type Device = {
   ipAddress: string | null;
 };
 
-export type PartialDevice = Omit<Device, "userId" | "typeId" | "statusId" | "groupId"> & {
-  createdAt: Date;
-  updatedAt: Date;
-};
-
 type DeviceIdAndName = Pick<Device, "id" | "name">;
 
 export type DeviceItem = { id: string; name: string };
@@ -37,5 +32,3 @@ export type SelectFieldItem = {
   label: string;
   value: string;
 };
-
-export type DownloadData = Record<string, string>;
