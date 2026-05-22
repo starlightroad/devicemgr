@@ -17,7 +17,7 @@ import {
 
 export default function ButtonActions() {
   return (
-    <div className="flex items-center gap-1">
+    <>
       <NewDeviceLink />
       <DropdownMenu>
         <Tooltip>
@@ -46,7 +46,7 @@ export default function ButtonActions() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>
+    </>
   );
 }
 
