@@ -1,4 +1,17 @@
-export const TABLE_COLUMNS = ["Name", "Type", "Status", "Group", "Serial Number", ""];
+import type { TableColumnItem } from "@/features/device/lib/definitions";
+
+export const TABLE_COLUMNS: TableColumnItem[] = [
+  { id: "id", header: "ID" },
+  { id: "name", header: "Name" },
+  { id: "type", header: "Type" },
+  { id: "status", header: "Status" },
+  { id: "group", header: "Group" },
+  { id: "serialNumber", header: "Serial Number" },
+  { id: "ipAddress", header: "IP Address" },
+  { id: "createdAt", header: "Created At" },
+  { id: "updatedAt", header: "Updated At" },
+  { id: "actions", header: "Actions" },
+];
 
 export const FORM_ID = "device-form";
 

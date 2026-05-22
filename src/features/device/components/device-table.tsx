@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 
 import type { Options } from "@/lib/definitions";
 
-import { createDeviceUrlById, getDeviceTableColumns } from "@/features/device/lib/utils";
+import { createDeviceUrlById, getTableColumns } from "@/features/device/lib/utils";
 
 import type { SortDirection } from "@/features/device/lib/definitions";
 
@@ -76,7 +76,7 @@ export default async function DeviceTable({
 
   const { data, error } = devices;
 
-  const columns = getDeviceTableColumns();
+  const tableColumns = getTableColumns("name", "type", "status", "group", "serialNumber", "ipAddress", "actions");
 
   const totalPagesPromise = getDevicesPages({ pagination: options.pagination, filters: options.filters });
 
@@ -86,12 +86,12 @@ export default async function DeviceTable({
         <Table>
           <TableHeader>
             <TableRow>
-              <DeviceTableColumns columns={columns} />
+              <DeviceTableColumns columns={tableColumns} />
             </TableRow>
           </TableHeader>
           <TableBody>
             {(error || !data?.length) && (
-              <NoResultsFoundRow columns={columns.length}>
+              <NoResultsFoundRow columns={tableColumns.length}>
                 <NoResultsFoundIcon />
                 <NoResultsFoundDescription>No devices to display.</NoResultsFoundDescription>
               </NoResultsFoundRow>
