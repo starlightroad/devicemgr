@@ -1,5 +1,7 @@
 import { DEVICES_PATH } from "@/features/dashboard/lib/constants";
 
+import type { TableColumn } from "@/features/device/lib/definitions";
+
 import { DEFAULT_PAGE_SIZE, PAGE_SIZES, TABLE_COLUMNS } from "@/features/device/lib/constants";
 
 export const getBadgeIconColorClassesByStatus = (status: string) => {
@@ -16,11 +18,6 @@ export const getBadgeIconColorClassesByStatus = (status: string) => {
 };
 
 export const generateId = (value: string, separator: string = "-") => value.toLowerCase().split(" ").join(separator);
-
-export const getDeviceTableColumns = () => {
-  const newColumns = TABLE_COLUMNS.slice(0, TABLE_COLUMNS.length - 1);
-  return [...newColumns, "IP Address", "Actions"] as const;
-};
 
 export const getFilteredSearchParams = (searchParams: string[], values: string[]) => {
   const validatedSearchParams: string[] = [];
@@ -44,3 +41,14 @@ export const validatePageSize = (pageSize: number) => {
 export const createDeviceUrlById = (deviceId: string) => `${DEVICES_PATH}/${deviceId}`;
 
 export const createFileName = () => `devices-export-${new Date().toISOString()}`;
+
+export const getTableColumns = (...columns: TableColumn[]) => {
+  const selectedColumns = [];
+
+  for (const column of columns) {
+    const selectedColumn = TABLE_COLUMNS.filter((tableColumn) => tableColumn.id === column);
+    selectedColumns.push(selectedColumn[0]);
+  }
+
+  return selectedColumns;
+};

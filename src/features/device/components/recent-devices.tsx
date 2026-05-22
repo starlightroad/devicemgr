@@ -12,9 +12,7 @@ import { getDeviceGroups } from "@/dal/group";
 
 import { getDeviceStatuses } from "@/dal/status";
 
-import { TABLE_COLUMNS } from "@/features/device/lib/constants";
-
-import { createDeviceUrlById, getBadgeIconColorClassesByStatus } from "@/features/device/lib/utils";
+import { createDeviceUrlById, getBadgeIconColorClassesByStatus, getTableColumns } from "@/features/device/lib/utils";
 
 import { Badge } from "@/components/ui/badge";
 
@@ -35,6 +33,8 @@ export default async function RecentDevices() {
 
   const hasNoData = !data?.length && data?.length === 0;
 
+  const tableColumns = getTableColumns("name", "type", "status", "group", "serialNumber", "actions");
+
   return (
     <>
       <div className="mb-5 flex items-center gap-2">
@@ -45,12 +45,12 @@ export default async function RecentDevices() {
         <Table>
           <TableHeader>
             <TableRow>
-              {TABLE_COLUMNS.map((tableColumn) => {
-                const isActionsColumn = tableColumn.toLowerCase() === "actions";
+              {tableColumns.map((tableColumn) => {
+                const isActionsColumn = tableColumn.id === "actions";
 
                 return (
-                  <TableHead key={tableColumn} className={cn("px-4", isActionsColumn ? "text-right" : "")}>
-                    {tableColumn}
+                  <TableHead key={tableColumn.id} className={cn("px-4", isActionsColumn ? "text-right" : "")}>
+                    {isActionsColumn ? "" : tableColumn.header}
                   </TableHead>
                 );
               })}
@@ -59,7 +59,7 @@ export default async function RecentDevices() {
           <TableBody>
             {error ? (
               <TableRow>
-                <TableCell colSpan={TABLE_COLUMNS.length}>
+                <TableCell colSpan={tableColumns.length}>
                   <div className="flex h-48 flex-col items-center justify-center gap-2 text-center">
                     <DatabaseZapIcon className="text-muted size-6" />
                     <span className="text-muted text-sm">{error}</span>
@@ -68,7 +68,7 @@ export default async function RecentDevices() {
               </TableRow>
             ) : hasNoData ? (
               <TableRow>
-                <TableCell colSpan={TABLE_COLUMNS.length}>
+                <TableCell colSpan={tableColumns.length}>
                   <div className="flex h-48 flex-col items-center justify-center gap-2 text-center">
                     <DatabaseIcon className="text-muted size-6" />
                     <span className="text-muted text-sm">No devices to display.</span>

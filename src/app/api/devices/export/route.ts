@@ -6,23 +6,11 @@ import { getSession } from "@/dal/session";
 
 import { MAX_ROWS } from "@/lib/constants";
 
-import { createFileName } from "@/features/device/lib/utils";
-
 import type { Device } from "@/features/device/lib/definitions";
 
 import { DEFAULT_PAGE_SIZE } from "@/features/device/lib/constants";
 
-const TABLE_COLUMNS = [
-  { id: "id", header: "ID" },
-  { id: "name", header: "Name" },
-  { id: "type", header: "Type" },
-  { id: "status", header: "Status" },
-  { id: "group", header: "Group" },
-  { id: "serialNumber", header: "Serial Number" },
-  { id: "ipAddress", header: "IP Address" },
-  { id: "createdAt", header: "Created At" },
-  { id: "updatedAt", header: "Updated At" },
-];
+import { createFileName, getTableColumns } from "@/features/device/lib/utils";
 
 const generateDeviceRow = (device: Device) => {
   const { id, name, type, status, group, serialNumber, ipAddress } = device;
@@ -32,7 +20,9 @@ const generateDeviceRow = (device: Device) => {
 export const GET = async () => {
   await getSession();
 
-  const headers = TABLE_COLUMNS.map((tableColumn) => tableColumn.header);
+  const tableColumns = getTableColumns("id", "name", "type", "status", "group", "serialNumber", "ipAddress");
+
+  const headers = tableColumns.map((tableColumn) => tableColumn.header);
 
   const header = `${headers.join(",")}\n`;
 
