@@ -36,7 +36,7 @@ export const getSqlOrderByStatementBySort = (sort: Options["sort"]) => {
 
   const tableColumn = getTableColumn(columnName);
 
-  return sql`${isIpAddress ? sql`${tableColumn}::inet` : tableColumn} ${sortDirection === "asc" ? sql`ASC` : sql`DESC`}`;
+  return sql`${isIpAddress ? sql`NULLIF(${tableColumn}, '')::inet` : tableColumn} ${sortDirection === "asc" ? sql`ASC` : sql`DESC`}`;
 };
 
 export const getSqlWhereStatementByFilters = (filters: Options["filters"]) => {
