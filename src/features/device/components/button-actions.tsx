@@ -25,7 +25,7 @@ export default function ButtonActions() {
             render={
               <DropdownMenuTrigger
                 aria-label="More Options"
-                className={buttonVariants({ variant: "outline", size: "icon" })}
+                className={buttonVariants({ variant: "outline", size: "icon", className: "border-l-0" })}
               >
                 <MoreHorizontalIcon />
               </DropdownMenuTrigger>
@@ -52,7 +52,7 @@ export default function ButtonActions() {
 
 function NewDeviceLink() {
   return (
-    <Link href={NEW_DEVICE_PATH} className={buttonVariants()}>
+    <Link href={NEW_DEVICE_PATH} className={buttonVariants({ variant: "outline" })}>
       <PlusIcon />
       New Device
     </Link>
