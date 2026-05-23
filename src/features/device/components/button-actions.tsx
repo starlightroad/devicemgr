@@ -1,6 +1,12 @@
+"use client";
+
 import Link from "next/link";
 
+import { useRouter } from "next/navigation";
+
 import { DownloadCloudIcon, ImportIcon, MoreHorizontalIcon, PlusIcon } from "lucide-react";
+
+import { DOWNLOAD_CSV_URL } from "@/features/device/lib/constants";
 
 import { NEW_DEVICE_PATH } from "@/features/dashboard/lib/constants";
 
@@ -16,8 +22,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function ButtonActions() {
+  const { push } = useRouter();
+
+  const handleDownload = () => {
+    push(DOWNLOAD_CSV_URL);
+  };
+
   return (
-    <div className="flex items-center gap-1">
+    <>
       <NewDeviceLink />
       <DropdownMenu>
         <Tooltip>
@@ -25,7 +37,7 @@ export default function ButtonActions() {
             render={
               <DropdownMenuTrigger
                 aria-label="More Options"
-                className={buttonVariants({ variant: "outline", size: "icon" })}
+                className={buttonVariants({ variant: "outline", size: "icon", className: "border-l-0" })}
               >
                 <MoreHorizontalIcon />
               </DropdownMenuTrigger>
@@ -36,7 +48,7 @@ export default function ButtonActions() {
           </TooltipContent>
         </Tooltip>
         <DropdownMenuContent align="end" className="w-40">
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={handleDownload}>
             <DownloadCloudIcon />
             Download CSV
           </DropdownMenuItem>
@@ -46,13 +58,13 @@ export default function ButtonActions() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>
+    </>
   );
 }
 
 function NewDeviceLink() {
   return (
-    <Link href={NEW_DEVICE_PATH} className={buttonVariants()}>
+    <Link href={NEW_DEVICE_PATH} className={buttonVariants({ variant: "outline" })}>
       <PlusIcon />
       New Device
     </Link>
