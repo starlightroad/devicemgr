@@ -10,6 +10,8 @@ export const deleteAccount = async () => {
   try {
     const currentUser = await getUser();
 
+    if (!currentUser) throw new Error();
+
     if (!canDeleteAccount(currentUser)) {
       return {
         error: ACTION_MESSAGE.denied,
@@ -27,6 +29,8 @@ export const deleteAccount = async () => {
 export const updateName = async () => {
   try {
     const currentUser = await getUser();
+
+    if (!currentUser) throw new Error();
 
     if (!canDeleteAccount(currentUser)) {
       return {

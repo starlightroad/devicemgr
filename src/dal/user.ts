@@ -9,29 +9,26 @@ import { usersTable } from "@/db/schemas";
 import { getSession } from "@/dal/session";
 
 export const getUser = async () => {
-  try {
-    const session = await getSession();
+  const session = await getSession();
 
+  try {
     const data = await db.select().from(usersTable).where(eq(usersTable.id, session.userId));
     const user = data[0];
 
     return user;
-  } catch (error) {
-    console.error(error);
-    throw new Error("Failed to get user.");
+  } catch {
+    console.error("Failed to get user.");
+    return null;
   }
 };
 
 export const getUserNameAndEmail = async () => {
-  try {
-    const user = await getUser();
+  const user = await getUser();
 
-    return {
-      name: user.name,
-      email: user.email,
-    };
-  } catch (error) {
-    console.error(error);
-    throw new Error("Failed to get the user's name and email address.");
-  }
+  if (!user) return null;
+
+  return {
+    name: user.name,
+    email: user.email,
+  };
 };
