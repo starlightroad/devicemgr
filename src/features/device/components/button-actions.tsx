@@ -1,6 +1,12 @@
+"use client";
+
 import Link from "next/link";
 
+import { useRouter } from "next/navigation";
+
 import { DownloadCloudIcon, ImportIcon, MoreHorizontalIcon, PlusIcon } from "lucide-react";
+
+import { DOWNLOAD_CSV_URL } from "@/features/device/lib/constants";
 
 import { NEW_DEVICE_PATH } from "@/features/dashboard/lib/constants";
 
@@ -16,6 +22,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function ButtonActions() {
+  const { push } = useRouter();
+
+  const handleDownload = () => {
+    push(DOWNLOAD_CSV_URL);
+  };
+
   return (
     <>
       <NewDeviceLink />
@@ -36,7 +48,7 @@ export default function ButtonActions() {
           </TooltipContent>
         </Tooltip>
         <DropdownMenuContent align="end" className="w-40">
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={handleDownload}>
             <DownloadCloudIcon />
             Download CSV
           </DropdownMenuItem>
