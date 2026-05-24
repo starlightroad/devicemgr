@@ -2,13 +2,11 @@
 
 import Link from "next/link";
 
-import { useRouter } from "next/navigation";
-
 import { DownloadCloudIcon, ImportIcon, MoreHorizontalIcon, PlusIcon } from "lucide-react";
 
-import { DOWNLOAD_CSV_URL } from "@/features/device/lib/constants";
-
 import { NEW_DEVICE_PATH } from "@/features/dashboard/lib/constants";
+
+import useDownloadDevices from "@/features/device/hooks/use-download-devices";
 
 import { buttonVariants } from "@/components/ui/button";
 
@@ -22,11 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function ButtonActions() {
-  const { push } = useRouter();
-
-  const handleDownload = () => {
-    push(DOWNLOAD_CSV_URL);
-  };
+  const { handleDownload } = useDownloadDevices();
 
   return (
     <>
