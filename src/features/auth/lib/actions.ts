@@ -20,19 +20,19 @@ export const authenticateUser = async (_prevState: unknown, formData: FormData):
     password: formData.get("password"),
   });
 
+  if (!parsedFields.success) {
+    const { fieldErrors } = z.flattenError(parsedFields.error);
+
+    return {
+      success: false,
+      serverErrors: {
+        email: fieldErrors.email?.toString(),
+        password: fieldErrors.password?.toString(),
+      },
+    };
+  }
+
   try {
-    if (!parsedFields.success) {
-      const { fieldErrors } = z.flattenError(parsedFields.error);
-
-      return {
-        success: false,
-        serverErrors: {
-          email: fieldErrors.email?.toString(),
-          password: fieldErrors.password?.toString(),
-        },
-      };
-    }
-
     const response = await auth.api.signInEmail({
       body: {
         email: parsedFields.data.email,

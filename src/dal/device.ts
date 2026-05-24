@@ -17,9 +17,9 @@ import { getSqlOrderByStatementBySort, getSqlWhereStatementByFilters } from "@/f
 import { deviceGroupsTable, devicesTable, deviceStatusesTable, deviceTypesTable, usersTable } from "@/db/schemas";
 
 export const getDevicesCount = async (): Promise<ActionResult<number>> => {
-  try {
-    const session = await getSession();
+  const session = await getSession();
 
+  try {
     const data = await db.select({ count: count() }).from(devicesTable).where(eq(devicesTable.userId, session.userId));
 
     return {
@@ -35,9 +35,9 @@ export const getDevicesCount = async (): Promise<ActionResult<number>> => {
 };
 
 export const getDevicesCountByStatus = async (status: string): Promise<ActionResult<number>> => {
-  try {
-    const session = await getSession();
+  const session = await getSession();
 
+  try {
     const data = await db
       .select({ count: count() })
       .from(devicesTable)
@@ -58,9 +58,9 @@ export const getDevicesCountByStatus = async (status: string): Promise<ActionRes
 };
 
 export const getDevices = async (options: Options): Promise<ActionResult<Device[]>> => {
-  try {
-    const session = await getSession();
+  const session = await getSession();
 
+  try {
     const data = await db
       .select({
         id: devicesTable.id,
@@ -98,9 +98,9 @@ export const getDevices = async (options: Options): Promise<ActionResult<Device[
 export const getDevicesPages = async (options: Pick<Options, "pagination" | "filters">) => {
   const { pagination, filters } = options;
 
-  try {
-    const session = await getSession();
+  const session = await getSession();
 
+  try {
     const data = await db
       .select({ count: count() })
       .from(devicesTable)
@@ -124,9 +124,9 @@ export const getDevicesPages = async (options: Pick<Options, "pagination" | "fil
 };
 
 export const getDeviceById = async (deviceId: string) => {
-  try {
-    const session = await getSession();
+  const session = await getSession();
 
+  try {
     const data = await db
       .select({
         id: devicesTable.id,
