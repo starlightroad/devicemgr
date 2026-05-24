@@ -36,23 +36,23 @@ export const updateDevice = async (deviceId: string, _prevState: unknown, formDa
     serialNumber: formData.get("serial-number"),
   });
 
+  if (!parsedFields.success) {
+    const { fieldErrors } = z.flattenError(parsedFields.error);
+
+    return {
+      success: false,
+      serverErrors: {
+        name: fieldErrors.name?.toString(),
+        type: fieldErrors.typeId?.toString(),
+        status: fieldErrors.statusId?.toString(),
+        group: fieldErrors.groupId?.toString(),
+        ipAddress: fieldErrors.ipAddress?.toString(),
+        serialNumber: fieldErrors.serialNumber?.toString(),
+      },
+    };
+  }
+
   try {
-    if (!parsedFields.success) {
-      const { fieldErrors } = z.flattenError(parsedFields.error);
-
-      return {
-        success: false,
-        serverErrors: {
-          name: fieldErrors.name?.toString(),
-          type: fieldErrors.typeId?.toString(),
-          status: fieldErrors.statusId?.toString(),
-          group: fieldErrors.groupId?.toString(),
-          ipAddress: fieldErrors.ipAddress?.toString(),
-          serialNumber: fieldErrors.serialNumber?.toString(),
-        },
-      };
-    }
-
     await db.transaction(async (tx) => {
       await tx
         .update(devicesTable)
@@ -89,22 +89,22 @@ type MoveDeviceAction = ActionReturnType<Partial<{ group: string }>>;
 export const moveDevice = async (deviceId: string, _prevState: unknown, formData: FormData): MoveDeviceAction => {
   const { userId } = await getSession();
 
+  const parsedFields = MoveDeviceSchema.safeParse({
+    groupId: formData.get("group"),
+  });
+
+  if (!parsedFields.success) {
+    const { fieldErrors } = z.flattenError(parsedFields.error);
+
+    return {
+      success: false,
+      serverErrors: {
+        group: fieldErrors.groupId?.toString(),
+      },
+    };
+  }
+
   try {
-    const parsedFields = MoveDeviceSchema.safeParse({
-      groupId: formData.get("group"),
-    });
-
-    if (!parsedFields.success) {
-      const { fieldErrors } = z.flattenError(parsedFields.error);
-
-      return {
-        success: false,
-        serverErrors: {
-          group: fieldErrors.groupId?.toString(),
-        },
-      };
-    }
-
     await db.transaction(async (tx) => {
       await tx
         .update(devicesTable)
@@ -135,18 +135,18 @@ type DeleteDeviceAction = ActionReturnType<{ message: string }>;
 export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
   const { userId } = await getSession();
 
+  const parsedDeviceId = DeleteDeviceSchema.safeParse(deviceId);
+
+  if (!parsedDeviceId.success) {
+    return {
+      success: false,
+      serverErrors: {
+        message: "Failed to delete device.",
+      },
+    };
+  }
+
   try {
-    const parsedDeviceId = DeleteDeviceSchema.safeParse(deviceId);
-
-    if (!parsedDeviceId.success) {
-      return {
-        success: false,
-        serverErrors: {
-          message: "Failed to delete device.",
-        },
-      };
-    }
-
     await db.transaction(async (tx) => {
       await tx.delete(devicesTable).where(and(eq(devicesTable.id, deviceId), eq(devicesTable.userId, userId)));
     });
@@ -180,23 +180,23 @@ export const createDevice = async (_prevState: unknown, formData: FormData) => {
     ipAddress: formData.get("ip-address")?.toString().trim(),
   });
 
+  if (!parsedFields.success) {
+    const { fieldErrors } = z.flattenError(parsedFields.error);
+
+    return {
+      success: false,
+      serverErrors: {
+        name: fieldErrors.name?.toString(),
+        typeId: fieldErrors.typeId?.toString(),
+        statusId: fieldErrors.statusId?.toString(),
+        groupId: fieldErrors.groupId?.toString(),
+        serialNumber: fieldErrors.serialNumber?.toString(),
+        ipAddress: fieldErrors.ipAddress?.toString(),
+      },
+    };
+  }
+
   try {
-    if (!parsedFields.success) {
-      const { fieldErrors } = z.flattenError(parsedFields.error);
-
-      return {
-        success: false,
-        serverErrors: {
-          name: fieldErrors.name?.toString(),
-          typeId: fieldErrors.typeId?.toString(),
-          statusId: fieldErrors.statusId?.toString(),
-          groupId: fieldErrors.groupId?.toString(),
-          serialNumber: fieldErrors.serialNumber?.toString(),
-          ipAddress: fieldErrors.ipAddress?.toString(),
-        },
-      };
-    }
-
     await db.transaction(async (tx) => {
       await tx.insert(devicesTable).values({
         id: generateId(),
