@@ -87,9 +87,9 @@ export const updateDevice = async (deviceId: string, _prevState: unknown, formDa
 type MoveDeviceAction = ActionReturnType<Partial<{ group: string }>>;
 
 export const moveDevice = async (deviceId: string, _prevState: unknown, formData: FormData): MoveDeviceAction => {
-  try {
-    const { userId } = await getSession();
+  const { userId } = await getSession();
 
+  try {
     const parsedFields = MoveDeviceSchema.safeParse({
       groupId: formData.get("group"),
     });
@@ -133,9 +133,9 @@ export const moveDevice = async (deviceId: string, _prevState: unknown, formData
 type DeleteDeviceAction = ActionReturnType<{ message: string }>;
 
 export const deleteDevice = async (deviceId: string): DeleteDeviceAction => {
-  try {
-    const { userId } = await getSession();
+  const { userId } = await getSession();
 
+  try {
     const parsedDeviceId = DeleteDeviceSchema.safeParse(deviceId);
 
     if (!parsedDeviceId.success) {

@@ -11,9 +11,9 @@ import type { ActionResult } from "@/lib/definitions";
 import { devicesTable, deviceTypesTable, usersTable } from "@/db/schemas";
 
 export const getDeviceTypes = async (): Promise<ActionResult<Array<{ id: string; name: string }>>> => {
-  try {
-    const session = await getSession();
+  const session = await getSession();
 
+  try {
     const data = await db
       .select({
         id: deviceTypesTable.id,
@@ -36,9 +36,9 @@ export const getDeviceTypes = async (): Promise<ActionResult<Array<{ id: string;
 };
 
 export const getDeviceCountsByType = async (): Promise<ActionResult<Array<{ name: string; total: number }>>> => {
-  try {
-    const session = await getSession();
+  const session = await getSession();
 
+  try {
     const data = await db
       .select({
         name: deviceTypesTable.name,
