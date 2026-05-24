@@ -9,26 +9,23 @@ import { getSession } from "./session";
 import { accountsTable } from "@/db/schemas";
 
 const getAccount = async () => {
-  try {
-    const session = await getSession();
+  const session = await getSession();
 
+  try {
     const data = await db.select().from(accountsTable).where(eq(accountsTable.userId, session.userId));
     const account = data[0];
 
     return account;
-  } catch (error) {
-    console.error(error);
-    throw new Error("Failed to get account.");
+  } catch {
+    console.error("Failed to get account.");
+    return null;
   }
 };
 
 export const getAccountUpdatedDate = async () => {
-  try {
-    const data = await getAccount();
+  const data = await getAccount();
 
-    return data.updatedAt;
-  } catch (error) {
-    console.error(error);
-    throw new Error("Failed to get account updated date.");
-  }
+  if (!data) return null;
+
+  return data.updatedAt;
 };

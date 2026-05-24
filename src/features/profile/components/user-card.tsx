@@ -11,7 +11,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default async function UserCard() {
-  const { name, createdAt } = await getUser();
+  const user = await getUser();
+
+  if (!user) return null;
+
+  const { name, createdAt } = user;
 
   return (
     <Card>

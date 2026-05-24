@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 export default async function SecurityCard() {
   const passwordLastChangedDate = await getAccountUpdatedDate();
 
-  const passwordLastChanged = formatRelativeTime(passwordLastChangedDate);
+  const passwordLastChanged = passwordLastChangedDate ? formatRelativeTime(passwordLastChangedDate) : null;
 
   return (
     <Card>
@@ -22,7 +22,8 @@ export default async function SecurityCard() {
           <div>
             <h3 className="font-medium">Password</h3>
             <p className="text-muted-foreground">
-              Last changed <strong className="font-medium">{passwordLastChanged}</strong>.
+              Last changed&nbsp;
+              <strong className="font-medium">{passwordLastChanged ? passwordLastChanged : "unavailable"}</strong>.
             </p>
           </div>
           <Button type="button" variant="outline" disabled>

@@ -11,6 +11,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 export default async function PersonalCard() {
   const user = await getUserNameAndEmail();
 
+  if (!user) return null;
+
   return (
     <Card>
       <CardHeader>
