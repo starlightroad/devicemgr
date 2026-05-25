@@ -4,6 +4,8 @@ import Link from "next/link";
 
 import { DownloadCloudIcon, ImportIcon, MoreHorizontalIcon, PlusIcon } from "lucide-react";
 
+import { cn } from "@/lib/utils";
+
 import { NEW_DEVICE_PATH } from "@/features/dashboard/lib/constants";
 
 import useDownloadDevices from "@/features/device/hooks/use-download-devices";
@@ -58,7 +60,7 @@ export default function ButtonActions() {
 
 function NewDeviceLink() {
   return (
-    <Link href={NEW_DEVICE_PATH} className={buttonVariants({ variant: "outline" })}>
+    <Link href={NEW_DEVICE_PATH} className={cn(buttonVariants({ variant: "outline" }), "border")}>
       <PlusIcon />
       New Device
     </Link>
