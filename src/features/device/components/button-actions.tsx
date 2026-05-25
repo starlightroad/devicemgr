@@ -10,7 +10,7 @@ import { NEW_DEVICE_PATH } from "@/features/dashboard/lib/constants";
 
 import useDownloadDevices from "@/features/device/hooks/use-download-devices";
 
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -32,8 +32,15 @@ export default function ButtonActions() {
           <TooltipTrigger
             render={
               <DropdownMenuTrigger
-                aria-label="More Options"
-                className={buttonVariants({ variant: "outline", size: "icon", className: "border-l-0" })}
+                render={
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    aria-label="More Options"
+                    className="border-l-0"
+                  />
+                }
               >
                 <MoreHorizontalIcon />
               </DropdownMenuTrigger>
