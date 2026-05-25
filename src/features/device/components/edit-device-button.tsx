@@ -1,5 +1,7 @@
 "use client";
 
+import { EditIcon } from "lucide-react";
+
 import type { Device, DeviceItem } from "@/features/device/lib/definitions";
 
 import useModal from "@/features/device/hooks/use-modal";
@@ -21,6 +23,7 @@ export default function EditDeviceButton({ device, types, statuses, groups }: Ed
   return (
     <>
       <Button type="button" variant="outline" onClick={() => setModal("edit")}>
+        <EditIcon data-icon="inline-start" />
         Edit Device
       </Button>
       {modal === "edit" && (
