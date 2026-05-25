@@ -4,11 +4,13 @@ import Link from "next/link";
 
 import { DownloadCloudIcon, ImportIcon, MoreHorizontalIcon, PlusIcon } from "lucide-react";
 
+import { cn } from "@/lib/utils";
+
 import { NEW_DEVICE_PATH } from "@/features/dashboard/lib/constants";
 
 import useDownloadDevices from "@/features/device/hooks/use-download-devices";
 
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -19,19 +21,29 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function ButtonActions() {
+export default function DeviceButtonActions() {
   const { handleDownload } = useDownloadDevices();
 
   return (
     <>
-      <NewDeviceLink />
+      <Link href={NEW_DEVICE_PATH} className={cn(buttonVariants({ variant: "outline" }), "border")}>
+        <PlusIcon data-icon="inline-start" />
+        New Device
+      </Link>
       <DropdownMenu>
         <Tooltip>
           <TooltipTrigger
             render={
               <DropdownMenuTrigger
-                aria-label="More Options"
-                className={buttonVariants({ variant: "outline", size: "icon", className: "border-l-0" })}
+                render={
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    aria-label="More Options"
+                    className="border-l-0"
+                  />
+                }
               >
                 <MoreHorizontalIcon />
               </DropdownMenuTrigger>
@@ -53,14 +65,5 @@ export default function ButtonActions() {
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-  );
-}
-
-function NewDeviceLink() {
-  return (
-    <Link href={NEW_DEVICE_PATH} className={buttonVariants({ variant: "outline" })}>
-      <PlusIcon />
-      New Device
-    </Link>
   );
 }

@@ -18,7 +18,7 @@ import SearchProvider from "@/features/device/providers/search-provider";
 
 import DeviceTable from "@/features/device/components/device-table";
 
-import ButtonActions from "@/features/device/components/button-actions";
+import DeviceButtonActions from "@/features/device/components/device-button-actions";
 
 import FilterPopover from "@/features/device/components/filter-popover";
 
@@ -74,7 +74,7 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
       <main>
         <SearchProvider>
           <div className="flex justify-end pb-5 lg:hidden">
-            <ButtonActions />
+            <DeviceButtonActions />
           </div>
           <ButtonGroup className="w-full sm:pb-5">
             <ButtonGroup aria-label="Search Bar Group" className="hidden sm:flex">
@@ -99,7 +99,7 @@ export default async function DevicesPage({ searchParams }: DevicesPageProps) {
               <ClearFilterButton />
             </ButtonGroup>
             <ButtonGroup className="hidden lg:flex lg:grow lg:justify-end">
-              <ButtonActions />
+              <DeviceButtonActions />
             </ButtonGroup>
           </ButtonGroup>
           <ButtonGroup className="w-full pt-2 pb-5 sm:hidden">
