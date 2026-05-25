@@ -26,7 +26,10 @@ export default function ButtonActions() {
 
   return (
     <>
-      <NewDeviceLink />
+      <Link href={NEW_DEVICE_PATH} className={cn(buttonVariants({ variant: "outline" }), "border")}>
+        <PlusIcon />
+        New Device
+      </Link>
       <DropdownMenu>
         <Tooltip>
           <TooltipTrigger
@@ -62,14 +65,5 @@ export default function ButtonActions() {
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-  );
-}
-
-function NewDeviceLink() {
-  return (
-    <Link href={NEW_DEVICE_PATH} className={cn(buttonVariants({ variant: "outline" }), "border")}>
-      <PlusIcon />
-      New Device
-    </Link>
   );
 }
