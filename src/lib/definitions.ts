@@ -20,3 +20,12 @@ export type TimeInterval = {
   label: Intl.RelativeTimeFormatUnit;
   seconds: number;
 };
+
+export type HomeItemLabel = "computer" | "phone" | "printer" | "database";
+
+export type HomeItem = {
+  label: string;
+  icon: HomeItemLabel;
+  itemClassName: string;
+  iconClassName: string;
+};

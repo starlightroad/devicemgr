@@ -2,9 +2,11 @@ import { twMerge } from "tailwind-merge";
 
 import { clsx, type ClassValue } from "clsx";
 
+import { ComputerIcon, DatabaseIcon, PrinterIcon, SmartphoneIcon } from "lucide-react";
+
 import { SECONDS } from "@/lib/constants";
 
-import type { TimeInterval } from "@/lib/definitions";
+import type { HomeItemLabel, TimeInterval } from "@/lib/definitions";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -47,4 +49,19 @@ export const formatRelativeTime = (date: Date) => {
   }
 
   return "Just now";
+};
+
+export const getHomeIcon = (label: HomeItemLabel) => {
+  switch (label) {
+    case "computer":
+      return ComputerIcon;
+    case "phone":
+      return SmartphoneIcon;
+    case "printer":
+      return PrinterIcon;
+    case "database":
+      return DatabaseIcon;
+    default:
+      throw new Error("Unknown label");
+  }
 };
