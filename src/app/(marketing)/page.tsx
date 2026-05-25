@@ -3,8 +3,8 @@ import { ComputerIcon, DatabaseIcon, PrinterIcon, SmartphoneIcon } from "lucide-
 import Navbar from "@/components/navbar";
 
 export default function HomePage() {
-  const headline = "Every Device. Every Location. Total Control.";
-  const subheadline = "The smartest way to group, map, and manage your network assets without the clutter.";
+  const headline = "Your Devices. Your Way. Grouped and Simplified.";
+  const subheadline = "The smartest way to group and manage your network assets without the clutter.";
 
   return (
     <>
