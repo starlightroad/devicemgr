@@ -1,3 +1,5 @@
+import type { HomeItem } from "@/lib/definitions";
+
 export const APP_NAME = "DeviceMGR";
 
 export const APP_DESCRIPTION = "A device management dashboard built with Next.js.";
@@ -11,6 +13,11 @@ export const MAX_ROWS = 10;
 export const CHART_CONTAINER_HEIGHT = 256;
 
 export const HOME_PATH = "/";
+
+export const HOME_CONTENT = {
+  headline: "Your Devices. Your Way. Grouped and Simplified.",
+  subheadline: "The smartest way to group and manage your network assets without the clutter.",
+};
 
 export const NOT_FOUND_TITLE = "Resource Not Found";
 
@@ -39,3 +46,30 @@ export const SECONDS = {
   MONTH: 2592000,
   YEAR: 31536000,
 };
+
+export const homeItems: HomeItem[] = [
+  {
+    label: "icon-1",
+    icon: "computer",
+    itemClassName: "flex h-16 w-16 items-center justify-center bg-red-500 lg:h-32 lg:w-32 dark:bg-red-300",
+    iconClassName: "size-4 text-red-100 dark:text-red-900 lg:size-6",
+  },
+  {
+    label: "icon-2",
+    icon: "phone",
+    itemClassName: "flex h-16 w-16 items-center justify-center bg-indigo-500 lg:h-32 lg:w-32 dark:bg-indigo-300",
+    iconClassName: "size-4 text-indigo-100 dark:text-indigo-900 lg:size-6",
+  },
+  {
+    label: "icon-3",
+    icon: "printer",
+    itemClassName: "flex h-16 w-16 items-center justify-center bg-green-500 lg:h-32 lg:w-32 dark:bg-green-300",
+    iconClassName: "size-4 text-green-100 dark:text-green-900 lg:size-6",
+  },
+  {
+    label: "icon-4",
+    icon: "database",
+    itemClassName: "flex h-16 w-16 items-center justify-center bg-amber-500 lg:h-32 lg:w-32 dark:bg-amber-300",
+    iconClassName: "size-4 text-amber-100 dark:text-amber-900 lg:size-6",
+  },
+];
