@@ -12,6 +12,11 @@ export const CHART_CONTAINER_HEIGHT = 256;
 
 export const HOME_PATH = "/";
 
+export const HOME_CONTENT = {
+  headline: "Your Devices. Your Way. Grouped and Simplified.",
+  subheadline: "The smartest way to group and manage your network assets without the clutter.",
+};
+
 export const NOT_FOUND_TITLE = "Resource Not Found";
 
 export const NOT_FOUND_DESCRIPTION = "The resource you are looking for was not found.";
