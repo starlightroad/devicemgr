@@ -51,25 +51,25 @@ export const homeItems: HomeItem[] = [
   {
     label: "icon-1",
     icon: "computer",
-    itemClassName: "flex h-16 w-16 items-center justify-center bg-red-300 lg:h-32 lg:w-32 dark:bg-red-400",
-    iconClassName: "size-4 text-red-900 lg:size-6",
+    itemClassName: "flex h-16 w-16 items-center justify-center bg-red-500 lg:h-32 lg:w-32 dark:bg-red-300",
+    iconClassName: "size-4 text-red-100 dark:text-red-900 lg:size-6",
   },
   {
     label: "icon-2",
     icon: "phone",
-    itemClassName: "flex h-16 w-16 items-center justify-center bg-indigo-300 lg:h-32 lg:w-32 dark:bg-indigo-400",
-    iconClassName: "size-4 text-indigo-900 lg:size-6",
+    itemClassName: "flex h-16 w-16 items-center justify-center bg-indigo-500 lg:h-32 lg:w-32 dark:bg-indigo-300",
+    iconClassName: "size-4 text-indigo-100 dark:text-indigo-900 lg:size-6",
   },
   {
     label: "icon-3",
     icon: "printer",
-    itemClassName: "flex h-16 w-16 items-center justify-center bg-green-300 lg:h-32 lg:w-32 dark:bg-green-400",
-    iconClassName: "size-4 text-green-900 lg:size-6",
+    itemClassName: "flex h-16 w-16 items-center justify-center bg-green-500 lg:h-32 lg:w-32 dark:bg-green-300",
+    iconClassName: "size-4 text-green-100 dark:text-green-900 lg:size-6",
   },
   {
     label: "icon-4",
     icon: "database",
-    itemClassName: "flex h-16 w-16 items-center justify-center bg-amber-300 lg:h-32 lg:w-32 dark:bg-amber-400",
-    iconClassName: "size-4 text-amber-900 lg:size-6",
+    itemClassName: "flex h-16 w-16 items-center justify-center bg-amber-500 lg:h-32 lg:w-32 dark:bg-amber-300",
+    iconClassName: "size-4 text-amber-100 dark:text-amber-900 lg:size-6",
   },
 ];
