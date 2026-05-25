@@ -21,7 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function ButtonActions() {
+export default function DeviceButtonActions() {
   const { handleDownload } = useDownloadDevices();
 
   return (
