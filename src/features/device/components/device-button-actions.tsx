@@ -27,7 +27,7 @@ export default function DeviceButtonActions() {
   return (
     <>
       <Link href={NEW_DEVICE_PATH} className={cn(buttonVariants({ variant: "outline" }), "border")}>
-        <PlusIcon />
+        <PlusIcon data-icon="inline-start" />
         New Device
       </Link>
       <DropdownMenu>
