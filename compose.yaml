@@ -1,4 +1,51 @@
 services:
+  app-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: devicemgr:prod
+    container_name: devicemgr_web_prod
+    ports:
+      - ${PORT}:3000
+    environment:
+      - HOSTNAME=${HOSTNAME}
+      - PORT=${PORT}
+      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+      - BETTER_AUTH_URL=${BETTER_AUTH_URL}
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+  app-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: devicemgr:dev
+    container_name: devicemgr_web_dev
+    ports:
+      - ${PORT}:3000
+    environment:
+      - HOSTNAME=${HOSTNAME}
+      - PORT=${PORT}
+      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+      - BETTER_AUTH_URL=${BETTER_AUTH_URL}
+      - DATABASE_URL=${DATABASE_URL}
+      - WATCHPACK_POLLING=true
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - node_modules/
+            - .next/
+        - action: rebuild
+          path: package.json
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
   db:
     container_name: devicemgr_db
     image: postgres:17-alpine
