@@ -5,7 +5,7 @@
 # IMPORTANT: Docker Hardened Image (DHI) Version Maintenance
 # This Dockerfile uses dhi.io/node. Regularly validate and update to the latest DHI versions in the catalog for security and compatibility.
 
-FROM dhi.io/node:24-alpine3.23 AS dependencies
+FROM dhi.io/node:24-alpine3.22-dev AS dependencies
 
 # Set working directory
 WORKDIR /app
@@ -31,7 +31,7 @@ RUN --mount=type=cache,target=/root/.npm \
 # Stage 2: Build Next.js application in standalone mode
 # ============================================
 
-FROM dhi.io/node:24-alpine3.23 AS builder
+FROM dhi.io/node:24-alpine3.22-dev AS builder
 
 # Set working directory
 WORKDIR /app
@@ -69,7 +69,7 @@ RUN if [ -f package-lock.json ]; then \
 # Stage 3: Run Next.js application
 # ============================================
 
-FROM dhi.io/node:24-alpine3.23 AS runner
+FROM dhi.io/node:24-alpine3.22-dev AS runner
 
 # Set working directory
 WORKDIR /app
