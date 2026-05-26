@@ -1,4 +1,20 @@
 services:
+  app:
+    container_name: devicemgr_web
+    build:
+      context: .
+    environment:
+      - HOSTNAME=${HOSTNAME}
+      - PORT=${PORT}
+      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+      - BETTER_AUTH_URL=${BETTER_AUTH_URL}
+      - DATABASE_URL=${DATABASE_URL}
+    ports:
+      - ${PORT}:3000
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
   db:
     container_name: devicemgr_db
     image: postgres:17-alpine
